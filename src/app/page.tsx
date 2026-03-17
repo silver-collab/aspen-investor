@@ -9,6 +9,7 @@ import { LicenseComparison } from "@/components/tabs/license-comparison";
 import { Team } from "@/components/tabs/team";
 
 const TABS = ["Client Portfolio", "ADGM License", "Team"];
+const BASE = process.env.NEXT_PUBLIC_BASE_PATH || "";
 
 function SplashScreen({ onComplete }: { onComplete: () => void }) {
   useEffect(() => {
@@ -76,7 +77,7 @@ function ClientPortfolio() {
     <div className="w-full max-w-6xl mx-auto">
       <iframe
         ref={iframeRef}
-        src="/clients.html"
+        src={`${BASE}/clients.html`}
         className="w-full border-0"
         scrolling="no"
         style={{ overflow: "hidden" }}
