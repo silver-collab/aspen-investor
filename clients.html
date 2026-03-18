@@ -129,7 +129,9 @@ body{max-width:1152px;margin:0 auto;padding:0 24px;overflow:hidden;}
 .bp-rg{padding:16px 24px 10px;background:rgba(255,255,255,0.02);border-radius:16px 16px 0 0;display:flex;align-items:center;gap:10px}
 .bp-fl{font-size:20px;line-height:1}.bp-rn{font-size:11px;font-weight:600;letter-spacing:2px;color:#a1a1aa}
 .bp-hd{padding:12px 24px 16px}
+.bp-nm-row{display:flex;align-items:baseline;gap:12px}
 .bp-nm{font-size:20px;font-weight:800;letter-spacing:.3px;color:var(--pc)}
+.bp-val{font-size:22px;font-weight:800;color:#fafafa;white-space:nowrap;font-variant-numeric:tabular-nums;margin-left:auto}
 .bp-sb{font-size:12px;color:#a1a1aa;margin-top:4px}
 .bp-sep{height:1px;background:rgba(46,46,51,0.5);margin:0 24px}
 .bp-bd{padding:16px 24px 20px}
@@ -151,7 +153,7 @@ body{max-width:1152px;margin:0 auto;padding:0 24px;overflow:hidden;}
   <div id="bp">
     <div class="bp-bar"></div>
     <div class="bp-rg"><span class="bp-fl" id="bp-fl"></span><span class="bp-rn" id="bp-rn"></span></div>
-    <div class="bp-hd"><div class="bp-nm" id="bp-nm"></div><div class="bp-sb" id="bp-sb"></div></div>
+    <div class="bp-hd"><div class="bp-nm-row"><div class="bp-nm" id="bp-nm"></div><div class="bp-val" id="bp-val"></div></div><div class="bp-sb" id="bp-sb"></div></div>
     <div class="bp-sep"></div>
     <div class="bp-bd" id="bp-bd"></div>
   </div>
@@ -385,7 +387,7 @@ const NAME_FS=12,VAL_FS=24,GAP=HOVER_R*0.21;
 /* ── panel ── */
 const panel=document.getElementById("bp");
 const bpFl=document.getElementById("bp-fl"),bpRn=document.getElementById("bp-rn");
-const bpNm=document.getElementById("bp-nm"),bpSb=document.getElementById("bp-sb"),bpBd=document.getElementById("bp-bd");
+const bpNm=document.getElementById("bp-nm"),bpVal=document.getElementById("bp-val"),bpSb=document.getElementById("bp-sb"),bpBd=document.getElementById("bp-bd");
 let hideTimer=null,activeId=null,breathPaused=false;
 
 function showPanel(d,svgX,svgY){
@@ -394,7 +396,7 @@ function showPanel(d,svgX,svgY){
   activeId=d.id;breathPaused=true;
   panel.style.setProperty("--pc",d.col);
   bpFl.textContent=d.flag;bpRn.textContent=d.rn;
-  bpNm.textContent=d.label.replace(/\n/g," ");bpSb.textContent=d.sub;
+  bpNm.textContent=d.label.replace(/\n/g," ");bpVal.textContent=d.val;bpSb.textContent=d.sub;
   bpBd.innerHTML=d.corps.map(c=>
     `<div class="bp-rw"><span class="bp-cn">${c.n}</span>${c.v&&c.v!=="—"?`<span class="bp-cv">${c.v}</span>`:""}</div>`
   ).join("");
@@ -448,7 +450,7 @@ function showPanel(d,svgX,svgY){
           .transition().duration(400).attr("opacity",0).remove();
       }
     }else{
-      el.transition().duration(HOVER_DUR).ease(EASE).attr("opacity",0.15);
+      el.transition().duration(HOVER_DUR).ease(EASE).attr("opacity",0.2);
     }
   });
 }
@@ -576,23 +578,38 @@ d3.json("https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json").then(w
   });
 
   /* map background fade-in */
-  mapG.attr("opacity",0).transition().duration(1200).ease(EASE).attr("opacity",0.7);
+  mapG.attr("opacity",0).transition().duration(1200).ease(EASE).attr("opacity",0.6);
 
-  /* breathing animation — gentle, organic pulse, no halo */
-  const allC=B.map(d=>({id:d.id,el:d3.select("#b-"+d.id).select(".b-circle")})).filter(e=>!e.el.empty());
-  function breathR(){
+  /* breathing animation — sequential wave sweep L→R with soft glow */
+  const allC=B.map(d=>({id:d.id,x:d.x,el:d3.select("#b-"+d.id).select(".b-circle"),halo:d3.select("#b-"+d.id).select(".b-halo")})).filter(e=>!e.el.empty());
+  /* sort by x position for left→right sweep */
+  const sortedByX=[...allC].sort((a,b)=>a.x-b.x);
+  let waveIdx=0;
+  function breathWave(){
     if(!breathPaused){
-      const pick=allC[Math.floor(Math.random()*allC.length)];
-      if(pick.id!==activeId){
-        pick.el.transition("breath").duration(900).ease(d3.easeSinInOut)
-          .attr("fill-opacity",0.35).attr("stroke-width",0.6)
-          .transition("breath").duration(900).ease(d3.easeSinInOut)
-          .attr("fill-opacity",0.27).attr("stroke-width",0.4);
+      /* sweep 3-4 bubbles per wave for organic feel */
+      const batch=3+Math.floor(Math.random()*2);
+      for(let i=0;i<batch;i++){
+        const idx=(waveIdx+i)%sortedByX.length;
+        const pick=sortedByX[idx];
+        if(pick.id!==activeId){
+          const delay=i*180;
+          pick.el.transition("breath").delay(delay).duration(800).ease(d3.easeSinInOut)
+            .attr("fill-opacity",0.40).attr("stroke-width",1.0)
+            .transition("breath").duration(1000).ease(d3.easeSinInOut)
+            .attr("fill-opacity",0.27).attr("stroke-width",0.4);
+          /* subtle halo glow during breath */
+          pick.halo.transition("bhalo").delay(delay).duration(800).ease(d3.easeSinInOut)
+            .attr("opacity",0.06)
+            .transition("bhalo").duration(1000).ease(d3.easeSinInOut)
+            .attr("opacity",0);
+        }
       }
+      waveIdx=(waveIdx+batch)%sortedByX.length;
     }
-    setTimeout(breathR,150+Math.random()*350);
+    setTimeout(breathWave,1200+Math.random()*600);
   }
-  setTimeout(breathR,1800);
+  setTimeout(breathWave,1800);
 
   /* notify parent iframe to resize */
   setTimeout(()=>{
