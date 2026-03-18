@@ -468,12 +468,15 @@ function showPanel(d,svgX,svgY){
   requestAnimationFrame(()=>{
     const ph=panel.offsetHeight||140;
     const pw2=panel.offsetWidth||380;
+    let left,top;
 
     if(window.innerWidth<768){
-      /* Mobile: CSS bottom-sheet handles positioning, just skip JS positioning */
+      /* Mobile: CSS bottom-sheet, position at bottom center */
+      left=window.innerWidth/2;
+      top=window.innerHeight-ph/2;
     }else{
       const gap=HOVER_R*2*sxR+24;
-      let left=sx+gap,top=sy-ph/2;
+      left=sx+gap;top=sy-ph/2;
       if(left+pw2>window.innerWidth-14)left=sx-gap-pw2;
       if(left<8)left=8;
       if(left+pw2>window.innerWidth-8)left=window.innerWidth-pw2-8;
@@ -620,7 +623,7 @@ d3.json("https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json").then(w
     const bs=d.r/HOVER_R;
     const g=bubbleL.append("g").attr("class","bg").attr("id","b-"+d.id)
       .attr("transform",`translate(${d.x},${d.y}) scale(0)`)
-      .style("cursor","pointer").style("opacity",0).datum(d);
+      .style("cursor","pointer").attr("opacity",0).datum(d);
 
     g.append("circle").attr("class","b-halo").attr("r",HOVER_R*1.4)
       .attr("fill",d.col).attr("opacity",0).attr("filter","url(#glow)");
@@ -645,7 +648,7 @@ d3.json("https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json").then(w
     /* staggered entrance: 40ms between each, spring-like ease */
     g.transition().delay(200+i*40).duration(600).ease(d3.easeBackOut.overshoot(0.6))
       .attr("transform",`translate(${d.x},${d.y}) scale(${bs})`)
-      .style("opacity",1);
+      .attr("opacity",1);
 
     g.on("mouseenter",()=>showPanel(d,d.x,d.y))
      .on("mouseleave",scheduleHide)
