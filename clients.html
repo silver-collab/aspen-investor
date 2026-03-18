@@ -88,7 +88,7 @@ body{max-width:1152px;margin:0 auto;padding:0 24px;overflow-x:hidden;overflow-y:
 .tbl{width:100%;border-collapse:collapse;}
 .tbl th{font-size:11px;font-weight:600;color:#a1a1aa;letter-spacing:1.5px;text-align:left;
         padding:12px 14px;border-bottom:1px solid #2e2e33;cursor:pointer;user-select:none;
-        transition:color 0.2s ease;text-transform:uppercase;opacity:0.7;}
+        transition:color 0.2s ease;text-transform:uppercase;opacity:0.7;white-space:nowrap;}
 .tbl th:hover{color:#F17E00;opacity:1;}
 .sort-arrow{font-size:10px;color:#F17E00;opacity:0.8;margin-left:2px;}
 .tbl th.r{text-align:right;}
@@ -143,19 +143,24 @@ body{max-width:1152px;margin:0 auto;padding:0 24px;overflow-x:hidden;overflow-y:
 .bp-rw:last-child{border-bottom:none}
 .bp-cn{font-size:13px;color:#fafafa;flex:1;line-height:1.4;font-weight:500}
 .bp-cv{font-size:22px;font-weight:800;color:var(--pc);white-space:nowrap;font-variant-numeric:tabular-nums}
-/* Narrow: card compact, centered within map area */
+/* Narrow: card 30% smaller, centered, no scroll */
 @media(max-width:700px){
-  #bp{width:calc(100% - 24px);max-width:340px;border-radius:12px;max-height:50%;}
-  .bp-rg{padding:10px 14px 6px;}
-  .bp-hd{padding:8px 14px 10px;}
-  .bp-nm{font-size:15px;}
-  .bp-val{font-size:16px;}
-  .bp-sb{font-size:11px;}
-  .bp-sep{margin:0 14px;}
-  .bp-bd{padding:10px 14px 14px;}
-  .bp-rw{padding:7px 0;gap:8px;}
-  .bp-cn{font-size:12px;}
-  .bp-cv{font-size:15px;}
+  #bp{width:260px;max-height:none;overflow:hidden;border-radius:10px;
+    box-shadow:0 6px 24px rgba(0,0,0,0.5);}
+  .bp-bar{width:2px;}
+  .bp-rg{padding:8px 12px 4px;}
+  .bp-fl{font-size:16px;}
+  .bp-rn{font-size:9px;letter-spacing:1.5px;}
+  .bp-hd{padding:6px 12px 8px;}
+  .bp-nm-row{gap:6px;}
+  .bp-nm{font-size:14px;}
+  .bp-val{font-size:15px;}
+  .bp-sb{font-size:10px;margin-top:2px;}
+  .bp-sep{margin:0 12px;}
+  .bp-bd{padding:8px 12px 10px;}
+  .bp-rw{padding:5px 0;gap:6px;}
+  .bp-cn{font-size:11px;}
+  .bp-cv{font-size:14px;}
 }
 /* Tap hint */
 .tap-hint{text-align:center;padding:8px 0 0;font-size:11px;color:#a1a1aa;opacity:0.5;letter-spacing:0.5px;
@@ -272,7 +277,7 @@ body{max-width:1152px;margin:0 auto;padding:0 24px;overflow-x:hidden;overflow-y:
 
   <div class="tbl-scroll"><table class="tbl" id="tbl1">
     <thead><tr>
-      <th data-sort="region">Region <span class="sort-arrow"></span></th><th data-sort="name">Corporation <span class="sort-arrow"></span></th><th class="r" data-sort="mcap">Market Cap <span class="sort-arrow"></span></th><th></th><th data-sort="fo">Family / Family Office <span class="sort-arrow"></span></th><th class="r" data-sort="nw">Net Worth <span class="sort-arrow"></span></th><th>Business</th>
+      <th data-sort="region">Region<span class="sort-arrow"></span></th><th data-sort="name">Corporation<span class="sort-arrow"></span></th><th class="r" data-sort="mcap">Market Cap<span class="sort-arrow"></span></th><th class="td-bar-cell"></th><th data-sort="fo">Family/FO<span class="sort-arrow"></span></th><th class="r" data-sort="nw">Net Worth<span class="sort-arrow"></span></th><th>Business</th>
     </tr></thead>
     <tbody>
       <tr data-region="HK" data-name="Alibaba Group" data-mcap="330" data-nw="12"><td class="td-region"><span class="td-flag">🇭🇰</span> HK</td><td class="td-corp">Alibaba Group</td><td class="td-val">$330B</td><td class="td-bar-cell"><div class="td-bar-wrap"><div class="td-bar" style="width:100%"></div></div></td><td class="td-fo">Blue Pool Capital</td><td class="td-nw">$12B</td><td class="td-biz">E-commerce · Cloud · Fintech</td></tr>
@@ -335,7 +340,7 @@ body{max-width:1152px;margin:0 auto;padding:0 24px;overflow-x:hidden;overflow-y:
 
   <div class="tbl-scroll"><table class="tbl" id="tbl2">
     <thead><tr>
-      <th data-sort="region">Region <span class="sort-arrow"></span></th><th data-sort="name">Entity <span class="sort-arrow"></span></th><th class="r" data-sort="mcap">AUM <span class="sort-arrow"></span></th><th></th><th>Type</th><th>Remarks</th>
+      <th data-sort="region">Region<span class="sort-arrow"></span></th><th data-sort="name">Entity<span class="sort-arrow"></span></th><th class="r" data-sort="mcap">AUM<span class="sort-arrow"></span></th><th class="td-bar-cell"></th><th>Type</th><th>Remarks</th>
     </tr></thead>
     <tbody>
       <tr data-region="UAE" data-name="ADIA" data-mcap="1000" data-nw="0"><td class="td-region"><span class="td-flag">🇦🇪</span> UAE</td><td class="td-corp">ADIA</td><td class="td-val">$1T</td><td class="td-bar-cell"><div class="td-bar-wrap"><div class="td-bar" style="width:100%"></div></div></td><td class="td-biz">Sovereign Wealth Fund</td><td class="td-biz">World's 3rd Largest SWF</td></tr>
