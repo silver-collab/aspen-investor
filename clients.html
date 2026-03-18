@@ -141,7 +141,10 @@ body{max-width:1152px;margin:0 auto;padding:0 24px;overflow:hidden;}
 .bp-cv{font-size:22px;font-weight:800;color:var(--pc);white-space:nowrap;font-variant-numeric:tabular-nums}
 
 /* ── Table scroll wrapper ── */
-.tbl-scroll{overflow-x:auto;-webkit-overflow-scrolling:touch;margin:0 -12px;padding:0 12px;}
+.tbl-scroll{overflow-x:auto;-webkit-overflow-scrolling:touch;margin:0 -12px;padding:0 12px;position:relative;}
+/* scroll fade-edge hint */
+.tbl-scroll{-webkit-mask-image:linear-gradient(90deg,#000 85%,transparent 100%);mask-image:linear-gradient(90deg,#000 85%,transparent 100%);}
+.tbl-scroll.scrolled{-webkit-mask-image:none;mask-image:none;}
 
 /* ═══ MOBILE / NARROW VIEWPORT ═══ */
 @media(max-width:1024px){
@@ -470,14 +473,24 @@ function showPanel(d,svgX,svgY){
   requestAnimationFrame(()=>{
     const ph=panel.offsetHeight||140;
     const pw2=panel.offsetWidth||380;
-    const gap=HOVER_R*2*sxR+24;
-    let left=sx+gap,top=sy-ph/2;
-    if(left+pw2>window.innerWidth-14)left=sx-gap-pw2;
-    if(left<8)left=8;
-    if(left+pw2>window.innerWidth-8)left=window.innerWidth-pw2-8;
-    if(top<12)top=12;
-    if(top+ph>window.innerHeight-12)top=window.innerHeight-ph-12;
-    panel.style.left=left+"px";panel.style.top=top+"px";
+    const isMobile=window.innerWidth<768;
+
+    if(isMobile){
+      /* Mobile: pin panel below the map, centered */
+      const mapBottom=rect.bottom+8;
+      let left=(window.innerWidth-pw2)/2;
+      if(left<8)left=8;
+      panel.style.left=left+"px";panel.style.top=mapBottom+"px";
+    }else{
+      const gap=HOVER_R*2*sxR+24;
+      let left=sx+gap,top=sy-ph/2;
+      if(left+pw2>window.innerWidth-14)left=sx-gap-pw2;
+      if(left<8)left=8;
+      if(left+pw2>window.innerWidth-8)left=window.innerWidth-pw2-8;
+      if(top<12)top=12;
+      if(top+ph>window.innerHeight-12)top=window.innerHeight-ph-12;
+      panel.style.left=left+"px";panel.style.top=top+"px";
+    }
 
     const oRect=document.getElementById("map-ovl").getBoundingClientRect();
     const peX=left+(left>sx?0:pw),peY=top+ph/2;
@@ -514,7 +527,8 @@ function showPanel(d,svgX,svgY){
           .transition().duration(400).attr("opacity",0).remove();
       }
     }else{
-      el.transition().duration(HOVER_DUR).ease(EASE).attr("opacity",0.2);
+      el.transition().duration(HOVER_DUR).ease(EASE).attr("opacity",0.12);
+      el.select(".b-circle").transition().duration(HOVER_DUR).attr("fill-opacity",0.1);
     }
   });
 }
@@ -526,7 +540,7 @@ function doHideInstant(){
     const el=d3.select(this);
     el.interrupt().attr("opacity",1).attr("transform",`translate(${n.x},${n.y}) scale(${n.r/HOVER_R})`);
     el.select(".b-halo").attr("opacity",0);
-    el.select(".b-circle").attr("filter",null);
+    el.select(".b-circle").attr("filter",null).attr("fill-opacity",0.27);
   });
   d3.selectAll(".b-ring").attr("opacity",0);d3.selectAll(".ripple").remove();ovl.selectAll("*").remove();
 }
@@ -537,7 +551,7 @@ function doHide(){
     el.interrupt().transition().duration(HOVER_DUR).ease(EASE)
       .attr("opacity",1).attr("transform",`translate(${n.x},${n.y}) scale(${n.r/HOVER_R})`);
     el.select(".b-halo").transition().duration(HOVER_DUR).attr("opacity",0);
-    el.select(".b-circle").attr("filter",null);
+    el.select(".b-circle").attr("filter",null).transition().duration(HOVER_DUR).attr("fill-opacity",0.27);
   });
   d3.selectAll(".b-ring").transition().duration(150).attr("opacity",0);
   d3.selectAll(".ripple").remove();ovl.selectAll("*").remove();
@@ -644,35 +658,53 @@ d3.json("https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json").then(w
   /* map background fade-in */
   mapG.attr("opacity",0).transition().duration(1200).ease(EASE).attr("opacity",0.6);
 
-  /* breathing animation — sequential wave sweep L→R with visible glow */
-  const allC=B.map(d=>({id:d.id,x:d.x,col:d.col,g:d3.select("#b-"+d.id),el:d3.select("#b-"+d.id).select(".b-circle"),halo:d3.select("#b-"+d.id).select(".b-halo")})).filter(e=>!e.el.empty());
-  /* sort by x position for left→right sweep */
-  const sortedByX=[...allC].sort((a,b)=>a.x-b.x);
-  let waveIdx=0;
+  /* breathing animation — top 3 per color glow + 10% scale up */
+  const colorGroups={};
+  B.forEach(d=>{if(!colorGroups[d.col])colorGroups[d.col]=[];colorGroups[d.col].push(d);});
+  /* get top 3 by value for each color */
+  const breathTargets=[];
+  Object.values(colorGroups).forEach(grp=>{
+    grp.sort((a,b)=>b.vB-a.vB);
+    grp.slice(0,3).forEach(d=>{
+      const g=d3.select("#b-"+d.id);
+      if(!g.empty()){
+        breathTargets.push({id:d.id,x:d.x,r:d.r,col:d.col,
+          g:g,el:g.select(".b-circle"),halo:g.select(".b-halo")});
+      }
+    });
+  });
+  /* sort L→R for sweep */
+  breathTargets.sort((a,b)=>a.x-b.x);
+  let bIdx=0;
   function breathWave(){
     if(!breathPaused){
-      /* sweep 4-6 bubbles per wave — clearly visible */
-      const batch=4+Math.floor(Math.random()*3);
+      /* light up 2-3 at a time */
+      const batch=2+Math.floor(Math.random()*2);
       for(let i=0;i<batch;i++){
-        const idx=(waveIdx+i)%sortedByX.length;
-        const pick=sortedByX[idx];
+        const pick=breathTargets[(bIdx+i)%breathTargets.length];
         if(pick.id!==activeId){
-          const delay=i*140;
-          /* brighten fill + stroke */
-          pick.el.transition("breath").delay(delay).duration(700).ease(d3.easeSinInOut)
-            .attr("fill-opacity",0.48).attr("stroke-width",1.5).attr("stroke-opacity",0.8)
-            .transition("breath").duration(1200).ease(d3.easeSinInOut)
+          const delay=i*200;
+          const bs=pick.r/HOVER_R;
+          const upScale=bs*1.1;
+          /* glow + scale up 10% */
+          pick.el.transition("breath").delay(delay).duration(800).ease(d3.easeSinInOut)
+            .attr("fill-opacity",0.50).attr("stroke-width",1.5).attr("stroke-opacity",0.9);
+          pick.halo.transition("bhalo").delay(delay).duration(800).ease(d3.easeSinInOut)
+            .attr("opacity",0.18);
+          pick.g.transition("bscale").delay(delay).duration(800).ease(d3.easeSinInOut)
+            .attr("transform",`translate(${pick.g.datum().x},${pick.g.datum().y}) scale(${upScale})`)
+            /* shrink back */
+            .transition("bscale").duration(1200).ease(d3.easeSinInOut)
+            .attr("transform",`translate(${pick.g.datum().x},${pick.g.datum().y}) scale(${bs})`);
+          pick.el.transition("breath2").delay(delay+800).duration(1200).ease(d3.easeSinInOut)
             .attr("fill-opacity",0.27).attr("stroke-width",0.4).attr("stroke-opacity",1);
-          /* visible halo glow pulse */
-          pick.halo.transition("bhalo").delay(delay).duration(700).ease(d3.easeSinInOut)
-            .attr("opacity",0.15)
-            .transition("bhalo").duration(1200).ease(d3.easeSinInOut)
+          pick.halo.transition("bhalo2").delay(delay+800).duration(1200).ease(d3.easeSinInOut)
             .attr("opacity",0);
         }
       }
-      waveIdx=(waveIdx+batch)%sortedByX.length;
+      bIdx=(bIdx+batch)%breathTargets.length;
     }
-    setTimeout(breathWave,800+Math.random()*400);
+    setTimeout(breathWave,2000+Math.random()*800);
   }
   setTimeout(breathWave,1800);
 
@@ -784,5 +816,34 @@ document.querySelectorAll('.td-bar').forEach(bar=>{
 
 /* ── Initial reveal ── */
 setTimeout(()=>revealRows('sec1'),500);
+
+/* ── Apple-style scroll hint for tables on narrow screens ── */
+function scrollHint(el){
+  if(!el||el.scrollWidth<=el.clientWidth+10)return;
+  const maxScroll=Math.min(el.scrollWidth-el.clientWidth,200);
+  const dur=1200;
+  let start=null;
+  function step(ts){
+    if(!start)start=ts;
+    const p=(ts-start)/dur;
+    if(p<0.5){el.scrollLeft=maxScroll*Math.sin(p*Math.PI);}
+    else if(p<1){el.scrollLeft=maxScroll*Math.sin(p*Math.PI);}
+    else{el.scrollLeft=0;return;}
+    requestAnimationFrame(step);
+  }
+  requestAnimationFrame(step);
+}
+/* remove fade mask once user has scrolled */
+document.querySelectorAll('.tbl-scroll').forEach(el=>{
+  el.addEventListener('scroll',function(){
+    if(el.scrollLeft>20)el.classList.add('scrolled');
+    else el.classList.remove('scrolled');
+  },{passive:true});
+});
+if(window.innerWidth<900){
+  setTimeout(()=>{
+    document.querySelectorAll('.tbl-scroll').forEach(el=>scrollHint(el));
+  },1500);
+}
 </script>
 </body></html>
