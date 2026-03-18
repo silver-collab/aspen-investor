@@ -31,7 +31,7 @@ body{max-width:1152px;margin:0 auto;padding:0 24px;overflow-x:hidden;overflow-y:
          font-family:'Inter',system-ui,sans-serif;
          animation:fadeUp 0.6s cubic-bezier(0.22,1,0.36,1) 0.1s both;}
 @media(min-width:640px){.hero h2{font-size:43px;}.hero p{font-size:17px;}}
-.hero p{font-size:13px;color:#a1a1aa;max-width:560px;margin:0 auto;line-height:1.5;
+.hero p{font-size:13px;color:#a1a1aa;max-width:720px;margin:0 auto;line-height:1.5;white-space:nowrap;
         font-family:'Inter',system-ui,sans-serif;
         animation:fadeUp 0.6s cubic-bezier(0.22,1,0.36,1) 0.2s both;}
 
@@ -99,15 +99,15 @@ body{max-width:1152px;margin:0 auto;padding:0 24px;overflow-x:hidden;overflow-y:
 
 .td-region{width:80px;white-space:nowrap;font-size:12px;color:#a1a1aa;letter-spacing:0.5px;font-weight:500;opacity:0.7;}
 .td-flag{font-size:16px;vertical-align:middle;margin-right:5px;}
-.td-corp{color:#fafafa;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:240px;font-size:14px;letter-spacing:-0.1px;cursor:pointer;}
+.td-corp{color:#a1a1aa;font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:200px;font-size:13px;letter-spacing:-0.1px;cursor:pointer;}
 .td-corp.expanded,.td-fo.expanded,.td-biz.expanded{white-space:normal;overflow:visible;text-overflow:unset;}
 .td-bar-cell{width:180px;padding-right:14px !important;}
 .td-bar-wrap{position:relative;height:4px;background:rgba(255,255,255,0.04);border-radius:2px;overflow:hidden;}
 .td-bar{height:100%;background:#F17E00;border-radius:2px;opacity:0.5;min-width:2px;
         transition:width 0.5s cubic-bezier(0.22,1,0.36,1);}
-.td-val{font-size:14px;font-weight:600;color:#F17E00;text-align:right;white-space:nowrap;width:85px;letter-spacing:-0.2px;}
-.td-fo{font-size:13px;font-weight:500;color:#a1a1aa;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:200px;cursor:pointer;}
-.td-nw{font-size:14px;font-weight:500;color:#a1a1aa;text-align:right;white-space:nowrap;width:85px;}
+.td-val{font-size:13px;font-weight:500;color:#a1a1aa;text-align:right;white-space:nowrap;width:75px;letter-spacing:-0.2px;}
+.td-fo{font-size:14px;font-weight:600;color:#fafafa;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:240px;cursor:pointer;letter-spacing:-0.1px;}
+.td-nw{font-size:14px;font-weight:600;color:#F17E00;text-align:right;white-space:nowrap;width:85px;letter-spacing:-0.2px;}
 .td-biz{font-size:12px;color:#a1a1aa;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:260px;letter-spacing:0.2px;font-weight:400;opacity:0.6;cursor:pointer;}
 
 /* ── MAP CONTAINER (full-screen) ── */
@@ -206,11 +206,11 @@ body{max-width:1152px;margin:0 auto;padding:0 24px;overflow-x:hidden;overflow-y:
   .tbl{min-width:580px;}
   .tbl td{padding:10px 8px;font-size:13px;}
   .tbl th{padding:10px 8px;font-size:10px;}
-  .td-corp{max-width:120px;font-size:13px;}
+  .td-corp{max-width:100px;font-size:12px;}
   .td-bar-cell{display:none;}
   .td-biz{max-width:100px;font-size:11px;}
-  .td-fo{max-width:100px;font-size:12px;}
-  .td-val{font-size:13px;width:60px;}
+  .td-fo{max-width:120px;font-size:13px;}
+  .td-val{font-size:12px;width:55px;}
   .td-nw{font-size:13px;width:60px;}
 }
 @media(max-width:480px){
@@ -278,80 +278,70 @@ body{max-width:1152px;margin:0 auto;padding:0 24px;overflow-x:hidden;overflow-y:
   <div class="chip-bar">
     <span>REGION</span>
     <button class="chip active" onclick="filterRegion('tbl1',null,this)">All</button>
-    <button class="chip" onclick="filterRegion('tbl1','HK',this)">🇭🇰 HK</button>
-    <button class="chip" onclick="filterRegion('tbl1','THA',this)">🇹🇭 THA</button>
-    <button class="chip" onclick="filterRegion('tbl1','CHN',this)">🇨🇳 CHN</button>
-    <button class="chip" onclick="filterRegion('tbl1','JPN',this)">🇯🇵 JPN</button>
-    <button class="chip" onclick="filterRegion('tbl1','KOR',this)">🇰🇷 KOR</button>
-    <button class="chip" onclick="filterRegion('tbl1','MYS',this)">🇲🇾 MYS</button>
-    <button class="chip" onclick="filterRegion('tbl1','PHL',this)">🇵🇭 PHL</button>
-    <button class="chip" onclick="filterRegion('tbl1','AUS',this)">🇦🇺 AUS</button>
-    <button class="chip" onclick="filterRegion('tbl1','UAE',this)">🇦🇪 UAE</button>
-    <button class="chip" onclick="filterRegion('tbl1','KSA',this)">🇸🇦 KSA</button>
-    <button class="chip" onclick="filterRegion('tbl1','BHR',this)">🇧🇭 BHR</button>
-    <button class="chip" onclick="filterRegion('tbl1','SGP',this)">🇸🇬 SGP</button>
+    <button class="chip" onclick="filterRegion('tbl1','ASIA',this)">Asia</button>
+    <button class="chip" onclick="filterRegion('tbl1','ME',this)">Middle East</button>
   </div>
 
   <div class="tbl-wrap"><div class="tbl-scroll"><table class="tbl" id="tbl1">
     <thead><tr>
-      <th data-sort="region">Region<span class="sort-arrow"></span></th><th data-sort="name">Corporation<span class="sort-arrow"></span></th><th class="r" data-sort="mcap">Market Cap<span class="sort-arrow"></span></th><th class="td-bar-cell"></th><th data-sort="fo">Family/FO<span class="sort-arrow"></span></th><th class="r" data-sort="nw">Net Worth<span class="sort-arrow"></span></th><th>Business</th>
+      <th data-sort="region">Region<span class="sort-arrow"></span></th><th data-sort="fo">Family/FO<span class="sort-arrow"></span></th><th class="r" data-sort="nw">Net Worth<span class="sort-arrow"></span></th><th data-sort="name">Corporation<span class="sort-arrow"></span></th><th class="r" data-sort="mcap">Market Cap<span class="sort-arrow"></span></th><th>Business</th>
     </tr></thead>
     <tbody>
-      <tr data-region="HK" data-name="Alibaba Group" data-mcap="330" data-nw="12"><td class="td-region"><span class="td-flag">🇭🇰</span> HK</td><td class="td-corp">Alibaba Group</td><td class="td-val">$330B</td><td class="td-bar-cell"><div class="td-bar-wrap"><div class="td-bar" style="width:100%"></div></div></td><td class="td-fo">Blue Pool Capital</td><td class="td-nw">$12B</td><td class="td-biz">E-commerce · Cloud · Fintech</td></tr>
-      <tr data-region="JPN" data-name="SoftBank Group" data-mcap="130" data-nw="55"><td class="td-region"><span class="td-flag">🇯🇵</span> JPN</td><td class="td-corp">SoftBank Group</td><td class="td-val">$130B</td><td class="td-bar-cell"><div class="td-bar-wrap"><div class="td-bar" style="width:39%"></div></div></td><td class="td-fo">SoftBank Vision Fund</td><td class="td-nw">$55B+</td><td class="td-biz">Tech Investment · ARM Holdings</td></tr>
-      <tr data-region="THA" data-name="CP Group" data-mcap="85" data-nw="53"><td class="td-region"><span class="td-flag">🇹🇭</span> THA</td><td class="td-corp">CP Group</td><td class="td-val">$85B</td><td class="td-bar-cell"><div class="td-bar-wrap"><div class="td-bar" style="width:25.8%"></div></div></td><td class="td-fo">Chearavanont Family</td><td class="td-nw">$53B</td><td class="td-biz">Agri-food · Retail · Telecom</td></tr>
-      <tr data-region="HK" data-name="Sun Hung Kai Properties" data-mcap="33" data-nw="35.6"><td class="td-region"><span class="td-flag">🇭🇰</span> HK</td><td class="td-corp">Sun Hung Kai Properties</td><td class="td-val">$33B</td><td class="td-bar-cell"><div class="td-bar-wrap"><div class="td-bar" style="width:10%"></div></div></td><td class="td-fo">Kwok Family</td><td class="td-nw">$35.6B</td><td class="td-biz">Property · Infrastructure · Telecom</td></tr>
-      <tr data-region="HK" data-name="CITIC Limited" data-mcap="30" data-nw="2.9"><td class="td-region"><span class="td-flag">🇭🇰</span> HK</td><td class="td-corp">CITIC Limited</td><td class="td-val">$30B</td><td class="td-bar-cell"><div class="td-bar-wrap"><div class="td-bar" style="width:15%"></div></div></td><td class="td-fo">Yung Family</td><td class="td-nw">$2.9B</td><td class="td-biz">Financial Services · Resources</td></tr>
-      <tr data-region="CHN" data-name="SF Holdings" data-mcap="25" data-nw="16"><td class="td-region"><span class="td-flag">🇨🇳</span> CHN</td><td class="td-corp">SF Holdings</td><td class="td-val">$25B</td><td class="td-bar-cell"><div class="td-bar-wrap"><div class="td-bar" style="width:12.5%"></div></div></td><td class="td-fo">Wang Family</td><td class="td-nw">$16B</td><td class="td-biz">Express Delivery · Logistics</td></tr>
-      <tr data-region="THA" data-name="CP ALL" data-mcap="22" data-nw="0"><td class="td-region"><span class="td-flag">🇹🇭</span> THA</td><td class="td-corp">CP ALL</td><td class="td-val">$22B</td><td class="td-bar-cell"><div class="td-bar-wrap"><div class="td-bar" style="width:11%"></div></div></td><td class="td-fo">Chearavanont Family</td><td class="td-nw">—</td><td class="td-biz">Convenience Stores (14,000+ 7-Eleven)</td></tr>
-      <tr data-region="HK" data-name="CLP Holdings" data-mcap="23" data-nw="17"><td class="td-region"><span class="td-flag">🇭🇰</span> HK</td><td class="td-corp">CLP Holdings</td><td class="td-val">$23B</td><td class="td-bar-cell"><div class="td-bar-wrap"><div class="td-bar" style="width:7%"></div></div></td><td class="td-fo">Kadoorie Family</td><td class="td-nw">$17B</td><td class="td-biz">Power Generation · Distribution</td></tr>
-      <tr data-region="HK" data-name="YunFeng Capital" data-mcap="15" data-nw="0"><td class="td-region"><span class="td-flag">🇭🇰</span> HK</td><td class="td-corp">YunFeng Capital</td><td class="td-val">$15B</td><td class="td-bar-cell"><div class="td-bar-wrap"><div class="td-bar" style="width:7.5%"></div></div></td><td class="td-fo">YunFeng Capital</td><td class="td-nw">—</td><td class="td-biz">Private Equity (AUM)</td></tr>
-      <tr data-region="MYS" data-name="Wilmar International" data-mcap="15" data-nw="14"><td class="td-region"><span class="td-flag">🇲🇾</span> MYS</td><td class="td-corp">Wilmar International</td><td class="td-val">$15B</td><td class="td-bar-cell"><div class="td-bar-wrap"><div class="td-bar" style="width:4.5%"></div></div></td><td class="td-fo">Kuok Family</td><td class="td-nw">$14B</td><td class="td-biz">Palm Oil · Agribusiness</td></tr>
-      <tr data-region="CHN" data-name="New Hope Group" data-mcap="15" data-nw="8"><td class="td-region"><span class="td-flag">🇨🇳</span> CHN</td><td class="td-corp">New Hope Group</td><td class="td-val">$15B</td><td class="td-bar-cell"><div class="td-bar-wrap"><div class="td-bar" style="width:7.5%"></div></div></td><td class="td-fo">Liu Family</td><td class="td-nw">$8B</td><td class="td-biz">Agriculture · Dairy · Finance</td></tr>
-      <tr data-region="JPN" data-name="Nexon" data-mcap="15" data-nw="10"><td class="td-region"><span class="td-flag">🇯🇵</span> JPN</td><td class="td-corp">Nexon</td><td class="td-val">$15B</td><td class="td-bar-cell"><div class="td-bar-wrap"><div class="td-bar" style="width:7.5%"></div></div></td><td class="td-fo">Kim Family (Nexon)</td><td class="td-nw">$10B</td><td class="td-biz">Online Gaming (MapleStory)</td></tr>
-      <tr data-region="KOR" data-name="Hanwha Corporation" data-mcap="15" data-nw="5"><td class="td-region"><span class="td-flag">🇰🇷</span> KOR</td><td class="td-corp">Hanwha Corporation</td><td class="td-val">$15B</td><td class="td-bar-cell"><div class="td-bar-wrap"><div class="td-bar" style="width:7.5%"></div></div></td><td class="td-fo">Hanwha Family Office</td><td class="td-nw">$5B</td><td class="td-biz">Defense · Energy · Finance</td></tr>
-      <tr data-region="HK" data-name="Chow Tai Fook Jewellery" data-mcap="15" data-nw="19.5"><td class="td-region"><span class="td-flag">🇭🇰</span> HK</td><td class="td-corp">Chow Tai Fook Jewellery</td><td class="td-val">$15B</td><td class="td-bar-cell"><div class="td-bar-wrap"><div class="td-bar" style="width:4.5%"></div></div></td><td class="td-fo">Cheng Family</td><td class="td-nw">$19.5B</td><td class="td-biz">Jewelry Retail (World's Largest)</td></tr>
-      <tr data-region="HK" data-name="SenseTime" data-mcap="10" data-nw="0"><td class="td-region"><span class="td-flag">🇭🇰</span> HK</td><td class="td-corp">SenseTime</td><td class="td-val">$10B</td><td class="td-bar-cell"><div class="td-bar-wrap"><div class="td-bar" style="width:5%"></div></div></td><td class="td-fo">Cheng Family / C Capital</td><td class="td-nw">—</td><td class="td-biz">AI · Computer Vision · Smart City</td></tr>
-      <tr data-region="HK" data-name="FWD Group" data-mcap="10" data-nw="6.1"><td class="td-region"><span class="td-flag">🇭🇰</span> HK</td><td class="td-corp">FWD Group</td><td class="td-val">$10B</td><td class="td-bar-cell"><div class="td-bar-wrap"><div class="td-bar" style="width:5%"></div></div></td><td class="td-fo">Pacific Century Group</td><td class="td-nw">$6.1B</td><td class="td-biz">Pan-Asian Insurance</td></tr>
-      <tr data-region="THA" data-name="True Corporation" data-mcap="10" data-nw="0"><td class="td-region"><span class="td-flag">🇹🇭</span> THA</td><td class="td-corp">True Corporation</td><td class="td-val">$10B</td><td class="td-bar-cell"><div class="td-bar-wrap"><div class="td-bar" style="width:5%"></div></div></td><td class="td-fo">Chearavanont Family</td><td class="td-nw">—</td><td class="td-biz">Telecom (52M+ Subscribers)</td></tr>
-      <tr data-region="HK" data-name="Kerry Properties" data-mcap="4.4" data-nw="14"><td class="td-region"><span class="td-flag">🇭🇰</span> HK</td><td class="td-corp">Kerry Properties</td><td class="td-val">$4.4B</td><td class="td-bar-cell"><div class="td-bar-wrap"><div class="td-bar" style="width:1.3%"></div></div></td><td class="td-fo">Kuok Family</td><td class="td-nw">$14B</td><td class="td-biz">Property Development</td></tr>
-      <tr data-region="PHL" data-name="Aboitiz Equity Ventures" data-mcap="8" data-nw="5"><td class="td-region"><span class="td-flag">🇵🇭</span> PHL</td><td class="td-corp">Aboitiz Equity Ventures</td><td class="td-val">$8B</td><td class="td-bar-cell"><div class="td-bar-wrap"><div class="td-bar" style="width:4%"></div></div></td><td class="td-fo">Aboitiz Family</td><td class="td-nw">$5B</td><td class="td-biz">Power Generation · Banking</td></tr>
-      <tr data-region="PHL" data-name="Ayala Corporation" data-mcap="8" data-nw="4"><td class="td-region"><span class="td-flag">🇵🇭</span> PHL</td><td class="td-corp">Ayala Corporation</td><td class="td-val">$8B</td><td class="td-bar-cell"><div class="td-bar-wrap"><div class="td-bar" style="width:4%"></div></div></td><td class="td-fo">Zobel de Ayala Family</td><td class="td-nw">$4B+</td><td class="td-biz">Banking · Telecom · Property</td></tr>
-      <tr data-region="PHL" data-name="JG Summit Holdings" data-mcap="8" data-nw="4"><td class="td-region"><span class="td-flag">🇵🇭</span> PHL</td><td class="td-corp">JG Summit Holdings</td><td class="td-val">$8B</td><td class="td-bar-cell"><div class="td-bar-wrap"><div class="td-bar" style="width:4%"></div></div></td><td class="td-fo">Gokongwei Family</td><td class="td-nw">$4B</td><td class="td-biz">Airlines · Food · Property</td></tr>
-      <tr data-region="HK" data-name="PCCW" data-mcap="7" data-nw="6.1"><td class="td-region"><span class="td-flag">🇭🇰</span> HK</td><td class="td-corp">PCCW / HKT</td><td class="td-val">$7B</td><td class="td-bar-cell"><div class="td-bar-wrap"><div class="td-bar" style="width:3.5%"></div></div></td><td class="td-fo">Pacific Century Group</td><td class="td-nw">$6.1B</td><td class="td-biz">Telecom · Media · IT Solutions</td></tr>
-      <tr data-region="HK" data-name="Animoca Brands" data-mcap="6" data-nw="0.5"><td class="td-region"><span class="td-flag">🇭🇰</span> HK</td><td class="td-corp">Animoca Brands</td><td class="td-val">$6B</td><td class="td-bar-cell"><div class="td-bar-wrap"><div class="td-bar" style="width:3%"></div></div></td><td class="td-fo">Outblaze</td><td class="td-nw">$0.5B+</td><td class="td-biz">Blockchain Gaming · Web3</td></tr>
-      <tr data-region="HK" data-name="Shangri-La Asia" data-mcap="2.2" data-nw="14"><td class="td-region"><span class="td-flag">🇭🇰</span> HK</td><td class="td-corp">Shangri-La Asia</td><td class="td-val">$2.2B</td><td class="td-bar-cell"><div class="td-bar-wrap"><div class="td-bar" style="width:0.7%"></div></div></td><td class="td-fo">Kuok Family</td><td class="td-nw">$14B</td><td class="td-biz">Luxury Hotels (100+ Worldwide)</td></tr>
-      <tr data-region="HK" data-name="Lee Kum Kee" data-mcap="5" data-nw="5"><td class="td-region"><span class="td-flag">🇭🇰</span> HK</td><td class="td-corp">Lee Kum Kee</td><td class="td-val">$5B+</td><td class="td-bar-cell"><div class="td-bar-wrap"><div class="td-bar" style="width:2.5%"></div></div></td><td class="td-fo">Lee Kum Kee Family</td><td class="td-nw">$5B</td><td class="td-biz">Condiments · Health Products</td></tr>
-      <tr data-region="HK" data-name="Nan Fung Group" data-mcap="5" data-nw="8"><td class="td-region"><span class="td-flag">🇭🇰</span> HK</td><td class="td-corp">Nan Fung Group</td><td class="td-val">$5B+</td><td class="td-bar-cell"><div class="td-bar-wrap"><div class="td-bar" style="width:2.5%"></div></div></td><td class="td-fo">Chen Family</td><td class="td-nw">$8B</td><td class="td-biz">Property · Life Sciences</td></tr>
-      <tr data-region="HK" data-name="The Peninsula Hotels" data-mcap="1.3" data-nw="17"><td class="td-region"><span class="td-flag">🇭🇰</span> HK</td><td class="td-corp">The Peninsula Hotels</td><td class="td-val">$1.3B</td><td class="td-bar-cell"><div class="td-bar-wrap"><div class="td-bar" style="width:0.4%"></div></div></td><td class="td-fo">Kadoorie Family</td><td class="td-nw">$17B</td><td class="td-biz">Ultra-Luxury Hotels</td></tr>
-      <tr data-region="AUS" data-name="Gandel Group" data-mcap="5" data-nw="5"><td class="td-region"><span class="td-flag">🇦🇺</span> AUS</td><td class="td-corp">Gandel Group</td><td class="td-val">$5B+</td><td class="td-bar-cell"><div class="td-bar-wrap"><div class="td-bar" style="width:2.5%"></div></div></td><td class="td-fo">Gandel Family</td><td class="td-nw">$5B+</td><td class="td-biz">Property · Shopping Centres</td></tr>
-      <tr data-region="KOR" data-name="SeAH Group" data-mcap="3" data-nw="3"><td class="td-region"><span class="td-flag">🇰🇷</span> KOR</td><td class="td-corp">SeAH Group</td><td class="td-val">$3B+</td><td class="td-bar-cell"><div class="td-bar-wrap"><div class="td-bar" style="width:1.5%"></div></div></td><td class="td-fo">Iron Grey Family Office</td><td class="td-nw">$3B</td><td class="td-biz">Steel · Industrial Materials</td></tr>
-      <tr data-region="HK" data-name="Great Eagle" data-mcap="1.5" data-nw="3.7"><td class="td-region"><span class="td-flag">🇭🇰</span> HK</td><td class="td-corp">Great Eagle / Langham</td><td class="td-val">$1.5B</td><td class="td-bar-cell"><div class="td-bar-wrap"><div class="td-bar" style="width:0.5%"></div></div></td><td class="td-fo">Lo Family</td><td class="td-nw">$3.7B</td><td class="td-biz">Property · Luxury Hotels</td></tr>
-      <tr data-region="HK" data-name="Jebsen Group" data-mcap="2" data-nw="4"><td class="td-region"><span class="td-flag">🇭🇰</span> HK</td><td class="td-corp">Jebsen Group</td><td class="td-val">$2B+</td><td class="td-bar-cell"><div class="td-bar-wrap"><div class="td-bar" style="width:1%"></div></div></td><td class="td-fo">Jebsen Family</td><td class="td-nw">$4B</td><td class="td-biz">Consumer Goods · Distribution</td></tr>
-      <tr data-region="HK" data-name="Emperor Group" data-mcap="2" data-nw="4"><td class="td-region"><span class="td-flag">🇭🇰</span> HK</td><td class="td-corp">Emperor Group</td><td class="td-val">$2B</td><td class="td-bar-cell"><div class="td-bar-wrap"><div class="td-bar" style="width:1%"></div></div></td><td class="td-fo">Yeung Family</td><td class="td-nw">$4B</td><td class="td-biz">Entertainment · Hotels · Jewelry</td></tr>
-      <tr data-region="HK" data-name="New World Development" data-mcap="3.4" data-nw="19.5"><td class="td-region"><span class="td-flag">🇭🇰</span> HK</td><td class="td-corp">New World Development</td><td class="td-val">$3.4B</td><td class="td-bar-cell"><div class="td-bar-wrap"><div class="td-bar" style="width:1%"></div></div></td><td class="td-fo">Cheng Family</td><td class="td-nw">$19.5B</td><td class="td-biz">Property · K11 Luxury Malls</td></tr>
-      <tr data-region="HK" data-name="Shui On Land" data-mcap="1" data-nw="4"><td class="td-region"><span class="td-flag">🇭🇰</span> HK</td><td class="td-corp">Shui On Land</td><td class="td-val">$1B</td><td class="td-bar-cell"><div class="td-bar-wrap"><div class="td-bar" style="width:0.5%"></div></div></td><td class="td-fo">Shui On Group</td><td class="td-nw">$4B</td><td class="td-biz">Premium Property (Xintiandi)</td></tr>
-      <tr data-region="HK" data-name="Chuangs Consortium" data-mcap="0.5" data-nw="3"><td class="td-region"><span class="td-flag">🇭🇰</span> HK</td><td class="td-corp">Chuangs Consortium</td><td class="td-val">$0.5B</td><td class="td-bar-cell"><div class="td-bar-wrap"><div class="td-bar" style="width:0.25%"></div></div></td><td class="td-fo">Chuang Family</td><td class="td-nw">$3B</td><td class="td-biz">Property · Trading</td></tr>
-      <tr data-region="KSA" data-name="Abdul Latif Jameel" data-mcap="10" data-nw="20"><td class="td-region"><span class="td-flag">🇸🇦</span> KSA</td><td class="td-corp">Abdul Latif Jameel</td><td class="td-val">$10B+</td><td class="td-bar-cell"><div class="td-bar-wrap"><div class="td-bar" style="width:3%"></div></div></td><td class="td-fo">Jameel Family</td><td class="td-nw">$20B+</td><td class="td-biz">Automotive · Energy · Finance</td></tr>
-      <tr data-region="UAE" data-name="Al Ghurair Group" data-mcap="5" data-nw="5"><td class="td-region"><span class="td-flag">🇦🇪</span> UAE</td><td class="td-corp">Al Ghurair Group</td><td class="td-val">$5B+</td><td class="td-bar-cell"><div class="td-bar-wrap"><div class="td-bar" style="width:1.5%"></div></div></td><td class="td-fo">Al Ghurair Family</td><td class="td-nw">$5B+</td><td class="td-biz">Food · Construction · Resources</td></tr>
-      <tr data-region="UAE" data-name="Al Tayer Group" data-mcap="3" data-nw="3"><td class="td-region"><span class="td-flag">🇦🇪</span> UAE</td><td class="td-corp">Al Tayer Group</td><td class="td-val">$3B+</td><td class="td-bar-cell"><div class="td-bar-wrap"><div class="td-bar" style="width:0.9%"></div></div></td><td class="td-fo">Al Tayer Family</td><td class="td-nw">$3B+</td><td class="td-biz">Luxury Retail · Automotive</td></tr>
-      <tr data-region="BHR" data-name="Kanoo Group" data-mcap="3" data-nw="3"><td class="td-region"><span class="td-flag">🇧🇭</span> BHR</td><td class="td-corp">Kanoo Group</td><td class="td-val">$3B+</td><td class="td-bar-cell"><div class="td-bar-wrap"><div class="td-bar" style="width:0.9%"></div></div></td><td class="td-fo">Kanoo Family</td><td class="td-nw">$3B+</td><td class="td-biz">Industrial · Logistics · Travel</td></tr>
-      <tr data-region="UAE" data-name="Abu Dhabi Capital Group" data-mcap="2" data-nw="2"><td class="td-region"><span class="td-flag">🇦🇪</span> UAE</td><td class="td-corp">Abu Dhabi Capital Group</td><td class="td-val">$2B+</td><td class="td-bar-cell"><div class="td-bar-wrap"><div class="td-bar" style="width:0.6%"></div></div></td><td class="td-fo">Royal Family Holding</td><td class="td-nw">$2B+</td><td class="td-biz">Multi-Asset Investment</td></tr>
-      <tr data-region="UAE" data-name="Ali & Sons" data-mcap="1" data-nw="1"><td class="td-region"><span class="td-flag">🇦🇪</span> UAE</td><td class="td-corp">Ali &amp; Sons</td><td class="td-val">$1B+</td><td class="td-bar-cell"><div class="td-bar-wrap"><div class="td-bar" style="width:0.3%"></div></div></td><td class="td-fo">Al Dhaheri Family</td><td class="td-nw">$1B+</td><td class="td-biz">Multi-Asset · Venture · PE</td></tr>
-      <tr data-region="KSA" data-name="Al Rashed Global" data-mcap="1" data-nw="1"><td class="td-region"><span class="td-flag">🇸🇦</span> KSA</td><td class="td-corp">Al Rashed Global</td><td class="td-val">$1B+</td><td class="td-bar-cell"><div class="td-bar-wrap"><div class="td-bar" style="width:0.3%"></div></div></td><td class="td-fo">Al Rashed Family</td><td class="td-nw">$1B+</td><td class="td-biz">Family Holdings · Private Markets</td></tr>
-      <tr data-region="UAE" data-name="Equalis Capital" data-mcap="0.5" data-nw="0.5"><td class="td-region"><span class="td-flag">🇦🇪</span> UAE</td><td class="td-corp">Equalis Capital</td><td class="td-val">—</td><td class="td-bar-cell"><div class="td-bar-wrap"><div class="td-bar" style="width:0.15%"></div></div></td><td class="td-fo">Al Otaiba Family Office</td><td class="td-nw">—</td><td class="td-biz">Multi-Asset · Tech · Venture</td></tr>
-      <tr data-region="UAE" data-name="KBW Ventures" data-mcap="0.5" data-nw="0.5"><td class="td-region"><span class="td-flag">🇦🇪</span> UAE</td><td class="td-corp">KBW Ventures</td><td class="td-val">—</td><td class="td-bar-cell"><div class="td-bar-wrap"><div class="td-bar" style="width:0.15%"></div></div></td><td class="td-fo">Prince Khalid bin Waleed</td><td class="td-nw">—</td><td class="td-biz">Growth · Ventures · AI</td></tr>
-      <tr data-region="UAE" data-name="Whitegate Capital" data-mcap="0.5" data-nw="0.5"><td class="td-region"><span class="td-flag">🇦🇪</span> UAE</td><td class="td-corp">Whitegate Capital</td><td class="td-val">—</td><td class="td-bar-cell"><div class="td-bar-wrap"><div class="td-bar" style="width:0.15%"></div></div></td><td class="td-fo">Single Family Office</td><td class="td-nw">—</td><td class="td-biz">AI · Venture · Direct Investments</td></tr>
-      <tr data-region="UAE" data-name="Blu Stone Management" data-mcap="0.1" data-nw="0.1"><td class="td-region"><span class="td-flag">🇦🇪</span> UAE</td><td class="td-corp">Blu Stone Management</td><td class="td-val">—</td><td class="td-bar-cell"><div class="td-bar-wrap"><div class="td-bar" style="width:0.15%"></div></div></td><td class="td-fo">DIFC Family Office</td><td class="td-nw">$100M+</td><td class="td-biz">Venture · Tech · Funds</td></tr>
-      <tr data-region="UAE" data-name="Al Masar Investments" data-mcap="0.1" data-nw="0.1"><td class="td-region"><span class="td-flag">🇦🇪</span> UAE</td><td class="td-corp">Al Masar Investments</td><td class="td-val">—</td><td class="td-bar-cell"><div class="td-bar-wrap"><div class="td-bar" style="width:0.15%"></div></div></td><td class="td-fo">Single Family Office</td><td class="td-nw">—</td><td class="td-biz">Multi-Asset · Private Markets</td></tr>
-      <tr data-region="UAE" data-name="Atlas MENA Capital" data-mcap="0.1" data-nw="0.1"><td class="td-region"><span class="td-flag">🇦🇪</span> UAE</td><td class="td-corp">Atlas MENA Capital</td><td class="td-val">—</td><td class="td-bar-cell"><div class="td-bar-wrap"><div class="td-bar" style="width:0.15%"></div></div></td><td class="td-fo">Family Office</td><td class="td-nw">—</td><td class="td-biz">Crypto VC · Venture Funds</td></tr>
-      <tr data-region="SGP" data-name="Golden Alpha" data-mcap="0.1" data-nw="0.1"><td class="td-region"><span class="td-flag">🇸🇬</span> SGP</td><td class="td-corp">Golden Alpha</td><td class="td-val">—</td><td class="td-bar-cell"><div class="td-bar-wrap"><div class="td-bar" style="width:0.15%"></div></div></td><td class="td-fo">3rd Gen Family Office</td><td class="td-nw">—</td><td class="td-biz">Multi-Asset Investment</td></tr>
-      <tr data-region="UAE" data-name="Crescent Group" data-mcap="0.5" data-nw="0.5"><td class="td-region"><span class="td-flag">🇦🇪</span> UAE</td><td class="td-corp">Crescent Group</td><td class="td-val">—</td><td class="td-bar-cell"><div class="td-bar-wrap"><div class="td-bar" style="width:0.15%"></div></div></td><td class="td-fo">Prominent UAE Family</td><td class="td-nw">—</td><td class="td-biz">Family Office · Diversified</td></tr>
-      <tr data-region="UAE" data-name="SantoCedrus Capital" data-mcap="0.1" data-nw="0.1"><td class="td-region"><span class="td-flag">🇦🇪</span> UAE</td><td class="td-corp">SantoCedrus Capital</td><td class="td-val">—</td><td class="td-bar-cell"><div class="td-bar-wrap"><div class="td-bar" style="width:0.15%"></div></div></td><td class="td-fo">Family Office</td><td class="td-nw">—</td><td class="td-biz">Family Office · Investments</td></tr>
-      <tr data-region="UAE" data-name="KF Inc" data-mcap="0.1" data-nw="0.1"><td class="td-region"><span class="td-flag">🇦🇪</span> UAE</td><td class="td-corp">KF Inc</td><td class="td-val">—</td><td class="td-bar-cell"><div class="td-bar-wrap"><div class="td-bar" style="width:0.15%"></div></div></td><td class="td-fo">Family Office</td><td class="td-nw">—</td><td class="td-biz">Family Office · Investments</td></tr>
-      <tr data-region="UAE" data-name="Purple Capital Group" data-mcap="0.1" data-nw="0.1"><td class="td-region"><span class="td-flag">🇦🇪</span> UAE</td><td class="td-corp">Purple Capital Group</td><td class="td-val">—</td><td class="td-bar-cell"><div class="td-bar-wrap"><div class="td-bar" style="width:0.15%"></div></div></td><td class="td-fo">Family Office</td><td class="td-nw">—</td><td class="td-biz">Family Office · MENA</td></tr>
-      <tr data-region="UAE" data-name="Miras MFO" data-mcap="0.1" data-nw="0.1"><td class="td-region"><span class="td-flag">🇦🇪</span> UAE</td><td class="td-corp">Miras MFO</td><td class="td-val">—</td><td class="td-bar-cell"><div class="td-bar-wrap"><div class="td-bar" style="width:0.15%"></div></div></td><td class="td-fo">Multi-Family Office</td><td class="td-nw">—</td><td class="td-biz">Multi-Family Office</td></tr>
-      <tr data-region="UAE" data-name="Patrimonium MFO" data-mcap="0.1" data-nw="0.1"><td class="td-region"><span class="td-flag">🇦🇪</span> UAE</td><td class="td-corp">Patrimonium MFO</td><td class="td-val">—</td><td class="td-bar-cell"><div class="td-bar-wrap"><div class="td-bar" style="width:0.15%"></div></div></td><td class="td-fo">Multi-Family Office</td><td class="td-nw">—</td><td class="td-biz">Multi-Family Office · UAE</td></tr>
+      <tr data-region="HK" data-name="Alibaba Group" data-mcap="330" data-nw="12"><td class="td-region"><span class="td-flag">🇭🇰</span> HK</td><td class="td-fo">Blue Pool Capital</td><td class="td-nw">$12B</td><td class="td-corp">Alibaba Group</td><td class="td-val">$330B</td><td class="td-biz">E-commerce · Cloud · Fintech</td></tr>
+      <tr data-region="JPN" data-name="SoftBank Group" data-mcap="130" data-nw="55"><td class="td-region"><span class="td-flag">🇯🇵</span> JPN</td><td class="td-fo">SoftBank Vision Fund</td><td class="td-nw">$55B+</td><td class="td-corp">SoftBank Group</td><td class="td-val">$130B</td><td class="td-biz">Tech Investment · ARM Holdings</td></tr>
+      <tr data-region="THA" data-name="CP Group" data-mcap="85" data-nw="53"><td class="td-region"><span class="td-flag">🇹🇭</span> THA</td><td class="td-fo">Chearavanont Family</td><td class="td-nw">$53B</td><td class="td-corp">CP Group</td><td class="td-val">$85B</td><td class="td-biz">Agri-food · Retail · Telecom</td></tr>
+      <tr data-region="HK" data-name="Sun Hung Kai Properties" data-mcap="33" data-nw="35.6"><td class="td-region"><span class="td-flag">🇭🇰</span> HK</td><td class="td-fo">Kwok Family</td><td class="td-nw">$35.6B</td><td class="td-corp">Sun Hung Kai Properties</td><td class="td-val">$33B</td><td class="td-biz">Property · Infrastructure · Telecom</td></tr>
+      <tr data-region="HK" data-name="CITIC Limited" data-mcap="30" data-nw="2.9"><td class="td-region"><span class="td-flag">🇭🇰</span> HK</td><td class="td-fo">Yung Family</td><td class="td-nw">$2.9B</td><td class="td-corp">CITIC Limited</td><td class="td-val">$30B</td><td class="td-biz">Financial Services · Resources</td></tr>
+      <tr data-region="CHN" data-name="SF Holdings" data-mcap="25" data-nw="16"><td class="td-region"><span class="td-flag">🇨🇳</span> CHN</td><td class="td-fo">Wang Family</td><td class="td-nw">$16B</td><td class="td-corp">SF Holdings</td><td class="td-val">$25B</td><td class="td-biz">Express Delivery · Logistics</td></tr>
+      <tr data-region="THA" data-name="CP ALL" data-mcap="22" data-nw="0"><td class="td-region"><span class="td-flag">🇹🇭</span> THA</td><td class="td-fo">Chearavanont Family</td><td class="td-nw">—</td><td class="td-corp">CP ALL</td><td class="td-val">$22B</td><td class="td-biz">Convenience Stores (14,000+ 7-Eleven)</td></tr>
+      <tr data-region="HK" data-name="CLP Holdings" data-mcap="23" data-nw="17"><td class="td-region"><span class="td-flag">🇭🇰</span> HK</td><td class="td-fo">Kadoorie Family</td><td class="td-nw">$17B</td><td class="td-corp">CLP Holdings</td><td class="td-val">$23B</td><td class="td-biz">Power Generation · Distribution</td></tr>
+      <tr data-region="HK" data-name="YunFeng Capital" data-mcap="15" data-nw="0"><td class="td-region"><span class="td-flag">🇭🇰</span> HK</td><td class="td-fo">YunFeng Capital</td><td class="td-nw">—</td><td class="td-corp">YunFeng Capital</td><td class="td-val">$15B</td><td class="td-biz">Private Equity (AUM)</td></tr>
+      <tr data-region="MYS" data-name="Wilmar International" data-mcap="15" data-nw="14"><td class="td-region"><span class="td-flag">🇲🇾</span> MYS</td><td class="td-fo">Kuok Family</td><td class="td-nw">$14B</td><td class="td-corp">Wilmar International</td><td class="td-val">$15B</td><td class="td-biz">Palm Oil · Agribusiness</td></tr>
+      <tr data-region="CHN" data-name="New Hope Group" data-mcap="15" data-nw="8"><td class="td-region"><span class="td-flag">🇨🇳</span> CHN</td><td class="td-fo">Liu Family</td><td class="td-nw">$8B</td><td class="td-corp">New Hope Group</td><td class="td-val">$15B</td><td class="td-biz">Agriculture · Dairy · Finance</td></tr>
+      <tr data-region="JPN" data-name="Nexon" data-mcap="15" data-nw="10"><td class="td-region"><span class="td-flag">🇯🇵</span> JPN</td><td class="td-fo">Kim Family (Nexon)</td><td class="td-nw">$10B</td><td class="td-corp">Nexon</td><td class="td-val">$15B</td><td class="td-biz">Online Gaming (MapleStory)</td></tr>
+      <tr data-region="KOR" data-name="Hanwha Corporation" data-mcap="15" data-nw="5"><td class="td-region"><span class="td-flag">🇰🇷</span> KOR</td><td class="td-fo">Hanwha Family Office</td><td class="td-nw">$5B</td><td class="td-corp">Hanwha Corporation</td><td class="td-val">$15B</td><td class="td-biz">Defense · Energy · Finance</td></tr>
+      <tr data-region="HK" data-name="Chow Tai Fook Jewellery" data-mcap="15" data-nw="19.5"><td class="td-region"><span class="td-flag">🇭🇰</span> HK</td><td class="td-fo">Cheng Family</td><td class="td-nw">$19.5B</td><td class="td-corp">Chow Tai Fook Jewellery</td><td class="td-val">$15B</td><td class="td-biz">Jewelry Retail (World's Largest)</td></tr>
+      <tr data-region="HK" data-name="SenseTime" data-mcap="10" data-nw="0"><td class="td-region"><span class="td-flag">🇭🇰</span> HK</td><td class="td-fo">Cheng Family / C Capital</td><td class="td-nw">—</td><td class="td-corp">SenseTime</td><td class="td-val">$10B</td><td class="td-biz">AI · Computer Vision · Smart City</td></tr>
+      <tr data-region="HK" data-name="FWD Group" data-mcap="10" data-nw="6.1"><td class="td-region"><span class="td-flag">🇭🇰</span> HK</td><td class="td-fo">Pacific Century Group</td><td class="td-nw">$6.1B</td><td class="td-corp">FWD Group</td><td class="td-val">$10B</td><td class="td-biz">Pan-Asian Insurance</td></tr>
+      <tr data-region="THA" data-name="True Corporation" data-mcap="10" data-nw="0"><td class="td-region"><span class="td-flag">🇹🇭</span> THA</td><td class="td-fo">Chearavanont Family</td><td class="td-nw">—</td><td class="td-corp">True Corporation</td><td class="td-val">$10B</td><td class="td-biz">Telecom (52M+ Subscribers)</td></tr>
+      <tr data-region="HK" data-name="Kerry Properties" data-mcap="4.4" data-nw="14"><td class="td-region"><span class="td-flag">🇭🇰</span> HK</td><td class="td-fo">Kuok Family</td><td class="td-nw">$14B</td><td class="td-corp">Kerry Properties</td><td class="td-val">$4.4B</td><td class="td-biz">Property Development</td></tr>
+      <tr data-region="PHL" data-name="Aboitiz Equity Ventures" data-mcap="8" data-nw="5"><td class="td-region"><span class="td-flag">🇵🇭</span> PHL</td><td class="td-fo">Aboitiz Family</td><td class="td-nw">$5B</td><td class="td-corp">Aboitiz Equity Ventures</td><td class="td-val">$8B</td><td class="td-biz">Power Generation · Banking</td></tr>
+      <tr data-region="PHL" data-name="Ayala Corporation" data-mcap="8" data-nw="4"><td class="td-region"><span class="td-flag">🇵🇭</span> PHL</td><td class="td-fo">Zobel de Ayala Family</td><td class="td-nw">$4B+</td><td class="td-corp">Ayala Corporation</td><td class="td-val">$8B</td><td class="td-biz">Banking · Telecom · Property</td></tr>
+      <tr data-region="PHL" data-name="JG Summit Holdings" data-mcap="8" data-nw="4"><td class="td-region"><span class="td-flag">🇵🇭</span> PHL</td><td class="td-fo">Gokongwei Family</td><td class="td-nw">$4B</td><td class="td-corp">JG Summit Holdings</td><td class="td-val">$8B</td><td class="td-biz">Airlines · Food · Property</td></tr>
+      <tr data-region="HK" data-name="PCCW" data-mcap="7" data-nw="6.1"><td class="td-region"><span class="td-flag">🇭🇰</span> HK</td><td class="td-fo">Pacific Century Group</td><td class="td-nw">$6.1B</td><td class="td-corp">PCCW / HKT</td><td class="td-val">$7B</td><td class="td-biz">Telecom · Media · IT Solutions</td></tr>
+      <tr data-region="HK" data-name="Animoca Brands" data-mcap="6" data-nw="0.5"><td class="td-region"><span class="td-flag">🇭🇰</span> HK</td><td class="td-fo">Outblaze</td><td class="td-nw">$0.5B+</td><td class="td-corp">Animoca Brands</td><td class="td-val">$6B</td><td class="td-biz">Blockchain Gaming · Web3</td></tr>
+      <tr data-region="HK" data-name="Shangri-La Asia" data-mcap="2.2" data-nw="14"><td class="td-region"><span class="td-flag">🇭🇰</span> HK</td><td class="td-fo">Kuok Family</td><td class="td-nw">$14B</td><td class="td-corp">Shangri-La Asia</td><td class="td-val">$2.2B</td><td class="td-biz">Luxury Hotels (100+ Worldwide)</td></tr>
+      <tr data-region="HK" data-name="Lee Kum Kee" data-mcap="5" data-nw="5"><td class="td-region"><span class="td-flag">🇭🇰</span> HK</td><td class="td-fo">Lee Kum Kee Family</td><td class="td-nw">$5B</td><td class="td-corp">Lee Kum Kee</td><td class="td-val">$5B+</td><td class="td-biz">Condiments · Health Products</td></tr>
+      <tr data-region="HK" data-name="Nan Fung Group" data-mcap="5" data-nw="8"><td class="td-region"><span class="td-flag">🇭🇰</span> HK</td><td class="td-fo">Chen Family</td><td class="td-nw">$8B</td><td class="td-corp">Nan Fung Group</td><td class="td-val">$5B+</td><td class="td-biz">Property · Life Sciences</td></tr>
+      <tr data-region="HK" data-name="The Peninsula Hotels" data-mcap="1.3" data-nw="17"><td class="td-region"><span class="td-flag">🇭🇰</span> HK</td><td class="td-fo">Kadoorie Family</td><td class="td-nw">$17B</td><td class="td-corp">The Peninsula Hotels</td><td class="td-val">$1.3B</td><td class="td-biz">Ultra-Luxury Hotels</td></tr>
+      <tr data-region="AUS" data-name="Gandel Group" data-mcap="5" data-nw="5"><td class="td-region"><span class="td-flag">🇦🇺</span> AUS</td><td class="td-fo">Gandel Family</td><td class="td-nw">$5B+</td><td class="td-corp">Gandel Group</td><td class="td-val">$5B+</td><td class="td-biz">Property · Shopping Centres</td></tr>
+      <tr data-region="KOR" data-name="SeAH Group" data-mcap="3" data-nw="3"><td class="td-region"><span class="td-flag">🇰🇷</span> KOR</td><td class="td-fo">Iron Grey Family Office</td><td class="td-nw">$3B</td><td class="td-corp">SeAH Group</td><td class="td-val">$3B+</td><td class="td-biz">Steel · Industrial Materials</td></tr>
+      <tr data-region="HK" data-name="Great Eagle" data-mcap="1.5" data-nw="3.7"><td class="td-region"><span class="td-flag">🇭🇰</span> HK</td><td class="td-fo">Lo Family</td><td class="td-nw">$3.7B</td><td class="td-corp">Great Eagle / Langham</td><td class="td-val">$1.5B</td><td class="td-biz">Property · Luxury Hotels</td></tr>
+      <tr data-region="HK" data-name="Jebsen Group" data-mcap="2" data-nw="4"><td class="td-region"><span class="td-flag">🇭🇰</span> HK</td><td class="td-fo">Jebsen Family</td><td class="td-nw">$4B</td><td class="td-corp">Jebsen Group</td><td class="td-val">$2B+</td><td class="td-biz">Consumer Goods · Distribution</td></tr>
+      <tr data-region="HK" data-name="Emperor Group" data-mcap="2" data-nw="4"><td class="td-region"><span class="td-flag">🇭🇰</span> HK</td><td class="td-fo">Yeung Family</td><td class="td-nw">$4B</td><td class="td-corp">Emperor Group</td><td class="td-val">$2B</td><td class="td-biz">Entertainment · Hotels · Jewelry</td></tr>
+      <tr data-region="HK" data-name="New World Development" data-mcap="3.4" data-nw="19.5"><td class="td-region"><span class="td-flag">🇭🇰</span> HK</td><td class="td-fo">Cheng Family</td><td class="td-nw">$19.5B</td><td class="td-corp">New World Development</td><td class="td-val">$3.4B</td><td class="td-biz">Property · K11 Luxury Malls</td></tr>
+      <tr data-region="HK" data-name="Shui On Land" data-mcap="1" data-nw="4"><td class="td-region"><span class="td-flag">🇭🇰</span> HK</td><td class="td-fo">Shui On Group</td><td class="td-nw">$4B</td><td class="td-corp">Shui On Land</td><td class="td-val">$1B</td><td class="td-biz">Premium Property (Xintiandi)</td></tr>
+      <tr data-region="HK" data-name="Chuangs Consortium" data-mcap="0.5" data-nw="3"><td class="td-region"><span class="td-flag">🇭🇰</span> HK</td><td class="td-fo">Chuang Family</td><td class="td-nw">$3B</td><td class="td-corp">Chuangs Consortium</td><td class="td-val">$0.5B</td><td class="td-biz">Property · Trading</td></tr>
+      <tr data-region="KSA" data-name="Abdul Latif Jameel" data-mcap="10" data-nw="20"><td class="td-region"><span class="td-flag">🇸🇦</span> KSA</td><td class="td-fo">Jameel Family</td><td class="td-nw">$20B+</td><td class="td-corp">Abdul Latif Jameel</td><td class="td-val">$10B+</td><td class="td-biz">Automotive · Energy · Finance</td></tr>
+      <tr data-region="UAE" data-name="Al Ghurair Group" data-mcap="5" data-nw="5"><td class="td-region"><span class="td-flag">🇦🇪</span> UAE</td><td class="td-fo">Al Ghurair Family</td><td class="td-nw">$5B+</td><td class="td-corp">Al Ghurair Group</td><td class="td-val">$5B+</td><td class="td-biz">Food · Construction · Resources</td></tr>
+      <tr data-region="UAE" data-name="Al Tayer Group" data-mcap="3" data-nw="3"><td class="td-region"><span class="td-flag">🇦🇪</span> UAE</td><td class="td-fo">Al Tayer Family</td><td class="td-nw">$3B+</td><td class="td-corp">Al Tayer Group</td><td class="td-val">$3B+</td><td class="td-biz">Luxury Retail · Automotive</td></tr>
+      <tr data-region="BHR" data-name="Kanoo Group" data-mcap="3" data-nw="3"><td class="td-region"><span class="td-flag">🇧🇭</span> BHR</td><td class="td-fo">Kanoo Family</td><td class="td-nw">$3B+</td><td class="td-corp">Kanoo Group</td><td class="td-val">$3B+</td><td class="td-biz">Industrial · Logistics · Travel</td></tr>
+      <tr data-region="UAE" data-name="Abu Dhabi Capital Group" data-mcap="2" data-nw="2"><td class="td-region"><span class="td-flag">🇦🇪</span> UAE</td><td class="td-fo">Royal Family Holding</td><td class="td-nw">$2B+</td><td class="td-corp">Abu Dhabi Capital Group</td><td class="td-val">$2B+</td><td class="td-biz">Multi-Asset Investment</td></tr>
+      <tr data-region="UAE" data-name="Ali & Sons" data-mcap="1" data-nw="1"><td class="td-region"><span class="td-flag">🇦🇪</span> UAE</td><td class="td-fo">Al Dhaheri Family</td><td class="td-nw">$1B+</td><td class="td-corp">Ali &amp; Sons</td><td class="td-val">$1B+</td><td class="td-biz">Multi-Asset · Venture · PE</td></tr>
+      <tr data-region="KSA" data-name="Al Rashed Global" data-mcap="1" data-nw="1"><td class="td-region"><span class="td-flag">🇸🇦</span> KSA</td><td class="td-fo">Al Rashed Family</td><td class="td-nw">$1B+</td><td class="td-corp">Al Rashed Global</td><td class="td-val">$1B+</td><td class="td-biz">Family Holdings · Private Markets</td></tr>
+      <tr data-region="UAE" data-name="Equalis Capital" data-mcap="0.5" data-nw="0.5"><td class="td-region"><span class="td-flag">🇦🇪</span> UAE</td><td class="td-fo">Al Otaiba Family Office</td><td class="td-nw">—</td><td class="td-corp">Equalis Capital</td><td class="td-val">—</td><td class="td-biz">Multi-Asset · Tech · Venture</td></tr>
+      <tr data-region="UAE" data-name="KBW Ventures" data-mcap="0.5" data-nw="0.5"><td class="td-region"><span class="td-flag">🇦🇪</span> UAE</td><td class="td-fo">Prince Khalid bin Waleed</td><td class="td-nw">—</td><td class="td-corp">KBW Ventures</td><td class="td-val">—</td><td class="td-biz">Growth · Ventures · AI</td></tr>
+      <tr data-region="UAE" data-name="Whitegate Capital" data-mcap="0.5" data-nw="0.5"><td class="td-region"><span class="td-flag">🇦🇪</span> UAE</td><td class="td-fo">Single Family Office</td><td class="td-nw">—</td><td class="td-corp">Whitegate Capital</td><td class="td-val">—</td><td class="td-biz">AI · Venture · Direct Investments</td></tr>
+      <tr data-region="UAE" data-name="Blu Stone Management" data-mcap="0.1" data-nw="0.1"><td class="td-region"><span class="td-flag">🇦🇪</span> UAE</td><td class="td-fo">DIFC Family Office</td><td class="td-nw">$100M+</td><td class="td-corp">Blu Stone Management</td><td class="td-val">—</td><td class="td-biz">Venture · Tech · Funds</td></tr>
+      <tr data-region="UAE" data-name="Al Masar Investments" data-mcap="0.1" data-nw="0.1"><td class="td-region"><span class="td-flag">🇦🇪</span> UAE</td><td class="td-fo">Single Family Office</td><td class="td-nw">—</td><td class="td-corp">Al Masar Investments</td><td class="td-val">—</td><td class="td-biz">Multi-Asset · Private Markets</td></tr>
+      <tr data-region="UAE" data-name="Atlas MENA Capital" data-mcap="0.1" data-nw="0.1"><td class="td-region"><span class="td-flag">🇦🇪</span> UAE</td><td class="td-fo">Family Office</td><td class="td-nw">—</td><td class="td-corp">Atlas MENA Capital</td><td class="td-val">—</td><td class="td-biz">Crypto VC · Venture Funds</td></tr>
+      <tr data-region="SGP" data-name="Golden Alpha" data-mcap="0.1" data-nw="0.1"><td class="td-region"><span class="td-flag">🇸🇬</span> SGP</td><td class="td-fo">3rd Gen Family Office</td><td class="td-nw">—</td><td class="td-corp">Golden Alpha</td><td class="td-val">—</td><td class="td-biz">Multi-Asset Investment</td></tr>
+      <tr data-region="UAE" data-name="Crescent Group" data-mcap="0.5" data-nw="0.5"><td class="td-region"><span class="td-flag">🇦🇪</span> UAE</td><td class="td-fo">Prominent UAE Family</td><td class="td-nw">—</td><td class="td-corp">Crescent Group</td><td class="td-val">—</td><td class="td-biz">Family Office · Diversified</td></tr>
+      <tr data-region="UAE" data-name="SantoCedrus Capital" data-mcap="0.1" data-nw="0.1"><td class="td-region"><span class="td-flag">🇦🇪</span> UAE</td><td class="td-fo">Family Office</td><td class="td-nw">—</td><td class="td-corp">SantoCedrus Capital</td><td class="td-val">—</td><td class="td-biz">Family Office · Investments</td></tr>
+      <tr data-region="UAE" data-name="KF Inc" data-mcap="0.1" data-nw="0.1"><td class="td-region"><span class="td-flag">🇦🇪</span> UAE</td><td class="td-fo">Family Office</td><td class="td-nw">—</td><td class="td-corp">KF Inc</td><td class="td-val">—</td><td class="td-biz">Family Office · Investments</td></tr>
+      <tr data-region="UAE" data-name="Purple Capital Group" data-mcap="0.1" data-nw="0.1"><td class="td-region"><span class="td-flag">🇦🇪</span> UAE</td><td class="td-fo">Family Office</td><td class="td-nw">—</td><td class="td-corp">Purple Capital Group</td><td class="td-val">—</td><td class="td-biz">Family Office · MENA</td></tr>
+      <tr data-region="UAE" data-name="Miras MFO" data-mcap="0.1" data-nw="0.1"><td class="td-region"><span class="td-flag">🇦🇪</span> UAE</td><td class="td-fo">Multi-Family Office</td><td class="td-nw">—</td><td class="td-corp">Miras MFO</td><td class="td-val">—</td><td class="td-biz">Multi-Family Office</td></tr>
+      <tr data-region="UAE" data-name="Patrimonium MFO" data-mcap="0.1" data-nw="0.1"><td class="td-region"><span class="td-flag">🇦🇪</span> UAE</td><td class="td-fo">Multi-Family Office</td><td class="td-nw">—</td><td class="td-corp">Patrimonium MFO</td><td class="td-val">—</td><td class="td-biz">Multi-Family Office · UAE</td></tr>
     </tbody>
   </table></div></div>
 </div>
@@ -363,16 +353,6 @@ body{max-width:1152px;margin:0 auto;padding:0 24px;overflow-x:hidden;overflow-y:
     <div class="section-title">SOVEREIGN WEALTH & GOVERNMENT CAPITAL</div>
     <div class="section-meta">12 ENTITIES · $3.7T+ AUM</div>
     <div class="section-line-r"></div>
-  </div>
-
-  <div class="chip-bar">
-    <span>REGION</span>
-    <button class="chip active" onclick="filterRegion('tbl2',null,this)">All</button>
-    <button class="chip" onclick="filterRegion('tbl2','UAE',this)">🇦🇪 UAE</button>
-    <button class="chip" onclick="filterRegion('tbl2','KSA',this)">🇸🇦 KSA</button>
-    <button class="chip" onclick="filterRegion('tbl2','QAT',this)">🇶🇦 QAT</button>
-    <button class="chip" onclick="filterRegion('tbl2','KAZ',this)">🇰🇿 KAZ</button>
-    <button class="chip" onclick="filterRegion('tbl2','OMN',this)">🇴🇲 OMN</button>
   </div>
 
   <div class="tbl-wrap"><div class="tbl-scroll"><table class="tbl" id="tbl2">
@@ -402,7 +382,7 @@ body{max-width:1152px;margin:0 auto;padding:0 24px;overflow-x:hidden;overflow-y:
 /* ═══ NETWORK MAP ═══════════════════════════════════════════════════════ */
 (function(){
 const mapWrap=document.querySelector('.map-wrap');
-const W=1440,H=750;
+const W=1440,H=920;
 const sc=1;
 const FONT="system-ui,-apple-system,sans-serif";
 const BRAND="#F17E00",BG="#09090b",FG="#fafafa",MUTED="#a1a1aa",BORDER="#2e2e33";
@@ -489,7 +469,7 @@ const B=[
   {id:"gokongwei",label:"Gokongwei\nFamily",sub:"JG Summit Holdings",val:"$4B",vB:4,col:GREEN,lng:121.2,lat:14.3,flag:"🇵🇭",rn:"PHILIPPINES",corps:[{n:"JG Summit Holdings",v:"$8B"},{n:"Cebu Pacific, Universal Robina, Robinsons",v:"—"}]},
 ];
 
-const MAX_R=80,MIN_R=18,HOVER_R=74;
+const MAX_R=100,MIN_R=22,HOVER_R=90;
 const grpMax={};
 B.forEach(d=>{if(!grpMax[d.col]||d.vB>grpMax[d.col])grpMax[d.col]=d.vB;});
 B.forEach(d=>{d.r=MIN_R+Math.sqrt(d.vB/grpMax[d.col])*(MAX_R-MIN_R);});
@@ -602,8 +582,8 @@ function showPanel(d,svgX,svgY){
       el.select(".b-circle").attr("filter","url(#glowSm)")
         .transition().duration(HOVER_DUR).ease(EASE).attr("fill-opacity",0.55);
       el.select(".b-ring").transition().duration(HOVER_DUR).ease(EASE).attr("opacity",0.55);
-      /* make texts inside hovered bubble fully visible */
-      el.selectAll("text").transition().duration(HOVER_DUR).ease(EASE).attr("opacity",1);
+      /* make texts inside hovered bubble fully visible + white */
+      el.selectAll("text").transition().duration(HOVER_DUR).ease(EASE).attr("opacity",1).attr("fill","#ffffff");
       for(let ri=0;ri<3;ri++){
         el.append("circle").attr("class","ripple").attr("r",HOVER_R).attr("fill","none")
           .attr("stroke",n.col).attr("stroke-width",1.2-ri*0.3).attr("opacity",0)
@@ -628,6 +608,7 @@ function doHideInstant(){
     el.interrupt().attr("opacity",1).attr("transform",`translate(${n.x},${n.y}) scale(${n.r/HOVER_R})`);
     el.select(".b-halo").attr("opacity",0);
     el.select(".b-circle").attr("filter",null).attr("fill-opacity",0.27);
+    el.selectAll("text").attr("fill",n.col);
   });
   d3.selectAll(".b-ring").attr("opacity",0);d3.selectAll(".ripple").remove();ovl.selectAll("*").remove();
 }
@@ -640,6 +621,7 @@ function doHide(){
       .attr("opacity",1).attr("transform",`translate(${n.x},${n.y}) scale(${n.r/HOVER_R})`);
     el.select(".b-halo").transition().duration(HOVER_DUR).attr("opacity",0);
     el.select(".b-circle").attr("filter",null).transition().duration(HOVER_DUR).ease(EASE).attr("fill-opacity",0.27);
+    el.selectAll("text").transition().duration(HOVER_DUR).ease(EASE).attr("fill",n.col);
   });
   d3.selectAll(".b-ring").transition().duration(HOVER_DUR).attr("opacity",0);
   d3.selectAll(".ripple").remove();ovl.selectAll("*").remove();
@@ -950,6 +932,8 @@ function switchTab(secId,btn){
 function parseVal(s){if(!s||s==='—'||s==='0')return 0;return parseFloat(s)||0;}
 
 /* ── Region filter chips ── */
+const ASIA_REGIONS=new Set(['HK','CHN','JPN','KOR','THA','MYS','PHL','SGP','AUS','IDN','IND','TWN']);
+const ME_REGIONS=new Set(['UAE','KSA','QAT','BHR','OMN','KWT','KAZ','JOR','EGY']);
 function filterRegion(tableId,region,btn){
   const table=document.getElementById(tableId),
         rows=Array.from(table.querySelectorAll('tbody tr')),
@@ -957,7 +941,10 @@ function filterRegion(tableId,region,btn){
   bar.querySelectorAll('.chip').forEach(c=>c.classList.remove('active'));
   btn.classList.add('active');
   rows.forEach(r=>{
-    r.style.display=(!region||r.dataset.region===region)?'':'none';
+    if(!region) r.style.display='';
+    else if(region==='ASIA') r.style.display=ASIA_REGIONS.has(r.dataset.region)?'':'none';
+    else if(region==='ME') r.style.display=ME_REGIONS.has(r.dataset.region)?'':'none';
+    else r.style.display=r.dataset.region===region?'':'none';
   });
   const visible=rows.filter(r=>r.style.display!=='none');
   const maxVal=Math.max(...visible.map(r=>parseVal(r.dataset.mcap)),1);
