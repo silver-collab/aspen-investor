@@ -9,7 +9,7 @@ html{max-width:100%;overflow-x:hidden;overflow-y:auto;
   font-family:'Inter',system-ui,-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
   background:#09090b;color:#fafafa;
   -webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;font-weight:400;}
-body{max-width:1152px;margin:0 auto;padding:0 24px;overflow-x:hidden;overflow-y:auto;position:relative;}
+body{max-width:1152px;margin:0 auto;padding:0 24px;overflow-x:hidden;overflow-y:auto;}
 
 ::selection{background:rgba(241,126,0,0.3);color:#fff;}
 
@@ -111,7 +111,7 @@ body{max-width:1152px;margin:0 auto;padding:0 24px;overflow-x:hidden;overflow-y:
 
 /* ── MAP CONTAINER (full-screen) ── */
 .map-wrap{position:relative;width:calc(100% + 48px);margin-left:-24px;margin-bottom:0;
-  overflow:hidden;
+  overflow-x:clip;overflow-y:visible;
   animation:fadeIn 0.8s cubic-bezier(0.22,1,0.36,1) 0.15s both;}
 .map-wrap svg{display:block;width:100%;height:auto;}
 #map-main{background:#09090b;}
@@ -143,9 +143,9 @@ body{max-width:1152px;margin:0 auto;padding:0 24px;overflow-x:hidden;overflow-y:
 .bp-rw:last-child{border-bottom:none}
 .bp-cn{font-size:13px;color:#fafafa;flex:1;line-height:1.4;font-weight:500}
 .bp-cv{font-size:22px;font-weight:800;color:var(--pc);white-space:nowrap;font-variant-numeric:tabular-nums}
-/* Mobile card: compact */
-@media(max-width:600px){
-  #bp{width:calc(100vw - 24px);max-height:40vh;border-radius:12px;}
+/* Narrow: card compact, centered within map area */
+@media(max-width:700px){
+  #bp{width:calc(100% - 24px);max-width:340px;border-radius:12px;max-height:50%;}
   .bp-rg{padding:10px 14px 6px;}
   .bp-hd{padding:8px 14px 10px;}
   .bp-nm{font-size:15px;}
@@ -219,14 +219,14 @@ body{max-width:1152px;margin:0 auto;padding:0 24px;overflow-x:hidden;overflow-y:
 <!-- ═══ NETWORK MAP ═══ -->
 <div class="map-wrap">
   <svg id="map-main"></svg><svg id="map-ovl" style="position:absolute;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:998"></svg>
-</div>
-<div class="tap-hint">Tap a bubble to explore</div>
-<div id="bp">
+  <div id="bp">
   <div class="bp-bar"></div>
   <div class="bp-rg"><span class="bp-fl" id="bp-fl"></span><span class="bp-rn" id="bp-rn"></span></div>
   <div class="bp-hd"><div class="bp-nm-row"><div class="bp-nm" id="bp-nm"></div><div class="bp-val" id="bp-val"></div></div><div class="bp-sb" id="bp-sb"></div></div>
   <div class="bp-sep"></div>
   <div class="bp-bd" id="bp-bd"></div>
+</div>
+<div class="tap-hint">Tap a bubble to explore</div>
 </div>
 
 <!-- ═══ KPI STRIP ═══ -->
@@ -485,49 +485,54 @@ function showPanel(d,svgX,svgY){
     const ph=panel.offsetHeight||140;
     const pw2=panel.offsetWidth||380;
     const wrapRect=mapWrap.getBoundingClientRect();
-    const bodyW=document.body.offsetWidth;
-    /* sx,sy are viewport coords; convert to body-relative for absolute positioning */
-    const bodyRect=document.body.getBoundingClientRect();
-    const bsx=sx-bodyRect.left, bsy=sy-bodyRect.top;
-    let left,top;
+    const mapW=wrapRect.width, mapH=wrapRect.height;
+    /* position relative to map-wrap */
+    const relX=sx-wrapRect.left, relY=sy-wrapRect.top;
 
-    if(bodyW<700){
-      /* Narrow: center card horizontally within body */
-      left=(bodyW-pw2)/2;
-      const bubbleBottom=bsy+HOVER_R*sxR+16;
-      top=bubbleBottom;
-      if(top+ph>wrapRect.bottom-bodyRect.top) top=bsy-HOVER_R*sxR-ph-16;
+    let left,top;
+    if(mapW<700){
+      /* Narrow: center card horizontally in map, vertically centered */
+      left=(mapW-pw2)/2;
+      top=(mapH-ph)/2;
+      /* clamp within map bounds */
+      if(left<4) left=4;
       if(top<4) top=4;
+      if(top+ph>mapH-4) top=mapH-ph-4;
     }else{
       /* Desktop: position beside the bubble */
       const gap=HOVER_R*2*sxR+24;
-      left=bsx+gap;top=bsy-ph/2;
-      if(left+pw2>bodyW-8) left=bsx-gap-pw2;
+      left=relX+gap;top=relY-ph/2;
+      if(left+pw2>mapW-8) left=relX-gap-pw2;
       if(left<4) left=4;
-      if(left+pw2>bodyW-4) left=bodyW-pw2-4;
+      if(left+pw2>mapW-4) left=mapW-pw2-4;
       if(top<4) top=4;
+      if(top+ph>mapH-4) top=mapH-ph-4;
     }
     panel.style.left=left+"px";panel.style.top=top+"px";
 
-    /* Connector line from bubble to panel edge */
-    const oRect=document.getElementById("map-ovl").getBoundingClientRect();
-    const peX=left+bodyRect.left+(left+bodyRect.left>sx?0:pw2);
-    const peY=top+bodyRect.top+ph/2;
-    const ang=Math.atan2(peY-sy,peX-sx);
-    const lx1=svgX+Math.cos(ang)*(HOVER_R+8*sc);
-    const ly1=svgY+Math.sin(ang)*(HOVER_R+8*sc);
-    const rLx2=(peX-oRect.left)*(W/oRect.width),rLy2=(peY-oRect.top)*(H/oRect.height);
-    const ea=Math.atan2(rLy2-ly1,rLx2-lx1);
-    const lx2=rLx2-Math.cos(ea)*8*sc,ly2=rLy2-Math.sin(ea)*8*sc;
+    /* Connector line (desktop only) */
+    if(mapW>=700){
+      const oRect=document.getElementById("map-ovl").getBoundingClientRect();
+      const peX=left+wrapRect.left+(left+wrapRect.left>sx?0:pw2);
+      const peY=top+wrapRect.top+ph/2;
+      const ang=Math.atan2(peY-sy,peX-sx);
+      const lx1=svgX+Math.cos(ang)*(HOVER_R+8*sc);
+      const ly1=svgY+Math.sin(ang)*(HOVER_R+8*sc);
+      const rLx2=(peX-oRect.left)*(W/oRect.width),rLy2=(peY-oRect.top)*(H/oRect.height);
+      const ea=Math.atan2(rLy2-ly1,rLx2-lx1);
+      const lx2=rLx2-Math.cos(ea)*8*sc,ly2=rLy2-Math.sin(ea)*8*sc;
 
-    ovl.selectAll("*").remove();
-    const od=ovl.append("defs");
-    const lg=od.append("linearGradient").attr("id","clg")
-      .attr("gradientUnits","userSpaceOnUse").attr("x1",lx1).attr("y1",ly1).attr("x2",lx2).attr("y2",ly2);
-    lg.append("stop").attr("offset","0%").attr("stop-color",d.col).attr("stop-opacity",0.8);
-    lg.append("stop").attr("offset","100%").attr("stop-color",d.col).attr("stop-opacity",0.1);
-    ovl.append("line").attr("x1",lx1).attr("y1",ly1).attr("x2",lx2).attr("y2",ly2)
-      .attr("stroke","url(#clg)").attr("stroke-width",1.5).attr("stroke-linecap","round");
+      ovl.selectAll("*").remove();
+      const od=ovl.append("defs");
+      const lg=od.append("linearGradient").attr("id","clg")
+        .attr("gradientUnits","userSpaceOnUse").attr("x1",lx1).attr("y1",ly1).attr("x2",lx2).attr("y2",ly2);
+      lg.append("stop").attr("offset","0%").attr("stop-color",d.col).attr("stop-opacity",0.8);
+      lg.append("stop").attr("offset","100%").attr("stop-color",d.col).attr("stop-opacity",0.1);
+      ovl.append("line").attr("x1",lx1).attr("y1",ly1).attr("x2",lx2).attr("y2",ly2)
+        .attr("stroke","url(#clg)").attr("stroke-width",1.5).attr("stroke-linecap","round");
+    }else{
+      ovl.selectAll("*").remove();
+    }
   });
 
   d3.selectAll(".bg").each(function(n){
