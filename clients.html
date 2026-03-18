@@ -491,7 +491,7 @@ if(isMobile){
   });
 }
 
-const NAME_FS=isMobile?18:14,VAL_FS=isMobile?33:26,GAP=isMobile?HOVER_R*0.38:HOVER_R*0.21;
+const NAME_FS=isMobile?18:14,VAL_FS=isMobile?33:26,GAP=isMobile?HOVER_R*0.25:HOVER_R*0.21;
 
 /* ── panel ── */
 const panel=document.getElementById("bp");
@@ -715,11 +715,12 @@ d3.json("https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json").then(w
     g.append("circle").attr("class","b-ring").attr("r",HOVER_R+8)
       .attr("fill","none").attr("stroke",d.col).attr("stroke-width",1.5).attr("opacity",0);
 
-    const aGAP=GAP/bs;
-    addLabel(g,d.label,-aGAP,NAME_FS,d.col,0.95,bs);
+    const tbs=Math.max(bs,0.6);
+    const aGAP=GAP/tbs;
+    addLabel(g,d.label,-aGAP,NAME_FS,d.col,0.95,tbs);
 
     const isNum=d.val.startsWith("$")||d.val.startsWith("~");
-    const aVFS=VAL_FS/bs;
+    const aVFS=VAL_FS/tbs;
     g.append("text").attr("text-anchor","middle").attr("dominant-baseline","central")
       .attr("y",aGAP)
       .attr("fill",isNum?FG:MUTED)
