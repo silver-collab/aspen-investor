@@ -9,7 +9,6 @@ import { LicenseComparison } from "@/components/tabs/license-comparison";
 import { Team } from "@/components/tabs/team";
 
 const TABS = ["Client Portfolio", "ADGM License", "Team"];
-const BASE = process.env.NEXT_PUBLIC_BASE_PATH || "";
 
 function SplashScreen({ onComplete }: { onComplete: () => void }) {
   useEffect(() => {
@@ -31,7 +30,7 @@ function SplashScreen({ onComplete }: { onComplete: () => void }) {
         transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1], delay: 0.15 }}
       >
         <Image
-          src="/logo.png"
+          src="/aspen-investor/logo.png"
           alt="Aspen Digital"
           width={320}
           height={100}
@@ -77,7 +76,7 @@ function ClientPortfolio() {
     <div className="w-full max-w-6xl mx-auto">
       <iframe
         ref={iframeRef}
-        src={`${BASE}/clients.html`}
+        src="/aspen-investor/clients.html"
         className="w-full border-0"
         scrolling="no"
         style={{ overflow: "hidden" }}

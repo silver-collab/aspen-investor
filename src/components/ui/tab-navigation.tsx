@@ -27,7 +27,7 @@ export function TabNavigation({
         {/* Logo — absolute left */}
         <div className="absolute left-6 flex items-center">
           <Image
-            src="/logo.png"
+            src="/aspen-investor/logo.png"
             alt="Aspen Digital"
             width={200}
             height={62}

@@ -304,7 +304,7 @@ export function LicenseComparison() {
                     Full Stack
                   </motion.div>
                   <Image
-                    src="/logo.png"
+                    src="/aspen-investor/logo.png"
                     alt="Aspen Digital"
                     width={120}
                     height={37}
