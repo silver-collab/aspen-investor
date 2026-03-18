@@ -9,7 +9,7 @@ html{max-width:100%;overflow-x:hidden;overflow-y:auto;
   font-family:'Inter',system-ui,-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
   background:#09090b;color:#fafafa;
   -webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;font-weight:400;}
-body{max-width:1152px;margin:0 auto;padding:0 24px;overflow-x:hidden;overflow-y:auto;}
+body{max-width:1152px;margin:0 auto;padding:0 24px;overflow-x:hidden;overflow-y:auto;position:relative;}
 
 ::selection{background:rgba(241,126,0,0.3);color:#fff;}
 
@@ -201,13 +201,13 @@ body{max-width:1152px;margin:0 auto;padding:0 24px;overflow-x:hidden;overflow-y:
 <!-- ═══ NETWORK MAP ═══ -->
 <div class="map-wrap">
   <svg id="map-main"></svg><svg id="map-ovl" style="position:absolute;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:998"></svg>
-  <div id="bp">
-    <div class="bp-bar"></div>
-    <div class="bp-rg"><span class="bp-fl" id="bp-fl"></span><span class="bp-rn" id="bp-rn"></span></div>
-    <div class="bp-hd"><div class="bp-nm-row"><div class="bp-nm" id="bp-nm"></div><div class="bp-val" id="bp-val"></div></div><div class="bp-sb" id="bp-sb"></div></div>
-    <div class="bp-sep"></div>
-    <div class="bp-bd" id="bp-bd"></div>
-  </div>
+</div>
+<div id="bp">
+  <div class="bp-bar"></div>
+  <div class="bp-rg"><span class="bp-fl" id="bp-fl"></span><span class="bp-rn" id="bp-rn"></span></div>
+  <div class="bp-hd"><div class="bp-nm-row"><div class="bp-nm" id="bp-nm"></div><div class="bp-val" id="bp-val"></div></div><div class="bp-sb" id="bp-sb"></div></div>
+  <div class="bp-sep"></div>
+  <div class="bp-bd" id="bp-bd"></div>
 </div>
 
 <!-- ═══ KPI STRIP ═══ -->
@@ -463,33 +463,34 @@ function showPanel(d,svgX,svgY){
     const ph=panel.offsetHeight||140;
     const pw2=panel.offsetWidth||380;
     const wrapRect=mapWrap.getBoundingClientRect();
-    const relX=sx-wrapRect.left, relY=sy-wrapRect.top;
+    const bodyW=document.body.offsetWidth;
+    /* sx,sy are viewport coords; convert to body-relative for absolute positioning */
+    const bodyRect=document.body.getBoundingClientRect();
+    const bsx=sx-bodyRect.left, bsy=sy-bodyRect.top;
     let left,top;
 
-    if(wrapRect.width<700){
-      /* Narrow: center card horizontally, place below the bubble */
-      left=(wrapRect.width-pw2)/2;
-      const bubbleBottom=relY+HOVER_R*sxR+16;
+    if(bodyW<700){
+      /* Narrow: center card horizontally within body */
+      left=(bodyW-pw2)/2;
+      const bubbleBottom=bsy+HOVER_R*sxR+16;
       top=bubbleBottom;
-      /* If card would overflow bottom, place above bubble */
-      if(top+ph>wrapRect.height-4) top=relY-HOVER_R*sxR-ph-16;
+      if(top+ph>wrapRect.bottom-bodyRect.top) top=bsy-HOVER_R*sxR-ph-16;
       if(top<4) top=4;
     }else{
       /* Desktop: position beside the bubble */
       const gap=HOVER_R*2*sxR+24;
-      left=relX+gap;top=relY-ph/2;
-      if(left+pw2>wrapRect.width-8) left=relX-gap-pw2;
+      left=bsx+gap;top=bsy-ph/2;
+      if(left+pw2>bodyW-8) left=bsx-gap-pw2;
       if(left<4) left=4;
-      if(left+pw2>wrapRect.width-4) left=wrapRect.width-pw2-4;
+      if(left+pw2>bodyW-4) left=bodyW-pw2-4;
       if(top<4) top=4;
-      if(top+ph>wrapRect.height-4) top=wrapRect.height-ph-4;
     }
     panel.style.left=left+"px";panel.style.top=top+"px";
 
     /* Connector line from bubble to panel edge */
     const oRect=document.getElementById("map-ovl").getBoundingClientRect();
-    const peX=left+wrapRect.left+(left+wrapRect.left>sx?0:pw2);
-    const peY=top+wrapRect.top+ph/2;
+    const peX=left+bodyRect.left+(left+bodyRect.left>sx?0:pw2);
+    const peY=top+bodyRect.top+ph/2;
     const ang=Math.atan2(peY-sy,peX-sx);
     const lx1=svgX+Math.cos(ang)*(HOVER_R+8*sc);
     const ly1=svgY+Math.sin(ang)*(HOVER_R+8*sc);
