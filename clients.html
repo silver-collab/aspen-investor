@@ -68,7 +68,7 @@ body{max-width:1152px;margin:0 auto;padding:0 24px;overflow-x:hidden;overflow-y:
 .td-bar{width:0 !important;}
 .td-bar.animated{width:var(--bar-w) !important;transition:width 0.8s cubic-bezier(0.22,1,0.36,1);}
 
-.section-header{display:flex;flex-direction:column;align-items:center;gap:4px;margin-bottom:16px;text-align:center;}
+.section-header{display:flex;flex-direction:column;align-items:center;gap:4px;margin-bottom:20px;text-align:center;}
 .section-line,.section-line-r{display:none;}
 .section-title{font-size:11px;font-weight:700;letter-spacing:2.5px;color:rgba(241,126,0,0.7);text-transform:uppercase;}
 .section-meta{font-size:11px;color:#a1a1aa;letter-spacing:0.5px;font-weight:500;opacity:0.6;}
@@ -144,10 +144,10 @@ body{max-width:1152px;margin:0 auto;padding:0 24px;overflow-x:hidden;overflow-y:
 .bp-cn{font-size:13px;color:#fafafa;flex:1;line-height:1.4;font-weight:500}
 .bp-cv{font-size:22px;font-weight:800;color:var(--pc);white-space:nowrap;font-variant-numeric:tabular-nums}
 /* Close button */
-.bp-close{position:absolute;top:6px;right:8px;width:28px;height:28px;border:none;background:rgba(255,255,255,0.08);
-  border-radius:50%;color:#a1a1aa;font-size:16px;line-height:1;cursor:pointer;display:none;
-  align-items:center;justify-content:center;z-index:10;transition:background 0.15s;}
-.bp-close:hover{background:rgba(255,255,255,0.15);color:#fafafa;}
+.bp-close{position:absolute;top:4px;right:4px;width:18px;height:18px;border:none;background:none;
+  border-radius:50%;color:rgba(161,161,170,0.5);font-size:11px;line-height:1;cursor:pointer;display:none;
+  align-items:center;justify-content:center;z-index:10;transition:color 0.15s;padding:0;}
+.bp-close:hover{color:#fafafa;}
 @media(max-width:700px){.bp-close{display:flex;}}
 /* Narrow: compact card, centered */
 @media(max-width:700px){
@@ -174,10 +174,11 @@ body{max-width:1152px;margin:0 auto;padding:0 24px;overflow-x:hidden;overflow-y:
 @media(pointer:coarse){.tap-hint{display:block;}}
 
 /* ── Table scroll wrapper ── */
-.tbl-scroll{overflow-x:auto;-webkit-overflow-scrolling:touch;margin:0;padding:0;position:relative;}
-.tbl-scroll::after{content:'';position:absolute;right:0;top:0;bottom:0;width:56px;pointer-events:none;
-  background:linear-gradient(90deg,transparent,rgba(9,9,11,0.95));z-index:2;opacity:1;transition:opacity 0.3s;}
-.tbl-scroll.at-end::after{opacity:0;}
+.tbl-wrap{position:relative;}
+.tbl-wrap::after{content:'';position:absolute;right:0;top:0;bottom:0;width:56px;pointer-events:none;
+  background:linear-gradient(90deg,transparent,rgba(9,9,11,0.95));z-index:2;transition:opacity 0.3s;}
+.tbl-wrap.at-end::after{opacity:0;}
+.tbl-scroll{overflow-x:auto;-webkit-overflow-scrolling:touch;margin:0;padding:0;}
 
 /* ═══ RESPONSIVE ═══ */
 @media(max-width:1024px){
@@ -201,7 +202,7 @@ body{max-width:1152px;margin:0 auto;padding:0 24px;overflow-x:hidden;overflow-y:
   .chip{font-size:11px;padding:5px 12px;flex-shrink:0;}
 
   .section{padding:0 0 32px;}
-  .section-header{margin-bottom:10px;}
+  .section-header{margin-bottom:16px;}
   .section-title{font-size:10px;letter-spacing:2px;}
   .section-meta{font-size:10px;}
 
@@ -293,7 +294,7 @@ body{max-width:1152px;margin:0 auto;padding:0 24px;overflow-x:hidden;overflow-y:
     <button class="chip" onclick="filterRegion('tbl1','AUS',this)">🇦🇺 AUS</button>
   </div>
 
-  <div class="tbl-scroll"><table class="tbl" id="tbl1">
+  <div class="tbl-wrap"><div class="tbl-scroll"><table class="tbl" id="tbl1">
     <thead><tr>
       <th data-sort="region">Region<span class="sort-arrow"></span></th><th data-sort="name">Corporation<span class="sort-arrow"></span></th><th class="r" data-sort="mcap">Market Cap<span class="sort-arrow"></span></th><th class="td-bar-cell"></th><th data-sort="fo">Family/FO<span class="sort-arrow"></span></th><th class="r" data-sort="nw">Net Worth<span class="sort-arrow"></span></th><th>Business</th>
     </tr></thead>
@@ -334,7 +335,7 @@ body{max-width:1152px;margin:0 auto;padding:0 24px;overflow-x:hidden;overflow-y:
       <tr data-region="HK" data-name="Shui On Land" data-mcap="1" data-nw="4"><td class="td-region"><span class="td-flag">🇭🇰</span> HK</td><td class="td-corp">Shui On Land</td><td class="td-val">$1B</td><td class="td-bar-cell"><div class="td-bar-wrap"><div class="td-bar" style="width:0.5%"></div></div></td><td class="td-fo">Shui On Group</td><td class="td-nw">$4B</td><td class="td-biz">Premium Property (Xintiandi)</td></tr>
       <tr data-region="HK" data-name="Chuangs Consortium" data-mcap="0.5" data-nw="3"><td class="td-region"><span class="td-flag">🇭🇰</span> HK</td><td class="td-corp">Chuangs Consortium</td><td class="td-val">$0.5B</td><td class="td-bar-cell"><div class="td-bar-wrap"><div class="td-bar" style="width:0.25%"></div></div></td><td class="td-fo">Chuang Family</td><td class="td-nw">$3B</td><td class="td-biz">Property · Trading</td></tr>
     </tbody>
-  </table></div>
+  </table></div></div>
 </div>
 
 <!-- ═══ TAB 2 ═══ -->
@@ -356,7 +357,7 @@ body{max-width:1152px;margin:0 auto;padding:0 24px;overflow-x:hidden;overflow-y:
     <button class="chip" onclick="filterRegion('tbl2','OMN',this)">🇴🇲 OMN</button>
   </div>
 
-  <div class="tbl-scroll"><table class="tbl" id="tbl2">
+  <div class="tbl-wrap"><div class="tbl-scroll"><table class="tbl" id="tbl2">
     <thead><tr>
       <th data-sort="region">Region<span class="sort-arrow"></span></th><th data-sort="name">Entity<span class="sort-arrow"></span></th><th class="r" data-sort="mcap">AUM<span class="sort-arrow"></span></th><th class="td-bar-cell"></th><th>Type</th><th>Remarks</th>
     </tr></thead>
@@ -374,7 +375,7 @@ body{max-width:1152px;margin:0 auto;padding:0 24px;overflow-x:hidden;overflow-y:
       <tr data-region="UAE" data-name="AD Pension Fund" data-mcap="15" data-nw="0"><td class="td-region"><span class="td-flag">🇦🇪</span> UAE</td><td class="td-corp">AD Pension Fund</td><td class="td-val">$15B+</td><td class="td-bar-cell"><div class="td-bar-wrap"><div class="td-bar" style="width:1.5%"></div></div></td><td class="td-biz">Government Pension</td><td class="td-biz">Exploring Alternatives</td></tr>
       <tr data-region="UAE" data-name="Shurooq" data-mcap="5" data-nw="0"><td class="td-region"><span class="td-flag">🇦🇪</span> UAE</td><td class="td-corp">Shurooq</td><td class="td-val">$5B+</td><td class="td-bar-cell"><div class="td-bar-wrap"><div class="td-bar" style="width:0.5%"></div></div></td><td class="td-biz">Gov Investment</td><td class="td-biz">Tourism · Healthcare · Tech</td></tr>
     </tbody>
-  </table></div>
+  </table></div></div>
 </div>
 
 <script src="https://d3js.org/d3.v7.min.js"></script>
@@ -490,7 +491,7 @@ if(isMobile){
   });
 }
 
-const NAME_FS=isMobile?18:14,VAL_FS=isMobile?30:24,GAP=HOVER_R*0.21;
+const NAME_FS=isMobile?18:14,VAL_FS=isMobile?33:26,GAP=isMobile?HOVER_R*0.38:HOVER_R*0.21;
 
 /* ── panel ── */
 const panel=document.getElementById("bp");
@@ -668,7 +669,7 @@ d3.json("https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json").then(w
   if(isMobile){
     /* Color clustering: group same-color bubbles together */
     const colorCX={[PURPLE]:W*0.30,[TEAL]:W*0.62,[GREEN]:W*0.50};
-    const colorCY={[PURPLE]:H*0.45,[TEAL]:H*0.45,[GREEN]:H*0.65};
+    const colorCY={[PURPLE]:H*0.52,[TEAL]:H*0.52,[GREEN]:H*0.72};
     sim.force("gx",d3.forceX(d=>colorCX[d.col]).strength(0.10));
     sim.force("gy",d3.forceY(d=>colorCY[d.col]).strength(0.10));
   }else{
@@ -686,12 +687,13 @@ d3.json("https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json").then(w
   /* draw bubbles */
   const bubbleL=svg.append("g").attr("id","bubbleL");
 
-  function addLabel(g,txt,y,fs,col,op){
-    const lines=txt.split("\n"),lh=fs*1.25;
+  function addLabel(g,txt,y,fs,col,op,bs){
+    const afs=bs?fs/bs:fs;
+    const lines=txt.split("\n"),lh=afs*1.25;
     const startY=y-(lines.length-1)*lh/2;
     lines.forEach((ln,i)=>{
       g.append("text").attr("text-anchor","middle").attr("dominant-baseline","central")
-        .attr("y",startY+i*lh).attr("fill",col).attr("font-size",fs)
+        .attr("y",startY+i*lh).attr("fill",col).attr("font-size",afs)
         .attr("font-weight",600).attr("font-family",FONT).attr("opacity",op).text(ln);
     });
   }
@@ -713,13 +715,15 @@ d3.json("https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json").then(w
     g.append("circle").attr("class","b-ring").attr("r",HOVER_R+8)
       .attr("fill","none").attr("stroke",d.col).attr("stroke-width",1.5).attr("opacity",0);
 
-    addLabel(g,d.label,-GAP,NAME_FS,d.col,0.95);
+    const aGAP=GAP/bs;
+    addLabel(g,d.label,-aGAP,NAME_FS,d.col,0.95,bs);
 
     const isNum=d.val.startsWith("$")||d.val.startsWith("~");
+    const aVFS=VAL_FS/bs;
     g.append("text").attr("text-anchor","middle").attr("dominant-baseline","central")
-      .attr("y",GAP)
+      .attr("y",aGAP)
       .attr("fill",isNum?FG:MUTED)
-      .attr("font-size",VAL_FS).attr("font-weight",800)
+      .attr("font-size",aVFS).attr("font-weight",800)
       .attr("font-style",isNum?"normal":"italic")
       .attr("font-family",FONT)
       .attr("font-variant-numeric","tabular-nums")
@@ -865,7 +869,7 @@ d3.json("https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json").then(w
                 setTimeout(()=>{
                   pill.style.opacity='0';
                   setTimeout(()=>{pill.remove();breathPaused=false;},1000);
-                },2500);
+                },2000);
               },400);
             },600);
           },2500);
@@ -985,9 +989,10 @@ setTimeout(()=>revealRows('sec1'),500);
 
 /* fade-edge: hide when scrolled to end */
 document.querySelectorAll('.tbl-scroll').forEach(el=>{
+  const wrap=el.closest('.tbl-wrap');
   el.addEventListener('scroll',()=>{
     const atEnd=el.scrollLeft>=el.scrollWidth-el.clientWidth-10;
-    el.classList.toggle('at-end',atEnd);
+    if(wrap)wrap.classList.toggle('at-end',atEnd);
   },{passive:true});
 });
 </script>
