@@ -187,6 +187,10 @@ body{max-width:1152px;margin:0 auto;padding:0 24px;overflow-x:hidden;overflow-y:
   body{padding:0 12px;}
   .map-wrap{width:calc(100% + 24px);margin-left:-12px;}
   .hero{padding:0 4px 24px;}
+  .hero h2{font-size:28px;}
+  .kpi{gap:clamp(6px,2vw,16px);padding:12px 10px;margin-bottom:24px;}
+  .kpi-num{font-size:clamp(16px,4vw,28px);}
+  .kpi-label{font-size:clamp(8px,1.5vw,11px);}
 
   /* Sub nav */
   .sub-nav-wrap{padding-bottom:24px;}
@@ -214,8 +218,20 @@ body{max-width:1152px;margin:0 auto;padding:0 24px;overflow-x:hidden;overflow-y:
 @media(max-width:480px){
   body{padding:0 8px;}
   .map-wrap{width:calc(100% + 16px);margin-left:-8px;}
-  .sub-btn{font-size:12px;padding:6px 10px;}
-  .chip{font-size:12px;padding:4px 10px;flex-shrink:0;}
+  .hero{padding:0 0 16px;}
+  .hero h2{font-size:22px;margin-bottom:10px;}
+  .hero p{font-size:13px;}
+  .kpi{gap:6px;padding:10px 6px;margin-bottom:20px;border-radius:12px;flex-wrap:wrap;justify-content:center;}
+  .kpi-item{min-width:60px;}
+  .kpi-num{font-size:18px;letter-spacing:-0.5px;}
+  .kpi-label{font-size:8px;letter-spacing:0.5px;margin-top:3px;}
+  .kpi-div{height:20px;}
+  .sub-nav-wrap{padding-bottom:16px;}
+  .sub-nav{gap:2px;padding:3px;}
+  .sub-btn{font-size:11px;padding:6px 10px;}
+  .chip{font-size:11px;padding:4px 10px;flex-shrink:0;}
+  .section-title{font-size:11px;letter-spacing:1px;}
+  .section-meta{font-size:10px;}
   .tbl{min-width:500px;}
   .td-bar-cell{display:none;}
 }
@@ -503,13 +519,10 @@ function showPanel(d,svgX,svgY){
 
     let left,top;
     if(mapW<700){
-      /* Narrow: center card horizontally in map, vertically centered */
+      /* Narrow: center card horizontally, position at top of map */
       left=(mapW-pw2)/2;
-      top=(mapH-ph)/2;
-      /* clamp within map bounds */
+      top=8;
       if(left<4) left=4;
-      if(top<4) top=4;
-      if(top+ph>mapH-4) top=mapH-ph-4;
     }else{
       /* Desktop: position beside the bubble */
       const gap=HOVER_R*2*sxR+24;
