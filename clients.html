@@ -142,9 +142,11 @@ body{max-width:1152px;margin:0 auto;padding:0 24px;overflow:hidden;}
 
 /* ── Table scroll wrapper ── */
 .tbl-scroll{overflow-x:auto;-webkit-overflow-scrolling:touch;margin:0 -12px;padding:0 12px;position:relative;}
-/* scroll fade-edge hint */
-.tbl-scroll{-webkit-mask-image:linear-gradient(90deg,#000 85%,transparent 100%);mask-image:linear-gradient(90deg,#000 85%,transparent 100%);}
-.tbl-scroll.scrolled{-webkit-mask-image:none;mask-image:none;}
+/* scroll fade-edge on right */
+.tbl-scroll{position:relative;}
+.tbl-scroll::after{content:'';position:absolute;right:0;top:0;bottom:0;width:48px;pointer-events:none;
+  background:linear-gradient(90deg,transparent,rgba(9,9,11,0.95));z-index:2;opacity:1;transition:opacity 0.3s;}
+.tbl-scroll.at-end::after{opacity:0;}
 
 /* ═══ MOBILE / NARROW VIEWPORT ═══ */
 @media(max-width:1024px){
@@ -153,6 +155,15 @@ body{max-width:1152px;margin:0 auto;padding:0 24px;overflow:hidden;}
 
   /* Panel: clamp to viewport */
   #bp{max-width:min(380px,calc(100vw - 24px));border-radius:12px;}
+}
+/* Mobile: panel as bottom sheet */
+@media(max-width:768px){
+  #bp{position:fixed !important;bottom:0 !important;top:auto !important;left:0 !important;
+    width:100% !important;max-width:100% !important;max-height:45vh;
+    border-radius:20px 20px 0 0 !important;
+    box-shadow:0 -8px 40px rgba(0,0,0,0.6);
+    transform:translateY(100%);transition:transform 0.3s cubic-bezier(0.22,1,0.36,1);}
+  #bp.vis{transform:translateY(0);}
 }
 @media(max-width:768px){
   body{padding:0 12px;}
@@ -473,14 +484,9 @@ function showPanel(d,svgX,svgY){
   requestAnimationFrame(()=>{
     const ph=panel.offsetHeight||140;
     const pw2=panel.offsetWidth||380;
-    const isMobile=window.innerWidth<768;
 
-    if(isMobile){
-      /* Mobile: pin panel below the map, centered */
-      const mapBottom=rect.bottom+8;
-      let left=(window.innerWidth-pw2)/2;
-      if(left<8)left=8;
-      panel.style.left=left+"px";panel.style.top=mapBottom+"px";
+    if(window.innerWidth<768){
+      /* Mobile: CSS bottom-sheet handles positioning, just skip JS positioning */
     }else{
       const gap=HOVER_R*2*sxR+24;
       let left=sx+gap,top=sy-ph/2;
@@ -817,33 +823,48 @@ document.querySelectorAll('.td-bar').forEach(bar=>{
 /* ── Initial reveal ── */
 setTimeout(()=>revealRows('sec1'),500);
 
-/* ── Apple-style scroll hint for tables on narrow screens ── */
-function scrollHint(el){
+/* ── Apple-style slow auto-scroll for tables ── */
+function autoScrollTable(el){
   if(!el||el.scrollWidth<=el.clientWidth+10)return;
-  const maxScroll=Math.min(el.scrollWidth-el.clientWidth,200);
-  const dur=1200;
-  let start=null;
+  const maxScroll=el.scrollWidth-el.clientWidth;
+  let userTouched=false;
+  el.addEventListener('touchstart',()=>{userTouched=true;},{passive:true,once:true});
+  el.addEventListener('mousedown',()=>{userTouched=true;},{once:true});
+
+  /* slow scroll right over 4s, pause 1.5s, scroll back over 3s */
+  const scrollRight=2500,pause=1200,scrollBack=1800;
+  let start=null,phase='right';
   function step(ts){
+    if(userTouched)return;
     if(!start)start=ts;
-    const p=(ts-start)/dur;
-    if(p<0.5){el.scrollLeft=maxScroll*Math.sin(p*Math.PI);}
-    else if(p<1){el.scrollLeft=maxScroll*Math.sin(p*Math.PI);}
-    else{el.scrollLeft=0;return;}
+    const elapsed=ts-start;
+    if(phase==='right'){
+      const p=Math.min(elapsed/scrollRight,1);
+      el.scrollLeft=maxScroll*easeInOut(p);
+      if(p>=1){phase='pause';start=ts;}
+    }else if(phase==='pause'){
+      if(elapsed>pause){phase='back';start=ts;}
+    }else if(phase==='back'){
+      const p=Math.min(elapsed/scrollBack,1);
+      el.scrollLeft=maxScroll*(1-easeInOut(p));
+      if(p>=1)return;
+    }
     requestAnimationFrame(step);
   }
+  function easeInOut(t){return t<0.5?2*t*t:(1-Math.pow(-2*t+2,2)/2);}
   requestAnimationFrame(step);
 }
-/* remove fade mask once user has scrolled */
+/* fade-edge: hide when scrolled to end */
 document.querySelectorAll('.tbl-scroll').forEach(el=>{
-  el.addEventListener('scroll',function(){
-    if(el.scrollLeft>20)el.classList.add('scrolled');
-    else el.classList.remove('scrolled');
+  el.addEventListener('scroll',()=>{
+    const atEnd=el.scrollLeft>=el.scrollWidth-el.clientWidth-10;
+    el.classList.toggle('at-end',atEnd);
   },{passive:true});
 });
-if(window.innerWidth<900){
+if(window.innerWidth<1024){
   setTimeout(()=>{
-    document.querySelectorAll('.tbl-scroll').forEach(el=>scrollHint(el));
-  },1500);
+    document.querySelectorAll('.tbl-scroll').forEach(el=>autoScrollTable(el));
+  },1800);
 }
 </script>
 </body></html>
