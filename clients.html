@@ -140,25 +140,33 @@ body{max-width:1152px;margin:0 auto;padding:0 24px;overflow:hidden;}
 .bp-cn{font-size:13px;color:#fafafa;flex:1;line-height:1.4;font-weight:500}
 .bp-cv{font-size:22px;font-weight:800;color:var(--pc);white-space:nowrap;font-variant-numeric:tabular-nums}
 
-/* ═══ MOBILE RESPONSIVE ═══ */
-@media(max-width:768px){
+/* ── Table scroll wrapper ── */
+.tbl-scroll{overflow-x:auto;-webkit-overflow-scrolling:touch;margin:0 -12px;padding:0 12px;}
+
+/* ═══ MOBILE / NARROW VIEWPORT ═══ */
+@media(max-width:1024px){
   html{overflow:auto;overflow-x:hidden;}
-  body{padding:0 12px;overflow:auto;overflow-x:hidden;}
+  body{overflow:auto;overflow-x:hidden;}
+
+  /* Panel: clamp to viewport */
+  #bp{max-width:min(380px,calc(100vw - 24px));border-radius:12px;}
+}
+@media(max-width:768px){
+  body{padding:0 12px;}
   .hero{padding:0 8px 24px;}
   .hero h2{font-size:28px;}
   .hero p{font-size:14px;}
 
-  /* KPI: 2×2 grid */
-  .kpi{flex-wrap:wrap;gap:16px 24px;padding:20px 16px;justify-content:center;}
-  .kpi-div{display:none;}
-  .kpi-item{min-width:calc(50% - 16px);text-align:center;}
-  .kpi-num{font-size:28px;}
-  .kpi-label{font-size:10px;letter-spacing:1.5px;}
+  /* KPI: single row, compact */
+  .kpi{gap:12px;padding:16px 12px;}
+  .kpi-num{font-size:22px;}
+  .kpi-label{font-size:9px;letter-spacing:1px;}
+  .kpi-div{height:24px;}
 
   /* Sub nav */
   .sub-nav-wrap{padding-bottom:24px;}
   .sub-nav{width:100%;max-width:100%;}
-  .sub-btn{font-size:12px;padding:7px 14px;}
+  .sub-btn{font-size:11px;padding:7px 12px;}
 
   /* Chip bar */
   .chip-bar{gap:6px;padding:4px 0 14px;}
@@ -169,30 +177,28 @@ body{max-width:1152px;margin:0 auto;padding:0 24px;overflow:hidden;}
   .section-title{font-size:11px;letter-spacing:2px;}
   .section-meta{font-size:10px;}
 
-  /* Tables: horizontal scroll */
-  .section{overflow-x:auto;-webkit-overflow-scrolling:touch;}
-  .tbl{min-width:700px;}
+  /* Tables: scroll wrapper handles overflow */
+  .tbl{min-width:680px;}
   .tbl td{padding:10px 10px;font-size:13px;}
   .tbl th{padding:10px 10px;font-size:10px;}
   .td-corp{max-width:160px;font-size:13px;}
-  .td-bar-cell{width:100px;}
+  .td-bar-cell{width:80px;}
   .td-biz{max-width:140px;font-size:11px;}
-  .td-fo{max-width:140px;font-size:12px;}
+  .td-fo{max-width:130px;font-size:12px;}
 
-  /* Map: let it overflow naturally */
+  /* Map */
   .map-wrap{margin-bottom:0;}
-
-  /* Panel: full-width on mobile */
-  #bp{width:calc(100vw - 24px);max-width:380px;border-radius:12px;}
 }
 @media(max-width:480px){
   body{padding:0 8px;}
   .hero h2{font-size:24px;}
-  .kpi{gap:12px 16px;padding:16px 12px;}
-  .kpi-num{font-size:24px;}
-  .kpi-item{min-width:calc(50% - 12px);}
-  .sub-btn{font-size:11px;padding:6px 10px;}
+  .kpi{gap:8px;padding:14px 8px;}
+  .kpi-num{font-size:18px;}
+  .kpi-label{font-size:8px;letter-spacing:1px;}
+  .kpi-div{height:20px;}
+  .sub-btn{font-size:10px;padding:6px 10px;}
   .chip{font-size:10px;padding:4px 10px;}
+  .tbl{min-width:600px;}
 }
 </style></head><body>
 
@@ -255,7 +261,7 @@ body{max-width:1152px;margin:0 auto;padding:0 24px;overflow:hidden;}
     <button class="chip" onclick="filterRegion('tbl1','AUS',this)">🇦🇺 AUS</button>
   </div>
 
-  <table class="tbl" id="tbl1">
+  <div class="tbl-scroll"><table class="tbl" id="tbl1">
     <thead><tr>
       <th data-sort="region">Region <span class="sort-arrow"></span></th><th data-sort="name">Corporation <span class="sort-arrow"></span></th><th class="r" data-sort="mcap">Market Cap <span class="sort-arrow"></span></th><th></th><th data-sort="fo">Family / Family Office <span class="sort-arrow"></span></th><th class="r" data-sort="nw">Net Worth <span class="sort-arrow"></span></th><th>Business</th>
     </tr></thead>
@@ -296,7 +302,7 @@ body{max-width:1152px;margin:0 auto;padding:0 24px;overflow:hidden;}
       <tr data-region="HK" data-name="Shui On Land" data-mcap="1" data-nw="4"><td class="td-region"><span class="td-flag">🇭🇰</span> HK</td><td class="td-corp">Shui On Land</td><td class="td-val">$1B</td><td class="td-bar-cell"><div class="td-bar-wrap"><div class="td-bar" style="width:0.5%"></div></div></td><td class="td-fo">Shui On Group</td><td class="td-nw">$4B</td><td class="td-biz">Premium Property (Xintiandi)</td></tr>
       <tr data-region="HK" data-name="Chuangs Consortium" data-mcap="0.5" data-nw="3"><td class="td-region"><span class="td-flag">🇭🇰</span> HK</td><td class="td-corp">Chuangs Consortium</td><td class="td-val">$0.5B</td><td class="td-bar-cell"><div class="td-bar-wrap"><div class="td-bar" style="width:0.25%"></div></div></td><td class="td-fo">Chuang Family</td><td class="td-nw">$3B</td><td class="td-biz">Property · Trading</td></tr>
     </tbody>
-  </table>
+  </table></div>
 </div>
 
 <!-- ═══ TAB 2 ═══ -->
@@ -318,7 +324,7 @@ body{max-width:1152px;margin:0 auto;padding:0 24px;overflow:hidden;}
     <button class="chip" onclick="filterRegion('tbl2','OMN',this)">🇴🇲 OMN</button>
   </div>
 
-  <table class="tbl" id="tbl2">
+  <div class="tbl-scroll"><table class="tbl" id="tbl2">
     <thead><tr>
       <th data-sort="region">Region <span class="sort-arrow"></span></th><th data-sort="name">Entity <span class="sort-arrow"></span></th><th class="r" data-sort="mcap">AUM <span class="sort-arrow"></span></th><th></th><th>Type</th><th>Remarks</th>
     </tr></thead>
@@ -336,7 +342,7 @@ body{max-width:1152px;margin:0 auto;padding:0 24px;overflow:hidden;}
       <tr data-region="UAE" data-name="AD Pension Fund" data-mcap="15" data-nw="0"><td class="td-region"><span class="td-flag">🇦🇪</span> UAE</td><td class="td-corp">AD Pension Fund</td><td class="td-val">$15B+</td><td class="td-bar-cell"><div class="td-bar-wrap"><div class="td-bar" style="width:1.5%"></div></div></td><td class="td-biz">Government Pension</td><td class="td-biz">Exploring Alternatives</td></tr>
       <tr data-region="UAE" data-name="Shurooq" data-mcap="5" data-nw="0"><td class="td-region"><span class="td-flag">🇦🇪</span> UAE</td><td class="td-corp">Shurooq</td><td class="td-val">$5B+</td><td class="td-bar-cell"><div class="td-bar-wrap"><div class="td-bar" style="width:0.5%"></div></div></td><td class="td-biz">Gov Investment</td><td class="td-biz">Tourism · Healthcare · Tech</td></tr>
     </tbody>
-  </table>
+  </table></div>
 </div>
 
 <script src="https://d3js.org/d3.v7.min.js"></script>
@@ -463,9 +469,12 @@ function showPanel(d,svgX,svgY){
 
   requestAnimationFrame(()=>{
     const ph=panel.offsetHeight||140;
+    const pw2=panel.offsetWidth||380;
     const gap=HOVER_R*2*sxR+24;
     let left=sx+gap,top=sy-ph/2;
-    if(left+pw>window.innerWidth-14)left=sx-gap-pw;
+    if(left+pw2>window.innerWidth-14)left=sx-gap-pw2;
+    if(left<8)left=8;
+    if(left+pw2>window.innerWidth-8)left=window.innerWidth-pw2-8;
     if(top<12)top=12;
     if(top+ph>window.innerHeight-12)top=window.innerHeight-ph-12;
     panel.style.left=left+"px";panel.style.top=top+"px";
@@ -635,34 +644,35 @@ d3.json("https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json").then(w
   /* map background fade-in */
   mapG.attr("opacity",0).transition().duration(1200).ease(EASE).attr("opacity",0.6);
 
-  /* breathing animation — sequential wave sweep L→R with soft glow */
-  const allC=B.map(d=>({id:d.id,x:d.x,el:d3.select("#b-"+d.id).select(".b-circle"),halo:d3.select("#b-"+d.id).select(".b-halo")})).filter(e=>!e.el.empty());
+  /* breathing animation — sequential wave sweep L→R with visible glow */
+  const allC=B.map(d=>({id:d.id,x:d.x,col:d.col,g:d3.select("#b-"+d.id),el:d3.select("#b-"+d.id).select(".b-circle"),halo:d3.select("#b-"+d.id).select(".b-halo")})).filter(e=>!e.el.empty());
   /* sort by x position for left→right sweep */
   const sortedByX=[...allC].sort((a,b)=>a.x-b.x);
   let waveIdx=0;
   function breathWave(){
     if(!breathPaused){
-      /* sweep 3-4 bubbles per wave for organic feel */
-      const batch=3+Math.floor(Math.random()*2);
+      /* sweep 4-6 bubbles per wave — clearly visible */
+      const batch=4+Math.floor(Math.random()*3);
       for(let i=0;i<batch;i++){
         const idx=(waveIdx+i)%sortedByX.length;
         const pick=sortedByX[idx];
         if(pick.id!==activeId){
-          const delay=i*180;
-          pick.el.transition("breath").delay(delay).duration(800).ease(d3.easeSinInOut)
-            .attr("fill-opacity",0.40).attr("stroke-width",1.0)
-            .transition("breath").duration(1000).ease(d3.easeSinInOut)
-            .attr("fill-opacity",0.27).attr("stroke-width",0.4);
-          /* subtle halo glow during breath */
-          pick.halo.transition("bhalo").delay(delay).duration(800).ease(d3.easeSinInOut)
-            .attr("opacity",0.06)
-            .transition("bhalo").duration(1000).ease(d3.easeSinInOut)
+          const delay=i*140;
+          /* brighten fill + stroke */
+          pick.el.transition("breath").delay(delay).duration(700).ease(d3.easeSinInOut)
+            .attr("fill-opacity",0.48).attr("stroke-width",1.5).attr("stroke-opacity",0.8)
+            .transition("breath").duration(1200).ease(d3.easeSinInOut)
+            .attr("fill-opacity",0.27).attr("stroke-width",0.4).attr("stroke-opacity",1);
+          /* visible halo glow pulse */
+          pick.halo.transition("bhalo").delay(delay).duration(700).ease(d3.easeSinInOut)
+            .attr("opacity",0.15)
+            .transition("bhalo").duration(1200).ease(d3.easeSinInOut)
             .attr("opacity",0);
         }
       }
       waveIdx=(waveIdx+batch)%sortedByX.length;
     }
-    setTimeout(breathWave,1200+Math.random()*600);
+    setTimeout(breathWave,800+Math.random()*400);
   }
   setTimeout(breathWave,1800);
 
