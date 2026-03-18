@@ -27,10 +27,10 @@ body{max-width:1152px;margin:0 auto;padding:0 24px;overflow-x:hidden;overflow-y:
 
 /* ── HERO HEADING (matches other tabs) ── */
 .hero{text-align:center;padding:0 16px 40px;overflow-wrap:break-word;word-wrap:break-word;}
-.hero h2{font-size:36px;font-weight:700;letter-spacing:-0.5px;color:#fafafa;line-height:1.1;margin-bottom:16px;
+.hero h2{font-size:32px;font-weight:700;letter-spacing:-0.5px;color:#fafafa;line-height:1.1;margin-bottom:16px;
          font-family:'Inter',system-ui,sans-serif;
          animation:fadeUp 0.6s cubic-bezier(0.22,1,0.36,1) 0.1s both;}
-@media(min-width:640px){.hero h2{font-size:48px;}}
+@media(min-width:640px){.hero h2{font-size:43px;}}
 .hero p{font-size:clamp(14px,2vw,18px);color:#a1a1aa;max-width:560px;margin:0 auto;line-height:1.6;
         font-family:'Inter',system-ui,sans-serif;
         animation:fadeUp 0.6s cubic-bezier(0.22,1,0.36,1) 0.2s both;}
@@ -42,7 +42,7 @@ body{max-width:1152px;margin:0 auto;padding:0 24px;overflow-x:hidden;overflow-y:
      animation:scaleIn 0.5s cubic-bezier(0.22,1,0.36,1) 0.3s both;}
 .kpi-item{text-align:center;flex-shrink:1;min-width:0;}
 .kpi-num{font-size:clamp(14px,3.5vw,36px);font-weight:800;color:#F17E00;line-height:1;letter-spacing:-1px;font-family:'Inter',system-ui,sans-serif;font-variant-numeric:tabular-nums;white-space:nowrap;}
-.kpi-label{font-size:clamp(6px,1.1vw,11px);font-weight:600;color:#a1a1aa;letter-spacing:clamp(0.3px,0.15vw,2px);margin-top:6px;text-transform:uppercase;opacity:0.7;font-family:'Inter',system-ui,sans-serif;white-space:nowrap;}
+.kpi-label{font-size:clamp(12px,1.5vw,14px);font-weight:600;color:#a1a1aa;letter-spacing:clamp(0.3px,0.15vw,2px);margin-top:6px;text-transform:uppercase;opacity:0.7;font-family:'Inter',system-ui,sans-serif;white-space:nowrap;}
 .kpi-div{width:1px;height:clamp(16px,3vw,32px);background:#2e2e33;flex-shrink:0;}
 
 /* ── SUB-TAB NAV (not competing with outer nav) ── */
@@ -51,7 +51,7 @@ body{max-width:1152px;margin:0 auto;padding:0 24px;overflow-x:hidden;overflow-y:
          animation:fadeUp 0.4s cubic-bezier(0.22,1,0.36,1) 0.45s both;}
 .sub-nav-wrap{padding-bottom:40px;display:flex;justify-content:center;padding-left:8px;padding-right:8px;}
 .sub-btn{background:transparent;border:none;color:#a1a1aa;
-         font-family:inherit;font-size:clamp(11px,1.5vw,13px);font-weight:500;padding:8px clamp(12px,2vw,24px);cursor:pointer;
+         font-family:inherit;font-size:clamp(12px,1.5vw,14px);font-weight:500;padding:8px clamp(12px,2vw,24px);cursor:pointer;
          border-radius:100px;transition:all 0.2s ease;white-space:nowrap;}
 .sub-btn:hover{color:#fafafa;}
 .sub-btn.active{background:#fafafa;color:#09090b;font-weight:600;}
@@ -70,14 +70,14 @@ body{max-width:1152px;margin:0 auto;padding:0 24px;overflow-x:hidden;overflow-y:
 
 .section-header{display:flex;flex-direction:column;align-items:center;gap:4px;margin-bottom:16px;text-align:center;}
 .section-line,.section-line-r{display:none;}
-.section-title{font-size:12px;font-weight:700;letter-spacing:2.5px;color:rgba(241,126,0,0.7);white-space:nowrap;}
-.section-meta{font-size:11px;color:#a1a1aa;letter-spacing:1px;white-space:nowrap;font-weight:500;opacity:0.7;}
+.section-title{font-size:13px;font-weight:700;letter-spacing:2.5px;color:rgba(241,126,0,0.7);white-space:nowrap;}
+.section-meta{font-size:13px;color:#a1a1aa;letter-spacing:1px;white-space:nowrap;font-weight:500;opacity:0.7;}
 
 /* ── REGION CHIPS ── */
 .chip-bar{display:flex;align-items:center;gap:8px;padding:4px 0 20px;flex-wrap:nowrap;overflow-x:auto;-webkit-overflow-scrolling:touch;
   scrollbar-width:none;-ms-overflow-style:none;}
 .chip-bar::-webkit-scrollbar{display:none;}
-.chip-bar span{font-size:11px;color:#a1a1aa;letter-spacing:1.5px;font-weight:600;margin-right:4px;opacity:0.7;flex-shrink:0;white-space:nowrap;}
+.chip-bar span{font-size:12px;color:#a1a1aa;letter-spacing:1.5px;font-weight:600;margin-right:4px;opacity:0.7;flex-shrink:0;white-space:nowrap;}
 .chip{background:rgba(255,255,255,0.03);border:1px solid #2e2e33;color:#a1a1aa;
       font-size:12px;font-weight:500;padding:6px 16px;border-radius:100px;
       cursor:pointer;transition:all 0.2s ease;font-family:inherit;flex-shrink:0;}
@@ -86,11 +86,11 @@ body{max-width:1152px;margin:0 auto;padding:0 24px;overflow-x:hidden;overflow-y:
 
 /* ── TABLE ── */
 .tbl{width:100%;border-collapse:collapse;}
-.tbl th{font-size:11px;font-weight:600;color:#a1a1aa;letter-spacing:1.5px;text-align:left;
+.tbl th{font-size:12px;font-weight:600;color:#a1a1aa;letter-spacing:1.5px;text-align:left;
         padding:12px 14px;border-bottom:1px solid #2e2e33;cursor:pointer;user-select:none;
         transition:color 0.2s ease;text-transform:uppercase;opacity:0.7;white-space:nowrap;}
 .tbl th:hover{color:#F17E00;opacity:1;}
-.sort-arrow{font-size:10px;color:#F17E00;opacity:0.8;margin-left:2px;}
+.sort-arrow{font-size:12px;color:#F17E00;opacity:0.8;margin-left:2px;}
 .tbl th.r{text-align:right;}
 .tbl td{font-size:14px;padding:14px 14px;border-bottom:1px solid rgba(46,46,51,0.5);vertical-align:middle;
         transition:background 0.15s ease;}
@@ -131,7 +131,7 @@ body{max-width:1152px;margin:0 auto;padding:0 24px;overflow-x:hidden;overflow-y:
 #bp::-webkit-scrollbar-thumb{background:rgba(255,255,255,0.1);border-radius:3px}
 .bp-bar{position:absolute;left:0;top:0;bottom:0;width:3px;border-radius:16px 0 0 16px;background:var(--pc)}
 .bp-rg{padding:16px 24px 10px;background:rgba(255,255,255,0.02);border-radius:16px 16px 0 0;display:flex;align-items:center;gap:10px}
-.bp-fl{font-size:20px;line-height:1}.bp-rn{font-size:11px;font-weight:600;letter-spacing:2px;color:#a1a1aa}
+.bp-fl{font-size:20px;line-height:1}.bp-rn{font-size:12px;font-weight:600;letter-spacing:2px;color:#a1a1aa}
 .bp-hd{padding:12px 24px 16px}
 .bp-nm-row{display:flex;align-items:baseline;gap:8px}
 .bp-nm{font-size:20px;font-weight:800;letter-spacing:.3px;color:var(--pc)}
@@ -150,27 +150,27 @@ body{max-width:1152px;margin:0 auto;padding:0 24px;overflow-x:hidden;overflow-y:
   .bp-bar{width:2px;}
   .bp-rg{padding:8px 12px 4px;}
   .bp-fl{font-size:16px;}
-  .bp-rn{font-size:9px;letter-spacing:1.5px;}
+  .bp-rn{font-size:12px;letter-spacing:1.5px;}
   .bp-hd{padding:6px 12px 8px;}
   .bp-nm-row{gap:6px;}
   .bp-nm{font-size:14px;}
   .bp-val{font-size:15px;}
-  .bp-sb{font-size:10px;margin-top:2px;}
+  .bp-sb{font-size:12px;margin-top:2px;}
   .bp-sep{margin:0 12px;}
   .bp-bd{padding:8px 12px 10px;}
   .bp-rw{padding:5px 0;gap:6px;}
-  .bp-cn{font-size:11px;}
+  .bp-cn{font-size:12px;}
   .bp-cv{font-size:14px;}
 }
 /* Tap hint */
-.tap-hint{text-align:center;padding:8px 0 0;font-size:11px;color:#a1a1aa;opacity:0.5;letter-spacing:0.5px;
+.tap-hint{text-align:center;padding:8px 0 0;font-size:12px;color:#a1a1aa;opacity:0.5;letter-spacing:0.5px;
   display:none;animation:fadeIn 1s ease 2s both;}
 @media(pointer:coarse){.tap-hint{display:block;}}
 
 /* ── Table scroll wrapper ── */
 .tbl-scroll{overflow-x:auto;-webkit-overflow-scrolling:touch;margin:0;padding:0;position:relative;}
-.tbl-scroll::after{content:'';position:absolute;right:0;top:0;bottom:0;width:24px;pointer-events:none;
-  background:linear-gradient(90deg,transparent,rgba(9,9,11,0.6));z-index:2;opacity:1;transition:opacity 0.3s;}
+.tbl-scroll::after{content:'';position:absolute;right:0;top:0;bottom:0;width:56px;pointer-events:none;
+  background:linear-gradient(90deg,transparent,rgba(9,9,11,0.95));z-index:2;opacity:1;transition:opacity 0.3s;}
 .tbl-scroll.at-end::after{opacity:0;}
 
 /* ═══ RESPONSIVE ═══ */
@@ -185,22 +185,22 @@ body{max-width:1152px;margin:0 auto;padding:0 24px;overflow-x:hidden;overflow-y:
   /* Sub nav */
   .sub-nav-wrap{padding-bottom:24px;}
   .sub-nav{width:100%;max-width:100%;}
-  .sub-btn{font-size:11px;padding:7px 12px;}
+  .sub-btn{font-size:12px;padding:7px 12px;}
 
   /* Chip bar */
   .chip-bar{gap:6px;padding:4px 0 14px;}
-  .chip{font-size:11px;padding:5px 12px;flex-shrink:0;}
+  .chip{font-size:12px;padding:5px 12px;flex-shrink:0;}
 
-  .section-title{font-size:11px;letter-spacing:2px;}
-  .section-meta{font-size:10px;}
+  .section-title{font-size:12px;letter-spacing:2px;}
+  .section-meta{font-size:12px;}
 
   /* Tables: scroll wrapper handles overflow */
   .tbl{min-width:580px;}
   .tbl td{padding:10px 8px;font-size:13px;}
-  .tbl th{padding:10px 8px;font-size:10px;}
+  .tbl th{padding:10px 8px;font-size:12px;}
   .td-corp{max-width:120px;font-size:13px;}
   .td-bar-cell{display:none;}
-  .td-biz{max-width:100px;font-size:11px;}
+  .td-biz{max-width:100px;font-size:12px;}
   .td-fo{max-width:100px;font-size:12px;}
   .td-val{font-size:13px;width:60px;}
   .td-nw{font-size:13px;width:60px;}
@@ -208,8 +208,8 @@ body{max-width:1152px;margin:0 auto;padding:0 24px;overflow-x:hidden;overflow-y:
 @media(max-width:480px){
   body{padding:0 8px;}
   .map-wrap{width:calc(100% + 16px);margin-left:-8px;}
-  .sub-btn{font-size:10px;padding:6px 10px;}
-  .chip{font-size:10px;padding:4px 10px;flex-shrink:0;}
+  .sub-btn{font-size:12px;padding:6px 10px;}
+  .chip{font-size:12px;padding:4px 10px;flex-shrink:0;}
   .tbl{min-width:500px;}
   .td-bar-cell{display:none;}
 }
@@ -457,7 +457,7 @@ const grpMax={};
 B.forEach(d=>{if(!grpMax[d.col]||d.vB>grpMax[d.col])grpMax[d.col]=d.vB;});
 B.forEach(d=>{d.r=MIN_R+Math.sqrt(d.vB/grpMax[d.col])*(MAX_R-MIN_R);});
 
-const NAME_FS=12,VAL_FS=24,GAP=HOVER_R*0.21;
+const NAME_FS=14,VAL_FS=24,GAP=HOVER_R*0.21;
 
 /* ── panel ── */
 const panel=document.getElementById("bp");
@@ -669,7 +669,7 @@ d3.json("https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json").then(w
     g.append("circle").attr("class","b-ring").attr("r",HOVER_R+8)
       .attr("fill","none").attr("stroke",d.col).attr("stroke-width",1.5).attr("opacity",0);
 
-    addLabel(g,d.label,-GAP,NAME_FS,d.col,0.85);
+    addLabel(g,d.label,-GAP,NAME_FS,d.col,0.95);
 
     const isNum=d.val.startsWith("$")||d.val.startsWith("~");
     g.append("text").attr("text-anchor","middle").attr("dominant-baseline","central")
@@ -690,6 +690,22 @@ d3.json("https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json").then(w
      .on("mouseleave",scheduleHide)
      .on("click",e=>{e.stopPropagation();activeId===d.id?doHide():showPanel(d,d.x,d.y);});
   });
+
+  /* ── Mobile: hide less-valued bubbles, keep purple:5, teal:5, green:3 ── */
+  const isMobile=window.innerWidth<700;
+  if(isMobile){
+    const mobileKeep={};
+    [PURPLE,TEAL,GREEN].forEach(col=>{
+      const limit=col===GREEN?3:5;
+      const grp=B.filter(d=>d.col===col).sort((a,b)=>b.vB-a.vB);
+      grp.slice(0,limit).forEach(d=>{mobileKeep[d.id]=true;});
+    });
+    B.forEach(d=>{
+      if(!mobileKeep[d.id]){
+        d3.select("#b-"+d.id).attr("opacity",0).style("pointer-events","none").style("display","none");
+      }
+    });
+  }
 
   /* map background fade-in */
   mapG.attr("opacity",0).transition().duration(1200).ease(EASE).attr("opacity",0.6);
@@ -742,7 +758,43 @@ d3.json("https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json").then(w
     /* no gap between color groups — next group starts right after this group's glow peaks */
     setTimeout(breathWave,glowDur+shrinkDur+200);
   }
-  setTimeout(breathWave,1800);
+  setTimeout(breathWave,isMobile?8000:1800);
+
+  /* ── Mobile intro animation: auto-show top bubble card, then "Tap to explore" pill ── */
+  if(isMobile){
+    const topBubble=B.slice().sort((a,b)=>b.vB-a.vB)[0]; /* most valued = PIF */
+    breathPaused=true;
+    setTimeout(()=>{
+      /* Show the most valued bubble's card */
+      showPanel(topBubble,topBubble.x,topBubble.y);
+      /* Fade it out after 2.5s */
+      setTimeout(()=>{
+        doHide();
+        /* After card fades, show "Tap to explore" pill */
+        setTimeout(()=>{
+          const pill=document.createElement('div');
+          pill.id='intro-pill';
+          pill.style.cssText=`
+            position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
+            background:rgba(9,9,11,0.85);backdrop-filter:blur(16px);
+            border:1px solid rgba(241,126,0,0.3);border-radius:100px;
+            padding:14px 32px;color:#F17E00;font-size:14px;font-weight:600;
+            letter-spacing:1px;font-family:'Inter',system-ui,sans-serif;
+            opacity:0;transition:opacity 0.8s ease;z-index:999;
+            box-shadow:0 0 40px rgba(241,126,0,0.15);white-space:nowrap;
+          `;
+          pill.textContent='Tap to explore';
+          mapWrap.appendChild(pill);
+          requestAnimationFrame(()=>{pill.style.opacity='1';});
+          /* Fade pill out after 2.5s */
+          setTimeout(()=>{
+            pill.style.opacity='0';
+            setTimeout(()=>{pill.remove();breathPaused=false;},800);
+          },2500);
+        },600);
+      },2500);
+    },2000);
+  }
 
   /* notify parent iframe to resize */
   setTimeout(()=>{
@@ -853,37 +905,6 @@ document.querySelectorAll('.td-bar').forEach(bar=>{
 /* ── Initial reveal ── */
 setTimeout(()=>revealRows('sec1'),500);
 
-/* ── Apple-style slow auto-scroll for tables ── */
-function autoScrollTable(el){
-  if(!el||el.scrollWidth<=el.clientWidth+10)return;
-  const maxScroll=el.scrollWidth-el.clientWidth;
-  let userTouched=false;
-  el.addEventListener('touchstart',()=>{userTouched=true;},{passive:true,once:true});
-  el.addEventListener('mousedown',()=>{userTouched=true;},{once:true});
-
-  /* slow scroll right over 4s, pause 1.5s, scroll back over 3s */
-  const scrollRight=2500,pause=1200,scrollBack=1800;
-  let start=null,phase='right';
-  function step(ts){
-    if(userTouched)return;
-    if(!start)start=ts;
-    const elapsed=ts-start;
-    if(phase==='right'){
-      const p=Math.min(elapsed/scrollRight,1);
-      el.scrollLeft=maxScroll*easeInOut(p);
-      if(p>=1){phase='pause';start=ts;}
-    }else if(phase==='pause'){
-      if(elapsed>pause){phase='back';start=ts;}
-    }else if(phase==='back'){
-      const p=Math.min(elapsed/scrollBack,1);
-      el.scrollLeft=maxScroll*(1-easeInOut(p));
-      if(p>=1)return;
-    }
-    requestAnimationFrame(step);
-  }
-  function easeInOut(t){return t<0.5?2*t*t:(1-Math.pow(-2*t+2,2)/2);}
-  requestAnimationFrame(step);
-}
 /* fade-edge: hide when scrolled to end */
 document.querySelectorAll('.tbl-scroll').forEach(el=>{
   el.addEventListener('scroll',()=>{
@@ -891,10 +912,5 @@ document.querySelectorAll('.tbl-scroll').forEach(el=>{
     el.classList.toggle('at-end',atEnd);
   },{passive:true});
 });
-if(window.innerWidth<1024){
-  setTimeout(()=>{
-    document.querySelectorAll('.tbl-scroll').forEach(el=>autoScrollTable(el));
-  },1800);
-}
 </script>
 </body></html>
