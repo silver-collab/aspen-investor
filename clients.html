@@ -115,7 +115,7 @@ body{max-width:1152px;margin:0 auto;padding:0 24px;overflow-x:hidden;overflow-y:
 #map-main{background:#09090b;}
 
 /* ── Map Panel (glass morphism) ── */
-#bp{position:fixed;display:none;
+#bp{position:absolute;display:none;
   background:rgba(9,9,11,0.78);
   backdrop-filter:blur(24px) saturate(1.5);
   -webkit-backdrop-filter:blur(24px) saturate(1.5);
@@ -156,13 +156,8 @@ body{max-width:1152px;margin:0 auto;padding:0 24px;overflow-x:hidden;overflow-y:
   .section-header{flex-wrap:wrap;gap:8px;}
 }
 @media(max-width:768px){
-  /* Panel: bottom sheet */
-  #bp{position:fixed !important;bottom:0 !important;top:auto !important;left:0 !important;
-    width:100% !important;max-width:100% !important;max-height:45vh;
-    border-radius:20px 20px 0 0 !important;
-    box-shadow:0 -8px 40px rgba(0,0,0,0.6);
-    transform:translateY(100%);transition:transform 0.3s cubic-bezier(0.22,1,0.36,1);}
-  #bp.vis{transform:translateY(0);}
+  /* Panel: positioned by JS near the bubble */
+  #bp{width:min(380px,calc(100vw - 24px)) !important;max-width:calc(100vw - 24px) !important;}
 
   body{padding:0 12px;}
   .map-wrap{width:calc(100% + 24px);margin-left:-12px;}
@@ -468,25 +463,24 @@ function showPanel(d,svgX,svgY){
   requestAnimationFrame(()=>{
     const ph=panel.offsetHeight||140;
     const pw2=panel.offsetWidth||380;
-    let left,top;
+    const wrapRect=mapWrap.getBoundingClientRect();
+    /* Position relative to map-wrap (absolute positioning parent) */
+    const relX=sx-wrapRect.left, relY=sy-wrapRect.top;
+    const gap=HOVER_R*2*sxR+24;
+    let left=relX+gap, top=relY-ph/2;
+    /* Flip to left side if overflows right */
+    if(left+pw2>wrapRect.width-8) left=relX-gap-pw2;
+    /* Clamp within map-wrap bounds */
+    if(left<4) left=4;
+    if(left+pw2>wrapRect.width-4) left=wrapRect.width-pw2-4;
+    if(top<4) top=4;
+    if(top+ph>wrapRect.height-4) top=wrapRect.height-ph-4;
+    panel.style.left=left+"px";panel.style.top=top+"px";
 
-    if(window.innerWidth<768){
-      /* Mobile: CSS bottom-sheet, position at bottom center */
-      left=window.innerWidth/2;
-      top=window.innerHeight-ph/2;
-    }else{
-      const gap=HOVER_R*2*sxR+24;
-      left=sx+gap;top=sy-ph/2;
-      if(left+pw2>window.innerWidth-14)left=sx-gap-pw2;
-      if(left<8)left=8;
-      if(left+pw2>window.innerWidth-8)left=window.innerWidth-pw2-8;
-      if(top<12)top=12;
-      if(top+ph>window.innerHeight-12)top=window.innerHeight-ph-12;
-      panel.style.left=left+"px";panel.style.top=top+"px";
-    }
-
+    /* Connector line from bubble to panel edge */
     const oRect=document.getElementById("map-ovl").getBoundingClientRect();
-    const peX=left+(left>sx?0:pw),peY=top+ph/2;
+    const peX=left+wrapRect.left+(left+wrapRect.left>sx?0:pw2);
+    const peY=top+wrapRect.top+ph/2;
     const ang=Math.atan2(peY-sy,peX-sx);
     const lx1=svgX+Math.cos(ang)*(HOVER_R+8*sc);
     const ly1=svgY+Math.sin(ang)*(HOVER_R+8*sc);
