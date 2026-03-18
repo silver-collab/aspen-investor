@@ -711,7 +711,6 @@ d3.json("https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json").then(w
   mapG.attr("opacity",0).transition().duration(1200).ease(EASE).attr("opacity",0.6);
 
   /* breathing animation — top 3 per color, sequential: purple → green → blue */
-  const PURPLE="#b060e0",TEAL="#38b0d0",GREEN="#68b830";
   const colorOrder=[PURPLE,GREEN,TEAL];
   const colorGroups={};
   B.forEach(d=>{if(!colorGroups[d.col])colorGroups[d.col]=[];colorGroups[d.col].push(d);});
