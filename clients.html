@@ -157,11 +157,11 @@ body{max-width:1152px;margin:0 auto;padding:0 24px;overflow:hidden;}
   .hero h2{font-size:28px;}
   .hero p{font-size:14px;}
 
-  /* KPI: single row, compact */
-  .kpi{gap:12px;padding:16px 12px;}
+  /* KPI: single row, compact — never wrap */
+  .kpi{gap:16px;padding:16px 12px;flex-wrap:nowrap;}
   .kpi-num{font-size:22px;}
   .kpi-label{font-size:9px;letter-spacing:1px;}
-  .kpi-div{height:24px;}
+  .kpi-div{height:24px;width:1px;flex-shrink:0;}
 
   /* Sub nav */
   .sub-nav-wrap{padding-bottom:24px;}
@@ -192,10 +192,10 @@ body{max-width:1152px;margin:0 auto;padding:0 24px;overflow:hidden;}
 @media(max-width:480px){
   body{padding:0 8px;}
   .hero h2{font-size:24px;}
-  .kpi{gap:8px;padding:14px 8px;}
-  .kpi-num{font-size:18px;}
-  .kpi-label{font-size:8px;letter-spacing:1px;}
-  .kpi-div{height:20px;}
+  .kpi{gap:8px;padding:14px 8px;flex-wrap:nowrap;}
+  .kpi-num{font-size:16px;}
+  .kpi-label{font-size:7px;letter-spacing:0.8px;}
+  .kpi-div{height:18px;}
   .sub-btn{font-size:10px;padding:6px 10px;}
   .chip{font-size:10px;padding:4px 10px;}
   .tbl{min-width:600px;}
