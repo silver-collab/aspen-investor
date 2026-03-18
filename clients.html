@@ -74,7 +74,9 @@ body{max-width:1152px;margin:0 auto;padding:0 24px;overflow-x:hidden;overflow-y:
 .section-meta{font-size:11px;color:#a1a1aa;letter-spacing:1px;white-space:nowrap;font-weight:500;opacity:0.7;}
 
 /* ── REGION CHIPS ── */
-.chip-bar{display:flex;align-items:center;gap:8px;padding:4px 0 20px;flex-wrap:nowrap;overflow-x:auto;-webkit-overflow-scrolling:touch;}
+.chip-bar{display:flex;align-items:center;gap:8px;padding:4px 0 20px;flex-wrap:nowrap;overflow-x:auto;-webkit-overflow-scrolling:touch;
+  scrollbar-width:none;-ms-overflow-style:none;}
+.chip-bar::-webkit-scrollbar{display:none;}
 .chip-bar span{font-size:11px;color:#a1a1aa;letter-spacing:1.5px;font-weight:600;margin-right:4px;opacity:0.7;flex-shrink:0;white-space:nowrap;}
 .chip{background:rgba(255,255,255,0.03);border:1px solid #2e2e33;color:#a1a1aa;
       font-size:12px;font-weight:500;padding:6px 16px;border-radius:100px;
@@ -120,7 +122,7 @@ body{max-width:1152px;margin:0 auto;padding:0 24px;overflow-x:hidden;overflow-y:
   backdrop-filter:blur(24px) saturate(1.5);
   -webkit-backdrop-filter:blur(24px) saturate(1.5);
   border:1px solid rgba(46,46,51,0.6);
-  border-radius:16px;width:380px;max-height:60vh;overflow-y:auto;z-index:999;
+  border-radius:16px;width:min(380px,calc(100vw - 32px));max-height:60vh;overflow-y:auto;z-index:999;
   font-family:system-ui,-apple-system,sans-serif;
   box-shadow:0 8px 32px rgba(0,0,0,0.5),0 0 0 1px rgba(46,46,51,0.3)}
 #bp.vis{display:block}
@@ -132,15 +134,15 @@ body{max-width:1152px;margin:0 auto;padding:0 24px;overflow-x:hidden;overflow-y:
 .bp-fl{font-size:20px;line-height:1}.bp-rn{font-size:11px;font-weight:600;letter-spacing:2px;color:#a1a1aa}
 .bp-hd{padding:12px 24px 16px}
 .bp-nm-row{display:flex;align-items:baseline;gap:12px}
-.bp-nm{font-size:20px;font-weight:800;letter-spacing:.3px;color:var(--pc)}
-.bp-val{font-size:22px;font-weight:800;color:#fafafa;white-space:nowrap;font-variant-numeric:tabular-nums;margin-left:auto}
+.bp-nm{font-size:clamp(16px,4vw,20px);font-weight:800;letter-spacing:.3px;color:var(--pc)}
+.bp-val{font-size:clamp(18px,4.5vw,22px);font-weight:800;color:#fafafa;white-space:nowrap;font-variant-numeric:tabular-nums;margin-left:auto}
 .bp-sb{font-size:12px;color:#a1a1aa;margin-top:4px}
 .bp-sep{height:1px;background:rgba(46,46,51,0.5);margin:0 24px}
 .bp-bd{padding:16px 24px 20px}
 .bp-rw{display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid rgba(46,46,51,0.35);gap:14px}
 .bp-rw:last-child{border-bottom:none}
 .bp-cn{font-size:13px;color:#fafafa;flex:1;line-height:1.4;font-weight:500}
-.bp-cv{font-size:22px;font-weight:800;color:var(--pc);white-space:nowrap;font-variant-numeric:tabular-nums}
+.bp-cv{font-size:clamp(16px,4vw,22px);font-weight:800;color:var(--pc);white-space:nowrap;font-variant-numeric:tabular-nums}
 
 /* ── Table scroll wrapper ── */
 .tbl-scroll{overflow-x:auto;-webkit-overflow-scrolling:touch;margin:0;padding:0;position:relative;}
@@ -153,9 +155,6 @@ body{max-width:1152px;margin:0 auto;padding:0 24px;overflow-x:hidden;overflow-y:
   #bp{max-width:min(380px,calc(100vw - 24px));border-radius:12px;}
 }
 @media(max-width:768px){
-  /* Panel: positioned by JS near the bubble */
-  #bp{width:min(380px,calc(100vw - 24px)) !important;max-width:calc(100vw - 24px) !important;}
-
   body{padding:0 12px;}
   .map-wrap{width:calc(100% + 24px);margin-left:-12px;}
   .hero{padding:0 4px 24px;}
@@ -464,17 +463,27 @@ function showPanel(d,svgX,svgY){
     const ph=panel.offsetHeight||140;
     const pw2=panel.offsetWidth||380;
     const wrapRect=mapWrap.getBoundingClientRect();
-    /* Position relative to map-wrap (absolute positioning parent) */
     const relX=sx-wrapRect.left, relY=sy-wrapRect.top;
-    const gap=HOVER_R*2*sxR+24;
-    let left=relX+gap, top=relY-ph/2;
-    /* Flip to left side if overflows right */
-    if(left+pw2>wrapRect.width-8) left=relX-gap-pw2;
-    /* Clamp within map-wrap bounds */
-    if(left<4) left=4;
-    if(left+pw2>wrapRect.width-4) left=wrapRect.width-pw2-4;
-    if(top<4) top=4;
-    if(top+ph>wrapRect.height-4) top=wrapRect.height-ph-4;
+    let left,top;
+
+    if(wrapRect.width<700){
+      /* Narrow: center card horizontally, place below the bubble */
+      left=(wrapRect.width-pw2)/2;
+      const bubbleBottom=relY+HOVER_R*sxR+16;
+      top=bubbleBottom;
+      /* If card would overflow bottom, place above bubble */
+      if(top+ph>wrapRect.height-4) top=relY-HOVER_R*sxR-ph-16;
+      if(top<4) top=4;
+    }else{
+      /* Desktop: position beside the bubble */
+      const gap=HOVER_R*2*sxR+24;
+      left=relX+gap;top=relY-ph/2;
+      if(left+pw2>wrapRect.width-8) left=relX-gap-pw2;
+      if(left<4) left=4;
+      if(left+pw2>wrapRect.width-4) left=wrapRect.width-pw2-4;
+      if(top<4) top=4;
+      if(top+ph>wrapRect.height-4) top=wrapRect.height-ph-4;
+    }
     panel.style.left=left+"px";panel.style.top=top+"px";
 
     /* Connector line from bubble to panel edge */
