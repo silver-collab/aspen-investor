@@ -99,15 +99,16 @@ body{max-width:1152px;margin:0 auto;padding:0 24px;overflow-x:hidden;overflow-y:
 
 .td-region{width:80px;white-space:nowrap;font-size:12px;color:#a1a1aa;letter-spacing:0.5px;font-weight:500;opacity:0.7;}
 .td-flag{font-size:16px;vertical-align:middle;margin-right:5px;}
-.td-corp{color:#fafafa;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:240px;font-size:14px;letter-spacing:-0.1px;}
+.td-corp{color:#fafafa;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:240px;font-size:14px;letter-spacing:-0.1px;cursor:pointer;}
+.td-corp.expanded,.td-fo.expanded,.td-biz.expanded{white-space:normal;overflow:visible;text-overflow:unset;}
 .td-bar-cell{width:180px;padding-right:14px !important;}
 .td-bar-wrap{position:relative;height:4px;background:rgba(255,255,255,0.04);border-radius:2px;overflow:hidden;}
 .td-bar{height:100%;background:#F17E00;border-radius:2px;opacity:0.5;min-width:2px;
         transition:width 0.5s cubic-bezier(0.22,1,0.36,1);}
 .td-val{font-size:14px;font-weight:600;color:#F17E00;text-align:right;white-space:nowrap;width:85px;letter-spacing:-0.2px;}
-.td-fo{font-size:13px;font-weight:500;color:#a1a1aa;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:200px;}
+.td-fo{font-size:13px;font-weight:500;color:#a1a1aa;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:200px;cursor:pointer;}
 .td-nw{font-size:14px;font-weight:500;color:#a1a1aa;text-align:right;white-space:nowrap;width:85px;}
-.td-biz{font-size:12px;color:#a1a1aa;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:260px;letter-spacing:0.2px;font-weight:400;opacity:0.6;}
+.td-biz{font-size:12px;color:#a1a1aa;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:260px;letter-spacing:0.2px;font-weight:400;opacity:0.6;cursor:pointer;}
 
 /* ── MAP CONTAINER (full-screen) ── */
 .map-wrap{position:relative;width:calc(100% + 48px);margin-left:-24px;margin-bottom:0;
@@ -168,10 +169,6 @@ body{max-width:1152px;margin:0 auto;padding:0 24px;overflow-x:hidden;overflow-y:
   .bp-cn{font-size:10px;}
   .bp-cv{font-size:12px;}
 }
-/* Tap hint */
-.tap-hint{text-align:center;padding:8px 0 0;font-size:12px;color:#a1a1aa;opacity:0.5;letter-spacing:0.5px;
-  display:none;animation:fadeIn 1s ease 2s both;}
-@media(pointer:coarse){.tap-hint{display:block;}}
 
 /* ── Table scroll wrapper ── */
 .tbl-wrap{position:relative;}
@@ -248,7 +245,6 @@ body{max-width:1152px;margin:0 auto;padding:0 24px;overflow-x:hidden;overflow-y:
   <div class="bp-sep"></div>
   <div class="bp-bd" id="bp-bd"></div>
 </div>
-<div class="tap-hint">Tap a bubble to explore</div>
 </div>
 
 <!-- ═══ KPI STRIP ═══ -->
@@ -386,7 +382,7 @@ const W=1440,H=750;
 const sc=1;
 const FONT="system-ui,-apple-system,sans-serif";
 const BRAND="#F17E00",BG="#09090b",FG="#fafafa",MUTED="#a1a1aa",BORDER="#2e2e33";
-const PURPLE="#b060e0",TEAL="#38b0d0",GREEN="#68b830";
+const PURPLE="#c87eef",TEAL="#38b0d0",GREEN="#68b830";
 const EASE=d3.easeCubicOut;
 const HOVER_DUR=500;
 
@@ -478,18 +474,23 @@ B.forEach(d=>{d.r=MIN_R+Math.sqrt(d.vB/grpMax[d.col])*(MAX_R-MIN_R);});
 const isMobile=window.innerWidth<700;
 let mobileKeep=null;
 if(isMobile){
-  /* 2x larger bubbles on mobile so text fits inside */
-  B.forEach(d=>{d.r*=2;});
-  /* determine which bubbles to keep */
+  /* determine which bubbles to keep: top 5/5/3 large + next 3 per color as small extras */
   mobileKeep={};
+  const mobileExtra={};
   [PURPLE,TEAL,GREEN].forEach(col=>{
-    const limit=col===GREEN?3:5;
-    B.filter(d=>d.col===col).sort((a,b)=>b.vB-a.vB).slice(0,limit)
-      .forEach(d=>{mobileKeep[d.id]=true;});
+    const sorted=B.filter(d=>d.col===col).sort((a,b)=>b.vB-a.vB);
+    const mainLimit=col===GREEN?3:5;
+    sorted.slice(0,mainLimit).forEach(d=>{mobileKeep[d.id]=true;});
+    sorted.slice(mainLimit,mainLimit+3).forEach(d=>{mobileKeep[d.id]=true;mobileExtra[d.id]=true;});
+  });
+  /* 2x for main bubbles, 0.8x for extras (small decorative) */
+  B.forEach(d=>{
+    if(mobileExtra[d.id]) d.r*=0.8;
+    else d.r*=2;
   });
 }
 
-const NAME_FS=isMobile?18:14,VAL_FS=isMobile?33:26,GAP=isMobile?HOVER_R*0.29:HOVER_R*0.21;
+const NAME_FS=isMobile?18:14,VAL_FS=isMobile?43:26,GAP=isMobile?HOVER_R*0.32:HOVER_R*0.21;
 
 /* ── panel ── */
 const panel=document.getElementById("bp");
@@ -509,8 +510,6 @@ function showPanel(d,svgX,svgY){
   ).join("");
   panel.classList.add("vis");
   /* hide tap hint after first interaction */
-  const hint=document.querySelector('.tap-hint');
-  if(hint)hint.style.display='none';
   /* dim map background when hovering */
   d3.select("#mapG").transition().duration(HOVER_DUR).ease(EASE).attr("opacity",0.25);
 
@@ -589,9 +588,9 @@ function showPanel(d,svgX,svgY){
           .transition().duration(400).attr("opacity",0).remove();
       }
     }else{
-      /* non-hovered: dim entire group (circle + text) smoothly */
-      el.interrupt().transition().duration(HOVER_DUR).ease(EASE).attr("opacity",0.08);
-      el.select(".b-circle").transition().duration(HOVER_DUR).ease(EASE).attr("fill-opacity",0.06);
+      /* non-hovered: dim circle but keep text slightly visible */
+      el.interrupt().transition().duration(HOVER_DUR).ease(EASE).attr("opacity",0.18);
+      el.select(".b-circle").transition().duration(HOVER_DUR).ease(EASE).attr("fill-opacity",0.08);
     }
   });
 }
@@ -985,6 +984,11 @@ document.querySelectorAll('.td-bar').forEach(bar=>{
 
 /* ── Initial reveal ── */
 setTimeout(()=>revealRows('sec1'),500);
+
+/* tap to expand truncated cells on mobile */
+document.querySelectorAll('.td-corp,.td-fo,.td-biz').forEach(el=>{
+  el.addEventListener('click',()=>el.classList.toggle('expanded'));
+});
 
 /* fade-edge: hide when scrolled to end */
 document.querySelectorAll('.tbl-scroll').forEach(el=>{
