@@ -133,16 +133,34 @@ body{max-width:1152px;margin:0 auto;padding:0 24px;overflow-x:hidden;overflow-y:
 .bp-rg{padding:16px 24px 10px;background:rgba(255,255,255,0.02);border-radius:16px 16px 0 0;display:flex;align-items:center;gap:10px}
 .bp-fl{font-size:20px;line-height:1}.bp-rn{font-size:11px;font-weight:600;letter-spacing:2px;color:#a1a1aa}
 .bp-hd{padding:12px 24px 16px}
-.bp-nm-row{display:flex;align-items:baseline;gap:12px}
-.bp-nm{font-size:clamp(16px,4vw,20px);font-weight:800;letter-spacing:.3px;color:var(--pc)}
-.bp-val{font-size:clamp(18px,4.5vw,22px);font-weight:800;color:#fafafa;white-space:nowrap;font-variant-numeric:tabular-nums;margin-left:auto}
+.bp-nm-row{display:flex;align-items:baseline;gap:8px}
+.bp-nm{font-size:20px;font-weight:800;letter-spacing:.3px;color:var(--pc)}
+.bp-val{font-size:22px;font-weight:800;color:#fafafa;white-space:nowrap;font-variant-numeric:tabular-nums;margin-left:auto}
 .bp-sb{font-size:12px;color:#a1a1aa;margin-top:4px}
 .bp-sep{height:1px;background:rgba(46,46,51,0.5);margin:0 24px}
 .bp-bd{padding:16px 24px 20px}
 .bp-rw{display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid rgba(46,46,51,0.35);gap:14px}
 .bp-rw:last-child{border-bottom:none}
 .bp-cn{font-size:13px;color:#fafafa;flex:1;line-height:1.4;font-weight:500}
-.bp-cv{font-size:clamp(16px,4vw,22px);font-weight:800;color:var(--pc);white-space:nowrap;font-variant-numeric:tabular-nums}
+.bp-cv{font-size:22px;font-weight:800;color:var(--pc);white-space:nowrap;font-variant-numeric:tabular-nums}
+/* Mobile card: compact */
+@media(max-width:600px){
+  #bp{width:calc(100vw - 24px);max-height:40vh;border-radius:12px;}
+  .bp-rg{padding:10px 14px 6px;}
+  .bp-hd{padding:8px 14px 10px;}
+  .bp-nm{font-size:15px;}
+  .bp-val{font-size:16px;}
+  .bp-sb{font-size:11px;}
+  .bp-sep{margin:0 14px;}
+  .bp-bd{padding:10px 14px 14px;}
+  .bp-rw{padding:7px 0;gap:8px;}
+  .bp-cn{font-size:12px;}
+  .bp-cv{font-size:15px;}
+}
+/* Tap hint */
+.tap-hint{text-align:center;padding:8px 0 0;font-size:11px;color:#a1a1aa;opacity:0.5;letter-spacing:0.5px;
+  display:none;animation:fadeIn 1s ease 2s both;}
+@media(pointer:coarse){.tap-hint{display:block;}}
 
 /* ── Table scroll wrapper ── */
 .tbl-scroll{overflow-x:auto;-webkit-overflow-scrolling:touch;margin:0;padding:0;position:relative;}
@@ -202,6 +220,7 @@ body{max-width:1152px;margin:0 auto;padding:0 24px;overflow-x:hidden;overflow-y:
 <div class="map-wrap">
   <svg id="map-main"></svg><svg id="map-ovl" style="position:absolute;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:998"></svg>
 </div>
+<div class="tap-hint">Tap a bubble to explore</div>
 <div id="bp">
   <div class="bp-bar"></div>
   <div class="bp-rg"><span class="bp-fl" id="bp-fl"></span><span class="bp-rn" id="bp-rn"></span></div>
@@ -452,6 +471,9 @@ function showPanel(d,svgX,svgY){
     `<div class="bp-rw"><span class="bp-cn">${c.n}</span>${c.v&&c.v!=="—"?`<span class="bp-cv">${c.v}</span>`:""}</div>`
   ).join("");
   panel.classList.add("vis");
+  /* hide tap hint after first interaction */
+  const hint=document.querySelector('.tap-hint');
+  if(hint)hint.style.display='none';
   /* dim map background when hovering */
   d3.select("#mapG").transition().duration(HOVER_DUR).ease(EASE).attr("opacity",0.25);
 
