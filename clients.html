@@ -5,11 +5,11 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 <style>
 *{margin:0;padding:0;box-sizing:border-box;}
-html{width:100%;overflow:hidden;
+html{width:100%;overflow-x:hidden;overflow-y:auto;
   font-family:'Inter',system-ui,-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
   background:#09090b;color:#fafafa;
   -webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;font-weight:400;}
-body{max-width:1152px;margin:0 auto;padding:0 24px;overflow:hidden;}
+body{max-width:1152px;margin:0 auto;padding:0 24px;overflow-x:hidden;overflow-y:auto;}
 
 ::selection{background:rgba(241,126,0,0.3);color:#fff;}
 
@@ -26,31 +26,32 @@ body{max-width:1152px;margin:0 auto;padding:0 24px;overflow:hidden;}
 .anim{opacity:0;animation-fill-mode:both;animation-timing-function:cubic-bezier(0.22,1,0.36,1);}
 
 /* ── HERO HEADING (matches other tabs) ── */
-.hero{text-align:center;padding:0 16px 40px;}
-.hero h2{font-size:clamp(36px,5vw,48px);font-weight:700;letter-spacing:-0.5px;color:#fafafa;line-height:1.1;margin-bottom:16px;
+.hero{text-align:center;padding:0 16px 40px;overflow-wrap:break-word;word-wrap:break-word;}
+.hero h2{font-size:clamp(24px,5vw,48px);font-weight:700;letter-spacing:-0.5px;color:#fafafa;line-height:1.1;margin-bottom:16px;
          font-family:'Inter',system-ui,sans-serif;
          animation:fadeUp 0.6s cubic-bezier(0.22,1,0.36,1) 0.1s both;}
-.hero p{font-size:clamp(16px,2vw,18px);color:#a1a1aa;max-width:560px;margin:0 auto;line-height:1.6;
+.hero p{font-size:clamp(14px,2vw,18px);color:#a1a1aa;max-width:560px;margin:0 auto;line-height:1.6;
         font-family:'Inter',system-ui,sans-serif;
         animation:fadeUp 0.6s cubic-bezier(0.22,1,0.36,1) 0.2s both;}
 
 /* ── KPI STRIP ── */
-.kpi{display:flex;justify-content:center;align-items:center;gap:48px;padding:28px 0;margin-bottom:32px;
+.kpi{display:flex;justify-content:center;align-items:center;gap:clamp(12px,3vw,48px);padding:clamp(14px,2vw,28px) clamp(8px,2vw,24px);margin-bottom:32px;
      border-radius:16px;border:1px solid #2e2e33;background:rgba(39,39,42,0.3);backdrop-filter:blur(12px);
+     flex-wrap:nowrap;overflow:hidden;
      animation:scaleIn 0.5s cubic-bezier(0.22,1,0.36,1) 0.3s both;}
-.kpi-item{text-align:center;}
-.kpi-num{font-size:36px;font-weight:800;color:#F17E00;line-height:1;letter-spacing:-1px;font-family:'Inter',system-ui,sans-serif;font-variant-numeric:tabular-nums;}
-.kpi-label{font-size:11px;font-weight:600;color:#a1a1aa;letter-spacing:2px;margin-top:6px;text-transform:uppercase;opacity:0.7;font-family:'Inter',system-ui,sans-serif;}
-.kpi-div{width:1px;height:32px;background:#2e2e33;}
+.kpi-item{text-align:center;flex-shrink:1;min-width:0;}
+.kpi-num{font-size:clamp(16px,3.5vw,36px);font-weight:800;color:#F17E00;line-height:1;letter-spacing:-1px;font-family:'Inter',system-ui,sans-serif;font-variant-numeric:tabular-nums;white-space:nowrap;}
+.kpi-label{font-size:clamp(7px,1.2vw,11px);font-weight:600;color:#a1a1aa;letter-spacing:clamp(0.5px,0.2vw,2px);margin-top:6px;text-transform:uppercase;opacity:0.7;font-family:'Inter',system-ui,sans-serif;white-space:nowrap;}
+.kpi-div{width:1px;height:clamp(18px,3vw,32px);background:#2e2e33;flex-shrink:0;}
 
 /* ── SUB-TAB NAV (not competing with outer nav) ── */
-.sub-nav{display:flex;justify-content:center;gap:4px;padding:0 0 32px;margin:0 auto;width:fit-content;
-         background:#27272a;border-radius:100px;padding:4px;
+.sub-nav{display:flex;justify-content:center;gap:4px;padding:4px;margin:0 auto;width:fit-content;max-width:100%;
+         background:#27272a;border-radius:100px;
          animation:fadeUp 0.4s cubic-bezier(0.22,1,0.36,1) 0.45s both;}
-.sub-nav-wrap{padding-bottom:40px;display:flex;justify-content:center;}
+.sub-nav-wrap{padding-bottom:40px;display:flex;justify-content:center;padding-left:8px;padding-right:8px;}
 .sub-btn{background:transparent;border:none;color:#a1a1aa;
-         font-family:inherit;font-size:13px;font-weight:500;padding:8px 24px;cursor:pointer;
-         border-radius:100px;transition:all 0.2s ease;}
+         font-family:inherit;font-size:clamp(11px,1.5vw,13px);font-weight:500;padding:8px clamp(12px,2vw,24px);cursor:pointer;
+         border-radius:100px;transition:all 0.2s ease;white-space:nowrap;}
 .sub-btn:hover{color:#fafafa;}
 .sub-btn.active{background:#fafafa;color:#09090b;font-weight:600;}
 
@@ -108,8 +109,9 @@ body{max-width:1152px;margin:0 auto;padding:0 24px;overflow:hidden;}
 
 /* ── MAP CONTAINER (full-screen) ── */
 .map-wrap{position:relative;width:100vw;margin-left:calc(-50vw + 50%);margin-bottom:0;
+  overflow:hidden;
   animation:fadeIn 0.8s cubic-bezier(0.22,1,0.36,1) 0.15s both;}
-.map-wrap svg{display:block;width:100%;height:100%;}
+.map-wrap svg{display:block;width:100%;height:auto;}
 #map-main{background:#09090b;}
 
 /* ── Map Panel (glass morphism) ── */
@@ -150,9 +152,6 @@ body{max-width:1152px;margin:0 auto;padding:0 24px;overflow:hidden;}
 
 /* ═══ MOBILE / NARROW VIEWPORT ═══ */
 @media(max-width:1024px){
-  html{overflow:auto;overflow-x:hidden;}
-  body{overflow:auto;overflow-x:hidden;}
-
   /* Panel: clamp to viewport */
   #bp{max-width:min(380px,calc(100vw - 24px));border-radius:12px;}
 }
@@ -371,7 +370,7 @@ const FONT="system-ui,-apple-system,sans-serif";
 const BRAND="#F17E00",BG="#09090b",FG="#fafafa",MUTED="#a1a1aa",BORDER="#2e2e33";
 const PURPLE="#b060e0",TEAL="#38b0d0",GREEN="#68b830";
 const EASE=d3.easeCubicOut;
-const HOVER_DUR=250;
+const HOVER_DUR=500;
 
 const svg=d3.select("#map-main").attr("viewBox",`0 0 ${W} ${H}`).attr("preserveAspectRatio","xMidYMid meet");
 const ovl=d3.select("#map-ovl").attr("viewBox",`0 0 ${W} ${H}`).attr("preserveAspectRatio","xMidYMid meet");
@@ -476,6 +475,8 @@ function showPanel(d,svgX,svgY){
     `<div class="bp-rw"><span class="bp-cn">${c.n}</span>${c.v&&c.v!=="—"?`<span class="bp-cv">${c.v}</span>`:""}</div>`
   ).join("");
   panel.classList.add("vis");
+  /* dim map background when hovering */
+  d3.select("#mapG").transition().duration(HOVER_DUR).ease(EASE).attr("opacity",0.25);
 
   const rect=document.getElementById("map-main").getBoundingClientRect();
   const sx=rect.left+svgX*(rect.width/W),sy=rect.top+svgY*(rect.height/H);
@@ -520,11 +521,15 @@ function showPanel(d,svgX,svgY){
   d3.selectAll(".bg").each(function(n){
     const el=d3.select(this);
     if(n.id===d.id){
-      el.attr("opacity",1).transition().duration(HOVER_DUR).ease(EASE)
+      /* hovered bubble: full brightness, scale up, glow */
+      el.interrupt().attr("opacity",1).transition().duration(HOVER_DUR).ease(EASE)
         .attr("transform",`translate(${n.x},${n.y}) scale(1)`);
-      el.select(".b-halo").transition().duration(HOVER_DUR).ease(EASE).attr("opacity",0.12);
-      el.select(".b-circle").attr("filter","url(#glowSm)");
+      el.select(".b-halo").transition().duration(HOVER_DUR).ease(EASE).attr("opacity",0.18);
+      el.select(".b-circle").attr("filter","url(#glowSm)")
+        .transition().duration(HOVER_DUR).ease(EASE).attr("fill-opacity",0.55);
       el.select(".b-ring").transition().duration(HOVER_DUR).ease(EASE).attr("opacity",0.55);
+      /* make texts inside hovered bubble fully visible */
+      el.selectAll("text").transition().duration(HOVER_DUR).ease(EASE).attr("opacity",1);
       for(let ri=0;ri<3;ri++){
         el.append("circle").attr("class","ripple").attr("r",HOVER_R).attr("fill","none")
           .attr("stroke",n.col).attr("stroke-width",1.2-ri*0.3).attr("opacity",0)
@@ -533,8 +538,9 @@ function showPanel(d,svgX,svgY){
           .transition().duration(400).attr("opacity",0).remove();
       }
     }else{
-      el.transition().duration(HOVER_DUR).ease(EASE).attr("opacity",0.12);
-      el.select(".b-circle").transition().duration(HOVER_DUR).attr("fill-opacity",0.1);
+      /* non-hovered: dim entire group (circle + text) smoothly */
+      el.interrupt().transition().duration(HOVER_DUR).ease(EASE).attr("opacity",0.08);
+      el.select(".b-circle").transition().duration(HOVER_DUR).ease(EASE).attr("fill-opacity",0.06);
     }
   });
 }
@@ -542,6 +548,7 @@ function showPanel(d,svgX,svgY){
 function scheduleHide(){hideTimer=setTimeout(doHide,40);}
 function doHideInstant(){
   activeId=null;breathPaused=false;panel.classList.remove("vis");
+  d3.select("#mapG").attr("opacity",0.6);
   d3.selectAll(".bg").each(function(n){
     const el=d3.select(this);
     el.interrupt().attr("opacity",1).attr("transform",`translate(${n.x},${n.y}) scale(${n.r/HOVER_R})`);
@@ -552,14 +559,15 @@ function doHideInstant(){
 }
 function doHide(){
   activeId=null;breathPaused=false;panel.classList.remove("vis");
+  d3.select("#mapG").transition().duration(HOVER_DUR).ease(EASE).attr("opacity",0.6);
   d3.selectAll(".bg").each(function(n){
     const el=d3.select(this);
     el.interrupt().transition().duration(HOVER_DUR).ease(EASE)
       .attr("opacity",1).attr("transform",`translate(${n.x},${n.y}) scale(${n.r/HOVER_R})`);
     el.select(".b-halo").transition().duration(HOVER_DUR).attr("opacity",0);
-    el.select(".b-circle").attr("filter",null).transition().duration(HOVER_DUR).attr("fill-opacity",0.27);
+    el.select(".b-circle").attr("filter",null).transition().duration(HOVER_DUR).ease(EASE).attr("fill-opacity",0.27);
   });
-  d3.selectAll(".b-ring").transition().duration(150).attr("opacity",0);
+  d3.selectAll(".b-ring").transition().duration(HOVER_DUR).attr("opacity",0);
   d3.selectAll(".ripple").remove();ovl.selectAll("*").remove();
 }
 panel.addEventListener("mouseenter",()=>clearTimeout(hideTimer));
@@ -664,53 +672,53 @@ d3.json("https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json").then(w
   /* map background fade-in */
   mapG.attr("opacity",0).transition().duration(1200).ease(EASE).attr("opacity",0.6);
 
-  /* breathing animation — top 3 per color glow + 10% scale up */
+  /* breathing animation — top 3 per color, sequential: purple → green → blue */
+  const PURPLE="#b060e0",TEAL="#38b0d0",GREEN="#68b830";
+  const colorOrder=[PURPLE,GREEN,TEAL];
   const colorGroups={};
   B.forEach(d=>{if(!colorGroups[d.col])colorGroups[d.col]=[];colorGroups[d.col].push(d);});
-  /* get top 3 by value for each color */
+  /* build ordered list: 3 purple, 3 green, 3 blue */
   const breathTargets=[];
-  Object.values(colorGroups).forEach(grp=>{
+  colorOrder.forEach(col=>{
+    const grp=colorGroups[col]||[];
     grp.sort((a,b)=>b.vB-a.vB);
     grp.slice(0,3).forEach(d=>{
       const g=d3.select("#b-"+d.id);
       if(!g.empty()){
-        breathTargets.push({id:d.id,x:d.x,r:d.r,col:d.col,
+        breathTargets.push({id:d.id,r:d.r,col:d.col,
           g:g,el:g.select(".b-circle"),halo:g.select(".b-halo")});
       }
     });
   });
-  /* sort L→R for sweep */
-  breathTargets.sort((a,b)=>a.x-b.x);
-  let bIdx=0;
+  /* animate one color group (3 bubbles) at a time, then immediately next */
+  let breathGroupIdx=0;
   function breathWave(){
-    if(!breathPaused){
-      /* light up 2-3 at a time */
-      const batch=2+Math.floor(Math.random()*2);
-      for(let i=0;i<batch;i++){
-        const pick=breathTargets[(bIdx+i)%breathTargets.length];
-        if(pick.id!==activeId){
-          const delay=i*200;
-          const bs=pick.r/HOVER_R;
-          const upScale=bs*1.1;
-          /* glow + scale up 10% */
-          pick.el.transition("breath").delay(delay).duration(800).ease(d3.easeSinInOut)
-            .attr("fill-opacity",0.50).attr("stroke-width",1.5).attr("stroke-opacity",0.9);
-          pick.halo.transition("bhalo").delay(delay).duration(800).ease(d3.easeSinInOut)
-            .attr("opacity",0.18);
-          pick.g.transition("bscale").delay(delay).duration(800).ease(d3.easeSinInOut)
-            .attr("transform",`translate(${pick.g.datum().x},${pick.g.datum().y}) scale(${upScale})`)
-            /* shrink back */
-            .transition("bscale").duration(1200).ease(d3.easeSinInOut)
-            .attr("transform",`translate(${pick.g.datum().x},${pick.g.datum().y}) scale(${bs})`);
-          pick.el.transition("breath2").delay(delay+800).duration(1200).ease(d3.easeSinInOut)
-            .attr("fill-opacity",0.27).attr("stroke-width",0.4).attr("stroke-opacity",1);
-          pick.halo.transition("bhalo2").delay(delay+800).duration(1200).ease(d3.easeSinInOut)
-            .attr("opacity",0);
-        }
-      }
-      bIdx=(bIdx+batch)%breathTargets.length;
+    if(breathPaused){setTimeout(breathWave,1000);return;}
+    const groupStart=breathGroupIdx*3;
+    const glowDur=900,shrinkDur=1200;
+    for(let i=0;i<3;i++){
+      const pick=breathTargets[(groupStart+i)%breathTargets.length];
+      if(!pick||pick.id===activeId)continue;
+      const delay=i*150; /* stagger within group */
+      const bs=pick.r/HOVER_R;
+      const upScale=bs*1.1;
+      /* glow + scale up 10% */
+      pick.el.transition("breath").delay(delay).duration(glowDur).ease(d3.easeSinInOut)
+        .attr("fill-opacity",0.50).attr("stroke-width",1.5).attr("stroke-opacity",0.9);
+      pick.halo.transition("bhalo").delay(delay).duration(glowDur).ease(d3.easeSinInOut)
+        .attr("opacity",0.18);
+      pick.g.transition("bscale").delay(delay).duration(glowDur).ease(d3.easeSinInOut)
+        .attr("transform",`translate(${pick.g.datum().x},${pick.g.datum().y}) scale(${upScale})`)
+        .transition().duration(shrinkDur).ease(d3.easeSinInOut)
+        .attr("transform",`translate(${pick.g.datum().x},${pick.g.datum().y}) scale(${bs})`);
+      pick.el.transition("breath2").delay(delay+glowDur).duration(shrinkDur).ease(d3.easeSinInOut)
+        .attr("fill-opacity",0.27).attr("stroke-width",0.4).attr("stroke-opacity",1);
+      pick.halo.transition("bhalo2").delay(delay+glowDur).duration(shrinkDur).ease(d3.easeSinInOut)
+        .attr("opacity",0);
     }
-    setTimeout(breathWave,2000+Math.random()*800);
+    breathGroupIdx=(breathGroupIdx+1)%3;
+    /* no gap between color groups — next group starts right after this group's glow peaks */
+    setTimeout(breathWave,glowDur+shrinkDur+200);
   }
   setTimeout(breathWave,1800);
 
