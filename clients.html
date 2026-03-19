@@ -396,7 +396,8 @@ const ovl=d3.select("#map-ovl").attr("viewBox",`${-VB_PAD} ${-VB_PAD} ${W+VB_PAD
 const defs=svg.append("defs");
 
 const mapCY=H/2;
-const baseProj=d3.geoMercator().center([88,18]).scale(H*0.80).translate([W*0.48,mapCY]);
+const baseProj=d3.geoMercator().center([88,18]).scale(H*0.58).translate([W*0.48,mapCY+30]);
+const ENLARGE=1.20; /* scale everything 20% after simulation */
 
 function mkGlow(id,sd){
   const f=defs.append("filter").attr("id",id).attr("x","-120%").attr("y","-120%").attr("width","340%").attr("height","340%");
@@ -657,9 +658,7 @@ d3.json("https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json").then(w
     .attr("fill",d=>DOTS_MAP[ISO_REGION[+d.id]]||"url(#dots-neutral)")
     .attr("stroke","none");
 
-  /* edge fades */
-  mapG.append("rect").attr("x",0).attr("y",0).attr("width",W).attr("height",fadeH)
-    .attr("fill","url(#topFade)").attr("pointer-events","none");
+  /* edge fades — bottom only, no top fade to avoid covering bubbles */
   mapG.append("rect").attr("x",0).attr("y",H-fadeBH).attr("width",W).attr("height",fadeBH)
     .attr("fill","url(#botFade)").attr("pointer-events","none");
 
@@ -691,6 +690,17 @@ d3.json("https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json").then(w
       d.y=Math.max(d.r+PAD,Math.min(H-d.r-PAD,d.y));
     });
   }
+
+  /* enlarge 20%: scale all bubble positions from center, preserving exact distribution */
+  if(!isMobile){
+    const cx=W/2,cy=H/2;
+    simBubbles.forEach(d=>{
+      d.x=cx+(d.x-cx)*ENLARGE;
+      d.y=cy+(d.y-cy)*ENLARGE;
+    });
+  }
+  /* scale the map paths to match */
+  mapG.attr("transform",isMobile?null:`translate(${W/2},${H/2}) scale(${ENLARGE}) translate(${-W/2},${-H/2})`);
 
   /* draw bubbles */
   const bubbleL=svg.append("g").attr("id","bubbleL");
