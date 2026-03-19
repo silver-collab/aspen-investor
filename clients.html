@@ -111,7 +111,7 @@ body{max-width:1152px;margin:0 auto;padding:0 24px;overflow-x:hidden;overflow-y:
 .td-biz{font-size:12px;color:#a1a1aa;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:260px;letter-spacing:0.2px;font-weight:400;opacity:0.6;cursor:pointer;}
 
 /* ── MAP CONTAINER (full-screen) ── */
-.map-wrap{position:relative;width:100vw;margin-left:calc(-50vw + 50%);margin-top:-2vh;margin-bottom:0;
+.map-wrap{position:relative;width:100vw;margin-left:calc(-50vw + 50%);margin-bottom:0;
   overflow:visible;
   animation:fadeIn 0.8s cubic-bezier(0.22,1,0.36,1) 0.15s both;}
 .map-wrap svg{display:block;width:100%;height:auto;}
@@ -396,8 +396,8 @@ const ovl=d3.select("#map-ovl").attr("viewBox",`${-VB_PAD} ${-VB_PAD} ${W+VB_PAD
 const defs=svg.append("defs");
 
 const mapCY=H/2;
-/* slight upward shift to reduce gap below hero */
-const baseProj=d3.geoMercator().center([88,18]).scale(H*0.58).translate([W*0.48,mapCY-10]);
+const baseProj=d3.geoMercator().center([88,18]).scale(H*0.58).translate([W*0.48,mapCY+30]);
+const ENLARGE=1.20; /* scale everything 20% after simulation to preserve distribution */
 
 function mkGlow(id,sd){
   const f=defs.append("filter").attr("id",id).attr("x","-120%").attr("y","-120%").attr("width","340%").attr("height","340%");
@@ -709,7 +709,16 @@ d3.json("https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json").then(w
     });
   }
 
-  /* no post-sim transform — bubbles stay at natural geo positions */
+  /* enlarge 20% from center — preserves distribution, just makes everything bigger */
+  if(!isMobile){
+    const cx=W/2,cy=H/2;
+    simBubbles.forEach(d=>{
+      d.x=cx+(d.x-cx)*ENLARGE;
+      d.y=cy+(d.y-cy)*ENLARGE;
+    });
+  }
+  /* scale the map dots to match */
+  mapG.attr("transform",isMobile?null:`translate(${W/2},${H/2}) scale(${ENLARGE}) translate(${-W/2},${-H/2})`);
 
   /* draw bubbles */
   const bubbleL=svg.append("g").attr("id","bubbleL");
