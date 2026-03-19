@@ -671,7 +671,7 @@ d3.json("https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json").then(w
   if(isMobile) B.filter(d=>!mobileKeep[d.id]).forEach(d=>{const[x0,y0]=baseProj([d.lng,d.lat]);d.x=x0;d.y=y0;});
 
   const sim=d3.forceSimulation(simBubbles)
-    .force("collide",d3.forceCollide(d=>d.r+(isMobile?12:14)).strength(1.0))
+    .force("collide",d3.forceCollide(d=>d.r+(isMobile?12:6)).strength(0.95))
     .stop();
   if(isMobile){
     /* Color clustering: group same-color bubbles together */
@@ -792,9 +792,13 @@ d3.json("https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json").then(w
       const pick=breathTargets[(groupStart+i)%breathTargets.length];
       if(!pick||pick.id===activeId)continue;
       const delay=i*150; /* stagger within group */
-      /* halo-only breathing: no circle changes to prevent text jitter */
+      /* scale circle + halo only (not the group, to avoid text jitter) */
+      pick.el.transition("breath").delay(delay).duration(glowDur).ease(d3.easeSinInOut)
+        .attr("r",HOVER_R*1.1).attr("fill-opacity",0.42);
       pick.halo.transition("bhalo").delay(delay).duration(glowDur).ease(d3.easeSinInOut)
         .attr("opacity",0.15);
+      pick.el.transition("breath2").delay(delay+glowDur).duration(shrinkDur).ease(d3.easeSinInOut)
+        .attr("r",HOVER_R).attr("fill-opacity",0.27);
       pick.halo.transition("bhalo2").delay(delay+glowDur).duration(shrinkDur).ease(d3.easeSinInOut)
         .attr("opacity",0);
     }
