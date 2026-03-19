@@ -111,7 +111,7 @@ body{max-width:1152px;margin:0 auto;padding:0 24px;overflow-x:hidden;overflow-y:
 .td-biz{font-size:12px;color:#a1a1aa;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:260px;letter-spacing:0.2px;font-weight:400;opacity:0.6;cursor:pointer;}
 
 /* ── MAP CONTAINER (full-screen) ── */
-.map-wrap{position:relative;width:calc(100% + 48px);margin-left:-24px;margin-bottom:0;
+.map-wrap{position:relative;width:100vw;left:50%;transform:translateX(-50%);margin-bottom:0;
   overflow:visible;
   animation:fadeIn 0.8s cubic-bezier(0.22,1,0.36,1) 0.15s both;}
 .map-wrap svg{display:block;width:100%;height:auto;}
@@ -183,7 +183,7 @@ body{max-width:1152px;margin:0 auto;padding:0 24px;overflow-x:hidden;overflow-y:
 }
 @media(max-width:768px){
   body{padding:0 12px;}
-  .map-wrap{width:calc(100% + 24px);margin-left:-12px;}
+  .map-wrap{width:100vw;left:50%;transform:translateX(-50%);}
   .hero{padding:0 4px 20px;}
   .hero p{font-size:13px;}
   .kpi{padding:12px 10px;margin-bottom:20px;}
@@ -215,7 +215,7 @@ body{max-width:1152px;margin:0 auto;padding:0 24px;overflow-x:hidden;overflow-y:
 }
 @media(max-width:480px){
   body{padding:0 8px;}
-  .map-wrap{width:calc(100% + 16px);margin-left:-8px;}
+  .map-wrap{width:100vw;left:50%;transform:translateX(-50%);}
   .hero{padding:0 0 20px;}
   .kpi{padding:10px 8px;margin-bottom:16px;border-radius:12px;}
   .sub-nav-wrap{padding-bottom:16px;}
@@ -679,22 +679,15 @@ d3.json("https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json").then(w
     sim.force("gx",d3.forceX(d=>colorCX[d.col]).strength(0.10));
     sim.force("gy",d3.forceY(d=>colorCY[d.col]).strength(0.10));
   }else{
+    const BUBBLE_LIFT=H*0.10;
     sim.force("gx",d3.forceX(d=>baseProj([d.lng,d.lat])[0]).strength(0.06));
-    sim.force("gy",d3.forceY(d=>baseProj([d.lng,d.lat])[1]).strength(0.06));
+    sim.force("gy",d3.forceY(d=>baseProj([d.lng,d.lat])[1]-BUBBLE_LIFT).strength(0.06));
   }
   for(let i=0;i<600;i++){
     sim.tick();
     simBubbles.forEach(d=>{
       d.x=Math.max(d.r+PAD,Math.min(W-d.r-PAD,d.x));
       d.y=Math.max(d.r+PAD,Math.min(H-d.r-PAD,d.y));
-    });
-  }
-
-  /* shift bubbles up 20% on desktop */
-  if(!isMobile){
-    const shiftY=H*0.20;
-    simBubbles.forEach(d=>{
-      d.y=Math.max(d.r+PAD,d.y-shiftY);
     });
   }
 
