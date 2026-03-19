@@ -671,7 +671,7 @@ d3.json("https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json").then(w
   if(isMobile) B.filter(d=>!mobileKeep[d.id]).forEach(d=>{const[x0,y0]=baseProj([d.lng,d.lat]);d.x=x0;d.y=y0;});
 
   const sim=d3.forceSimulation(simBubbles)
-    .force("collide",d3.forceCollide(d=>d.r+(isMobile?12:6)).strength(0.95))
+    .force("collide",d3.forceCollide(d=>d.r+(isMobile?12:14)).strength(1.0))
     .stop();
   if(isMobile){
     /* Color clustering: group same-color bubbles together */
@@ -684,7 +684,7 @@ d3.json("https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json").then(w
     sim.force("gx",d3.forceX(d=>baseProj([d.lng,d.lat])[0]).strength(0.06));
     sim.force("gy",d3.forceY(d=>baseProj([d.lng,d.lat])[1]-BUBBLE_LIFT).strength(0.06));
   }
-  for(let i=0;i<600;i++){
+  for(let i=0;i<1000;i++){
     sim.tick();
     simBubbles.forEach(d=>{
       d.x=Math.max(d.r+PAD,Math.min(W-d.r-PAD,d.x));
