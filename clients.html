@@ -792,13 +792,9 @@ d3.json("https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json").then(w
       const pick=breathTargets[(groupStart+i)%breathTargets.length];
       if(!pick||pick.id===activeId)continue;
       const delay=i*150; /* stagger within group */
-      /* glow-only breathing: no scale to avoid overlap & text jitter */
-      pick.el.transition("breath").delay(delay).duration(glowDur).ease(d3.easeSinInOut)
-        .attr("fill-opacity",0.42).attr("stroke-width",1.5).attr("stroke-opacity",0.9);
+      /* halo-only breathing: no circle changes to prevent text jitter */
       pick.halo.transition("bhalo").delay(delay).duration(glowDur).ease(d3.easeSinInOut)
-        .attr("opacity",0.12);
-      pick.el.transition("breath2").delay(delay+glowDur).duration(shrinkDur).ease(d3.easeSinInOut)
-        .attr("fill-opacity",0.27).attr("stroke-width",0.4).attr("stroke-opacity",1);
+        .attr("opacity",0.15);
       pick.halo.transition("bhalo2").delay(delay+glowDur).duration(shrinkDur).ease(d3.easeSinInOut)
         .attr("opacity",0);
     }
