@@ -792,17 +792,11 @@ d3.json("https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json").then(w
       const pick=breathTargets[(groupStart+i)%breathTargets.length];
       if(!pick||pick.id===activeId)continue;
       const delay=i*150; /* stagger within group */
-      const bs=pick.r/HOVER_R;
-      const upScale=bs*1.05;
-      /* glow + scale up 10% */
+      /* glow-only breathing: no scale to avoid overlap & text jitter */
       pick.el.transition("breath").delay(delay).duration(glowDur).ease(d3.easeSinInOut)
-        .attr("fill-opacity",0.50).attr("stroke-width",1.5).attr("stroke-opacity",0.9);
+        .attr("fill-opacity",0.42).attr("stroke-width",1.5).attr("stroke-opacity",0.9);
       pick.halo.transition("bhalo").delay(delay).duration(glowDur).ease(d3.easeSinInOut)
         .attr("opacity",0.12);
-      pick.g.transition("bscale").delay(delay).duration(glowDur).ease(d3.easeSinInOut)
-        .attr("transform",`translate(${pick.g.datum().x},${pick.g.datum().y}) scale(${upScale})`)
-        .transition().duration(shrinkDur).ease(d3.easeSinInOut)
-        .attr("transform",`translate(${pick.g.datum().x},${pick.g.datum().y}) scale(${bs})`);
       pick.el.transition("breath2").delay(delay+glowDur).duration(shrinkDur).ease(d3.easeSinInOut)
         .attr("fill-opacity",0.27).attr("stroke-width",0.4).attr("stroke-opacity",1);
       pick.halo.transition("bhalo2").delay(delay+glowDur).duration(shrinkDur).ease(d3.easeSinInOut)
