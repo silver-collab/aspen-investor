@@ -795,11 +795,21 @@ d3.json("https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json").then(w
       const bs=pick.r/HOVER_R;
       const upScale=bs*1.10;
       const d_=pick.g.datum();
-      /* scale only — no glow to avoid text jitter from filter re-render */
-      pick.g.transition("breath").delay(delay).duration(glowDur).ease(d3.easeSinInOut)
-        .attr("transform",`translate(${d_.x},${d_.y}) scale(${upScale})`)
+      /* animate r + font-size individually to avoid transform jitter */
+      const scale=1.10;
+      pick.el.transition("breath").delay(delay).duration(glowDur).ease(d3.easeSinInOut)
+        .attr("r",HOVER_R*scale)
         .transition().duration(shrinkDur).ease(d3.easeSinInOut)
-        .attr("transform",`translate(${d_.x},${d_.y}) scale(${bs})`);
+        .attr("r",HOVER_R);
+      pick.g.selectAll("text").each(function(){
+        const t=d3.select(this);
+        const origFS=parseFloat(t.attr("font-size"));
+        const origY=parseFloat(t.attr("y"));
+        t.transition("breath").delay(delay).duration(glowDur).ease(d3.easeSinInOut)
+          .attr("font-size",origFS*scale).attr("y",origY*scale)
+          .transition().duration(shrinkDur).ease(d3.easeSinInOut)
+          .attr("font-size",origFS).attr("y",origY);
+      });
     }
     breathGroupIdx=(breathGroupIdx+1)%3;
     /* no gap between color groups — next group starts right after this group's glow peaks */
