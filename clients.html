@@ -792,14 +792,17 @@ d3.json("https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json").then(w
       const pick=breathTargets[(groupStart+i)%breathTargets.length];
       if(!pick||pick.id===activeId)continue;
       const delay=i*150; /* stagger within group */
-      /* scale circle + halo only (not the group, to avoid text jitter) */
-      pick.el.transition("breath").delay(delay).duration(glowDur).ease(d3.easeSinInOut)
-        .attr("r",HOVER_R*1.1).attr("fill-opacity",0.42);
-      pick.halo.transition("bhalo").delay(delay).duration(glowDur).ease(d3.easeSinInOut)
-        .attr("opacity",0.15);
-      pick.el.transition("breath2").delay(delay+glowDur).duration(shrinkDur).ease(d3.easeSinInOut)
-        .attr("r",HOVER_R).attr("fill-opacity",0.27);
-      pick.halo.transition("bhalo2").delay(delay+glowDur).duration(shrinkDur).ease(d3.easeSinInOut)
+      const bs=pick.r/HOVER_R;
+      const upScale=bs*1.10;
+      const d_=pick.g.datum();
+      /* scale up then back down — chained transitions */
+      pick.g.transition("breath").delay(delay).duration(glowDur).ease(d3.easeSinInOut)
+        .attr("transform",`translate(${d_.x},${d_.y}) scale(${upScale})`)
+        .transition().duration(shrinkDur).ease(d3.easeSinInOut)
+        .attr("transform",`translate(${d_.x},${d_.y}) scale(${bs})`);
+      pick.halo.transition("breath").delay(delay).duration(glowDur).ease(d3.easeSinInOut)
+        .attr("opacity",0.15)
+        .transition().duration(shrinkDur).ease(d3.easeSinInOut)
         .attr("opacity",0);
     }
     breathGroupIdx=(breathGroupIdx+1)%3;
