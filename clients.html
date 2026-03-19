@@ -382,7 +382,7 @@ body{max-width:1152px;margin:0 auto;padding:0 24px;overflow-x:hidden;overflow-y:
 /* ═══ NETWORK MAP ═══════════════════════════════════════════════════════ */
 (function(){
 const mapWrap=document.querySelector('.map-wrap');
-const W=1440,H=1100;
+const W=1200,H=766;
 const sc=1;
 const FONT="system-ui,-apple-system,sans-serif";
 const BRAND="#F17E00",BG="#09090b",FG="#fafafa",MUTED="#a1a1aa",BORDER="#2e2e33";
@@ -395,7 +395,7 @@ const ovl=d3.select("#map-ovl").attr("viewBox",`0 0 ${W} ${H}`).attr("preserveAs
 const defs=svg.append("defs");
 
 const mapCY=H/2;
-const baseProj=d3.geoMercator().center([88,18]).scale(H*0.58).translate([W*0.48,mapCY+30]);
+const baseProj=d3.geoMercator().center([88,18]).scale(H*0.58).translate([W*0.48,mapCY+25]);
 
 function mkGlow(id,sd){
   const f=defs.append("filter").attr("id",id).attr("x","-120%").attr("y","-120%").attr("width","340%").attr("height","340%");
@@ -497,7 +497,7 @@ if(isMobile){
   });
 }
 
-const NAME_FS=isMobile?22:17,VAL_FS=isMobile?52:31,GAP=isMobile?HOVER_R*0.32:NAME_FS;
+const NAME_FS=isMobile?22:17,VAL_FS=isMobile?52:31,GAP=isMobile?HOVER_R*0.32:NAME_FS*1.15;
 
 /* ── panel ── */
 const panel=document.getElementById("bp");
