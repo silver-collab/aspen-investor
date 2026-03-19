@@ -713,7 +713,8 @@ d3.json("https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json").then(w
     const bs=d.r/HOVER_R;
     const g=bubbleL.append("g").attr("class","bg").attr("id","b-"+d.id)
       .attr("transform",`translate(${d.x},${d.y}) scale(0)`)
-      .style("cursor","pointer").attr("opacity",0).datum(d);
+      .style("cursor","pointer").style("will-change","transform")
+      .attr("opacity",0).datum(d);
 
     g.append("circle").attr("class","b-halo").attr("r",HOVER_R*1.2)
       .attr("fill","none").attr("stroke",d.col).attr("stroke-width",HOVER_R*0.5)
@@ -795,7 +796,7 @@ d3.json("https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json").then(w
       const bs=pick.r/HOVER_R;
       const upScale=bs*1.10;
       const d_=pick.g.datum();
-      /* scale up then back down — chained transitions */
+      /* scale up then back down */
       pick.g.transition("breath").delay(delay).duration(glowDur).ease(d3.easeSinInOut)
         .attr("transform",`translate(${d_.x},${d_.y}) scale(${upScale})`)
         .transition().duration(shrinkDur).ease(d3.easeSinInOut)
