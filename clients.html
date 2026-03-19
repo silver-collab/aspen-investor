@@ -396,8 +396,8 @@ const ovl=d3.select("#map-ovl").attr("viewBox",`${-VB_PAD} ${-VB_PAD} ${W+VB_PAD
 const defs=svg.append("defs");
 
 const mapCY=H/2;
-/* shift projection up so bubbles fill top-to-bottom evenly */
-const baseProj=d3.geoMercator().center([88,18]).scale(H*0.58).translate([W*0.48,mapCY-40]);
+/* slight upward shift to reduce gap below hero */
+const baseProj=d3.geoMercator().center([88,18]).scale(H*0.58).translate([W*0.48,mapCY-10]);
 
 function mkGlow(id,sd){
   const f=defs.append("filter").attr("id",id).attr("x","-120%").attr("y","-120%").attr("width","340%").attr("height","340%");
