@@ -30,8 +30,8 @@ body{max-width:1152px;margin:0 auto;padding:0 24px;overflow-x:hidden;overflow-y:
 .hero h2{font-size:32px;font-weight:700;letter-spacing:-0.5px;color:#fafafa;line-height:1.1;margin-bottom:12px;
          font-family:'Inter',system-ui,sans-serif;
          animation:fadeUp 0.6s cubic-bezier(0.22,1,0.36,1) 0.1s both;}
-@media(min-width:640px){.hero h2{font-size:43px;}.hero p{font-size:18px;}}
-.hero p{font-size:14px;color:#a1a1aa;max-width:720px;margin:0 auto;line-height:1.5;
+@media(min-width:640px){.hero h2{font-size:43px;}.hero p{font-size:17px;}}
+.hero p{font-size:13px;color:#a1a1aa;max-width:672px;margin:0 auto;line-height:1.5;
         font-family:'Inter',system-ui,sans-serif;
         animation:fadeUp 0.6s cubic-bezier(0.22,1,0.36,1) 0.2s both;}
 
@@ -382,7 +382,7 @@ body{max-width:1152px;margin:0 auto;padding:0 24px;overflow-x:hidden;overflow-y:
 /* ═══ NETWORK MAP ═══════════════════════════════════════════════════════ */
 (function(){
 const mapWrap=document.querySelector('.map-wrap');
-const W=1200,H=766;
+const W=1440,H=920;
 const sc=1;
 const FONT="system-ui,-apple-system,sans-serif";
 const BRAND="#F17E00",BG="#09090b",FG="#fafafa",MUTED="#a1a1aa",BORDER="#2e2e33";
@@ -395,7 +395,7 @@ const ovl=d3.select("#map-ovl").attr("viewBox",`0 0 ${W} ${H}`).attr("preserveAs
 const defs=svg.append("defs");
 
 const mapCY=H/2;
-const baseProj=d3.geoMercator().center([88,18]).scale(H*0.58).translate([W*0.48,mapCY+25]);
+const baseProj=d3.geoMercator().center([88,18]).scale(H*0.58).translate([W*0.48,mapCY+30]);
 
 function mkGlow(id,sd){
   const f=defs.append("filter").attr("id",id).attr("x","-120%").attr("y","-120%").attr("width","340%").attr("height","340%");
@@ -687,6 +687,14 @@ d3.json("https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json").then(w
     simBubbles.forEach(d=>{
       d.x=Math.max(d.r+PAD,Math.min(W-d.r-PAD,d.x));
       d.y=Math.max(d.r+PAD,Math.min(H-d.r-PAD,d.y));
+    });
+  }
+
+  /* shift bubbles up 20% on desktop */
+  if(!isMobile){
+    const shiftY=H*0.20;
+    simBubbles.forEach(d=>{
+      d.y=Math.max(d.r+PAD,d.y-shiftY);
     });
   }
 
