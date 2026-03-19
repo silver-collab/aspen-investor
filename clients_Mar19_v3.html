@@ -1,0 +1,1040 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Aspen Digital — Client Portfolio</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+html{max-width:100%;overflow-x:clip;overflow-y:auto;
+  font-family:'Inter',system-ui,-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+  background:#09090b;color:#fafafa;
+  -webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;font-weight:400;}
+body{max-width:1152px;margin:0 auto;padding:0 24px;overflow-x:hidden;overflow-y:auto;}
+
+::selection{background:rgba(241,126,0,0.3);color:#fff;}
+
+::-webkit-scrollbar{width:6px;}
+::-webkit-scrollbar-track{background:transparent;}
+::-webkit-scrollbar-thumb{background:rgba(255,255,255,0.1);border-radius:3px;}
+::-webkit-scrollbar-thumb:hover{background:rgba(255,255,255,0.2);}
+
+/* ── ANIMATION SYSTEM ── */
+@keyframes fadeUp{from{opacity:0;transform:translateY(16px);}to{opacity:1;transform:translateY(0);}}
+@keyframes fadeIn{from{opacity:0;}to{opacity:1;}}
+@keyframes scaleIn{from{opacity:0;transform:scale(0.96);}to{opacity:1;transform:scale(1);}}
+@keyframes barGrow{from{width:0;}to{width:var(--bar-w);}}
+.anim{opacity:0;animation-fill-mode:both;animation-timing-function:cubic-bezier(0.22,1,0.36,1);}
+
+/* ── HERO HEADING ── */
+.hero{text-align:center;padding:0 16px 12px;overflow-wrap:break-word;word-wrap:break-word;}
+.hero h2{font-size:32px;font-weight:700;letter-spacing:-0.5px;color:#fafafa;line-height:1.1;margin-bottom:6px;
+         font-family:'Inter',system-ui,sans-serif;
+         animation:fadeUp 0.6s cubic-bezier(0.22,1,0.36,1) 0.1s both;}
+.hero p{font-size:13px;color:#a1a1aa;max-width:672px;margin:0 auto;line-height:1.5;
+        font-family:'Inter',system-ui,sans-serif;
+        animation:fadeUp 0.6s cubic-bezier(0.22,1,0.36,1) 0.2s both;}
+@media(min-width:640px){.hero h2{font-size:43px;}.hero p{font-size:17px;}}
+
+/* ── KPI STRIP ── */
+.kpi{display:flex;justify-content:center;align-items:center;gap:clamp(12px,3vw,48px);padding:clamp(14px,2vw,28px) clamp(12px,2vw,24px);margin-bottom:24px;
+     border-radius:16px;border:1px solid #2e2e33;background:rgba(39,39,42,0.3);backdrop-filter:blur(12px);
+     flex-wrap:nowrap;
+     animation:scaleIn 0.5s cubic-bezier(0.22,1,0.36,1) 0.3s both;}
+.kpi-item{text-align:center;flex-shrink:1;min-width:0;}
+.kpi-num{font-size:clamp(18px,4.5vw,36px);font-weight:800;color:#F17E00;line-height:1;letter-spacing:-0.5px;font-family:'Inter',system-ui,sans-serif;font-variant-numeric:tabular-nums;white-space:nowrap;}
+.kpi-label{font-size:clamp(8px,1vw,11px);font-weight:600;color:#a1a1aa;letter-spacing:clamp(0.5px,0.15vw,2px);margin-top:4px;text-transform:uppercase;opacity:0.6;font-family:'Inter',system-ui,sans-serif;}
+.kpi-div{width:1px;height:clamp(18px,3vw,32px);background:#2e2e33;flex-shrink:0;}
+
+/* ── SUB-TAB NAV (not competing with outer nav) ── */
+.sub-nav{display:flex;justify-content:center;gap:4px;padding:4px;margin:0 auto;width:fit-content;max-width:100%;
+         background:#27272a;border-radius:100px;
+         animation:fadeUp 0.4s cubic-bezier(0.22,1,0.36,1) 0.45s both;}
+.sub-nav-wrap{padding-bottom:24px;display:flex;justify-content:center;padding-left:8px;padding-right:8px;}
+.sub-btn{background:transparent;border:none;color:#a1a1aa;
+         font-family:inherit;font-size:clamp(11px,1.4vw,13px);font-weight:500;padding:7px clamp(12px,2vw,24px);cursor:pointer;
+         border-radius:100px;transition:all 0.2s ease;white-space:nowrap;text-align:center;line-height:1.3;}
+.sub-btn:hover{color:#fafafa;}
+.sub-btn.active{background:#fafafa;color:#09090b;font-weight:600;}
+
+/* ── SECTION ── */
+.section{padding:0 0 48px;display:none;}
+.section.visible{display:block;}
+
+/* ── TABLE ROW ANIMATION ── */
+.tbl tbody tr{opacity:0;transform:translateY(6px);transition:opacity 0.5s cubic-bezier(0.22,1,0.36,1),transform 0.5s cubic-bezier(0.22,1,0.36,1);}
+.tbl tbody tr.revealed{opacity:1;transform:translateY(0);}
+
+/* ── BAR ANIMATION ── */
+.td-bar{width:0 !important;}
+.td-bar.animated{width:var(--bar-w) !important;transition:width 0.8s cubic-bezier(0.22,1,0.36,1);}
+
+.section-header{display:flex;flex-direction:column;align-items:center;gap:4px;margin-bottom:20px;text-align:center;}
+.section-line,.section-line-r{display:none;}
+.section-title{font-size:11px;font-weight:700;letter-spacing:2.5px;color:rgba(241,126,0,0.7);text-transform:uppercase;}
+.section-meta{font-size:11px;color:#a1a1aa;letter-spacing:0.5px;font-weight:500;opacity:0.6;}
+
+/* ── REGION CHIPS ── */
+.chip-bar{display:flex;align-items:center;gap:8px;padding:4px 0 20px;flex-wrap:nowrap;overflow-x:auto;-webkit-overflow-scrolling:touch;
+  scrollbar-width:none;-ms-overflow-style:none;}
+.chip-bar::-webkit-scrollbar{display:none;}
+.chip-bar span{font-size:12px;color:#a1a1aa;letter-spacing:1.5px;font-weight:600;margin-right:4px;opacity:0.7;flex-shrink:0;white-space:nowrap;}
+.chip{background:rgba(255,255,255,0.03);border:1px solid #2e2e33;color:#a1a1aa;
+      font-size:12px;font-weight:500;padding:6px 16px;border-radius:100px;
+      cursor:pointer;transition:all 0.2s ease;font-family:inherit;flex-shrink:0;}
+.chip:hover{background:rgba(241,126,0,0.08);border-color:rgba(241,126,0,0.3);color:#F17E00;}
+.chip.active{background:#F17E00;border-color:#F17E00;color:#09090b;font-weight:600;}
+
+/* ── TABLE ── */
+.tbl{width:100%;border-collapse:collapse;}
+.tbl th{font-size:11px;font-weight:600;color:#a1a1aa;letter-spacing:1.5px;text-align:left;
+        padding:12px 14px;border-bottom:1px solid #2e2e33;cursor:pointer;user-select:none;
+        transition:color 0.2s ease;text-transform:uppercase;opacity:0.7;white-space:nowrap;}
+.tbl th:hover{color:#F17E00;opacity:1;}
+.sort-arrow{font-size:12px;color:#F17E00;opacity:0.8;margin-left:2px;}
+.tbl th.r{text-align:right;}
+.tbl td{font-size:14px;padding:14px 14px;border-bottom:1px solid rgba(46,46,51,0.5);vertical-align:middle;
+        transition:background 0.15s ease;}
+.tbl tbody tr{transition:background 0.15s ease;}
+.tbl tbody tr:hover td{background:rgba(255,255,255,0.02);}
+
+.td-region{width:80px;white-space:nowrap;font-size:12px;color:#a1a1aa;letter-spacing:0.5px;font-weight:500;opacity:0.7;}
+.td-flag{font-size:16px;vertical-align:middle;margin-right:5px;}
+.td-corp{color:#a1a1aa;font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:200px;font-size:13px;letter-spacing:-0.1px;cursor:pointer;}
+.td-corp.expanded,.td-fo.expanded,.td-biz.expanded{white-space:normal;overflow:visible;text-overflow:unset;}
+.td-bar-cell{width:180px;padding-right:14px !important;}
+.td-bar-wrap{position:relative;height:4px;background:rgba(255,255,255,0.04);border-radius:2px;overflow:hidden;}
+.td-bar{height:100%;background:#F17E00;border-radius:2px;opacity:0.5;min-width:2px;
+        transition:width 0.5s cubic-bezier(0.22,1,0.36,1);}
+.td-val{font-size:13px;font-weight:500;color:#a1a1aa;text-align:right;white-space:nowrap;width:75px;letter-spacing:-0.2px;}
+.td-fo{font-size:14px;font-weight:600;color:#fafafa;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:240px;cursor:pointer;letter-spacing:-0.1px;}
+.td-nw{font-size:14px;font-weight:600;color:#F17E00;text-align:right;white-space:nowrap;width:85px;letter-spacing:-0.2px;}
+.td-biz{font-size:12px;color:#a1a1aa;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:260px;letter-spacing:0.2px;font-weight:400;opacity:0.6;cursor:pointer;}
+
+/* ── MAP CONTAINER (full-screen) ── */
+.map-wrap{position:relative;width:100vw;margin-left:calc(-50vw + 50%);margin-bottom:0;
+  overflow:visible;
+  animation:fadeIn 0.8s cubic-bezier(0.22,1,0.36,1) 0.15s both;}
+.map-wrap svg{display:block;width:100%;height:auto;}
+#map-main{background:#09090b;}
+
+/* ── Map Panel (glass morphism) ── */
+#bp{position:absolute;display:none;
+  background:rgba(9,9,11,0.78);
+  backdrop-filter:blur(24px) saturate(1.5);
+  -webkit-backdrop-filter:blur(24px) saturate(1.5);
+  border:1px solid rgba(46,46,51,0.6);
+  border-radius:16px;width:min(380px,calc(100vw - 32px));max-height:60vh;overflow-y:auto;z-index:999;
+  font-family:system-ui,-apple-system,sans-serif;
+  box-shadow:0 8px 32px rgba(0,0,0,0.5),0 0 0 1px rgba(46,46,51,0.3)}
+#bp.vis{display:block}
+#bp::-webkit-scrollbar{width:6px}
+#bp::-webkit-scrollbar-track{background:transparent}
+#bp::-webkit-scrollbar-thumb{background:rgba(255,255,255,0.1);border-radius:3px}
+.bp-bar{position:absolute;left:0;top:0;bottom:0;width:3px;border-radius:16px 0 0 16px;background:var(--pc)}
+.bp-rg{padding:16px 24px 10px;background:rgba(255,255,255,0.02);border-radius:16px 16px 0 0;display:flex;align-items:center;gap:10px}
+.bp-fl{font-size:20px;line-height:1}.bp-rn{font-size:12px;font-weight:600;letter-spacing:2px;color:#a1a1aa}
+.bp-hd{padding:12px 24px 16px}
+.bp-nm-row{display:flex;align-items:baseline;gap:8px}
+.bp-nm{font-size:20px;font-weight:800;letter-spacing:.3px;color:var(--pc)}
+.bp-val{font-size:22px;font-weight:800;color:#fafafa;white-space:nowrap;font-variant-numeric:tabular-nums;margin-left:auto}
+.bp-sb{font-size:12px;color:#a1a1aa;margin-top:4px}
+.bp-sep{height:1px;background:rgba(46,46,51,0.5);margin:0 24px}
+.bp-bd{padding:16px 24px 20px}
+.bp-rw{display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid rgba(46,46,51,0.35);gap:14px}
+.bp-rw:last-child{border-bottom:none}
+.bp-cn{font-size:13px;color:#fafafa;flex:1;line-height:1.4;font-weight:500}
+.bp-cv{font-size:22px;font-weight:800;color:var(--pc);white-space:nowrap;font-variant-numeric:tabular-nums}
+/* Close button */
+.bp-close{position:absolute;top:4px;right:4px;width:18px;height:18px;border:none;background:none;
+  border-radius:50%;color:rgba(161,161,170,0.5);font-size:11px;line-height:1;cursor:pointer;display:none;
+  align-items:center;justify-content:center;z-index:10;transition:color 0.15s;padding:0;}
+.bp-close:hover{color:#fafafa;}
+@media(max-width:700px){.bp-close{display:flex;}}
+/* Narrow: compact card, centered */
+@media(max-width:700px){
+  #bp{width:200px;max-height:none;overflow:hidden;border-radius:10px;
+    box-shadow:0 6px 24px rgba(0,0,0,0.5);}
+  .bp-bar{width:2px;}
+  .bp-rg{padding:6px 10px 3px;}
+  .bp-fl{font-size:14px;}
+  .bp-rn{font-size:9px;letter-spacing:1px;}
+  .bp-hd{padding:4px 10px 6px;}
+  .bp-nm-row{gap:4px;flex-wrap:wrap;}
+  .bp-nm{font-size:13px;}
+  .bp-val{font-size:13px;margin-left:0;}
+  .bp-sb{font-size:9px;margin-top:1px;}
+  .bp-sep{margin:0 10px;}
+  .bp-bd{padding:6px 10px 8px;}
+  .bp-rw{padding:4px 0;gap:4px;}
+  .bp-cn{font-size:10px;}
+  .bp-cv{font-size:12px;}
+}
+
+/* ── Table scroll wrapper ── */
+.tbl-wrap{position:relative;}
+.tbl-wrap::after{content:'';position:absolute;right:0;top:0;bottom:0;width:56px;pointer-events:none;
+  background:linear-gradient(90deg,transparent,rgba(9,9,11,0.95));z-index:2;transition:opacity 0.3s;}
+.tbl-wrap.at-end::after{opacity:0;}
+.tbl-scroll{overflow-x:auto;-webkit-overflow-scrolling:touch;margin:0;padding:0;}
+
+/* ═══ RESPONSIVE ═══ */
+@media(max-width:1024px){
+  #bp{max-width:min(380px,calc(100vw - 24px));border-radius:12px;}
+}
+@media(max-width:768px){
+  body{padding:0 12px;}
+  .map-wrap{width:100vw;margin-left:calc(-50vw + 50%);}
+  .hero{padding:0 4px 12px;}
+  .hero p{font-size:13px;}
+  .kpi{padding:12px 10px;margin-bottom:20px;}
+
+  /* Sub nav — match outer tab nav size */
+  .sub-nav-wrap{padding-bottom:20px;}
+  .sub-nav{width:100%;max-width:100%;}
+  .sub-btn{font-size:11px;padding:6px 12px;}
+
+  /* Chip bar */
+  .chip-bar{gap:6px;padding:4px 0 12px;}
+  .chip{font-size:11px;padding:5px 12px;flex-shrink:0;}
+
+  .section{padding:0 0 32px;}
+  .section-header{margin-bottom:16px;}
+  .section-title{font-size:10px;letter-spacing:2px;}
+  .section-meta{font-size:10px;}
+
+  /* Tables */
+  .tbl{min-width:580px;}
+  .tbl td{padding:10px 8px;font-size:13px;}
+  .tbl th{padding:10px 8px;font-size:10px;}
+  .td-corp{max-width:100px;font-size:12px;}
+  .td-bar-cell{display:none;}
+  .td-biz{max-width:100px;font-size:11px;}
+  .td-fo{max-width:120px;font-size:13px;}
+  .td-val{font-size:12px;width:55px;}
+  .td-nw{font-size:13px;width:60px;}
+}
+@media(max-width:480px){
+  body{padding:0 8px;}
+  .map-wrap{width:100vw;margin-left:calc(-50vw + 50%);}
+  .hero{padding:0 0 12px;}
+  .kpi{padding:10px 8px;margin-bottom:16px;border-radius:12px;}
+  .sub-nav-wrap{padding-bottom:16px;}
+  .sub-nav{gap:2px;padding:3px;}
+  .sub-btn{font-size:11px;padding:5px 10px;}
+  .section{padding:0 0 24px;}
+  .chip{font-size:10px;padding:4px 10px;flex-shrink:0;}
+  .tbl{min-width:500px;}
+  .td-bar-cell{display:none;}
+}
+</style></head><body>
+
+<!-- ═══ HERO ═══ -->
+<div class="hero">
+  <h2>Institutional Client Portfolio</h2>
+  <p>Asia & Middle East's most influential family offices, corporations, and sovereign wealth funds.</p>
+</div>
+
+<!-- ═══ NETWORK MAP ═══ -->
+<div class="map-wrap">
+  <svg id="map-main"></svg><svg id="map-ovl" style="position:absolute;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:998"></svg>
+  <div id="bp">
+  <button class="bp-close" id="bp-close" aria-label="Close">✕</button>
+  <div class="bp-bar"></div>
+  <div class="bp-rg"><span class="bp-fl" id="bp-fl"></span><span class="bp-rn" id="bp-rn"></span></div>
+  <div class="bp-hd"><div class="bp-nm-row"><div class="bp-nm" id="bp-nm"></div><div class="bp-val" id="bp-val"></div></div><div class="bp-sb" id="bp-sb"></div></div>
+  <div class="bp-sep"></div>
+  <div class="bp-bd" id="bp-bd"></div>
+</div>
+</div>
+
+<!-- ═══ KPI STRIP ═══ -->
+<div class="kpi">
+  <div class="kpi-item"><div class="kpi-num">$4.5T+</div><div class="kpi-label">Network AUM</div></div>
+  <div class="kpi-div"></div>
+  <div class="kpi-item"><div class="kpi-num">3300+</div><div class="kpi-label">Institutions</div></div>
+  <div class="kpi-div"></div>
+  <div class="kpi-item"><div class="kpi-num">7</div><div class="kpi-label">Regions</div></div>
+  <div class="kpi-div"></div>
+  <div class="kpi-item"><div class="kpi-num">12</div><div class="kpi-label">Sovereign Entities</div></div>
+</div>
+
+<!-- ═══ SUB-TAB NAV ═══ -->
+<div class="sub-nav-wrap">
+<div class="sub-nav">
+  <button class="sub-btn active" onclick="switchTab('sec1',this)">Family Offices & Corporations</button>
+  <button class="sub-btn" onclick="switchTab('sec2',this)">Sovereign Wealth & Gov. Capital</button>
+</div>
+</div>
+
+<!-- ═══ TAB 1 ═══ -->
+<div class="section visible" id="sec1">
+  <div class="section-header">
+    <div class="section-line"></div>
+    <div class="section-title">FAMILY OFFICES & CORPORATIONS</div>
+    <div class="section-meta">53 ENTITIES · ~$740B+ COMBINED</div>
+    <div class="section-line-r"></div>
+  </div>
+
+  <div class="chip-bar">
+    <span>REGION</span>
+    <button class="chip active" onclick="filterRegion('tbl1',null,this)">All</button>
+    <button class="chip" onclick="filterRegion('tbl1','ASIA',this)">Asia</button>
+    <button class="chip" onclick="filterRegion('tbl1','ME',this)">Middle East</button>
+  </div>
+
+  <div class="tbl-wrap"><div class="tbl-scroll"><table class="tbl" id="tbl1">
+    <thead><tr>
+      <th data-sort="region">Region<span class="sort-arrow"></span></th><th data-sort="fo">Family/FO<span class="sort-arrow"></span></th><th class="r" data-sort="nw">Net Worth<span class="sort-arrow"></span></th><th data-sort="name">Corporation<span class="sort-arrow"></span></th><th class="r" data-sort="mcap">Market Cap<span class="sort-arrow"></span></th><th>Business</th>
+    </tr></thead>
+    <tbody>
+      <tr data-region="HK" data-name="Alibaba Group" data-mcap="330" data-nw="12"><td class="td-region"><span class="td-flag">🇭🇰</span> HK</td><td class="td-fo">Blue Pool Capital</td><td class="td-nw">$12B</td><td class="td-corp">Alibaba Group</td><td class="td-val">$330B</td><td class="td-biz">E-commerce · Cloud · Fintech</td></tr>
+      <tr data-region="JPN" data-name="SoftBank Group" data-mcap="130" data-nw="55"><td class="td-region"><span class="td-flag">🇯🇵</span> JPN</td><td class="td-fo">SoftBank Vision Fund</td><td class="td-nw">$55B+</td><td class="td-corp">SoftBank Group</td><td class="td-val">$130B</td><td class="td-biz">Tech Investment · ARM Holdings</td></tr>
+      <tr data-region="THA" data-name="CP Group" data-mcap="85" data-nw="53"><td class="td-region"><span class="td-flag">🇹🇭</span> THA</td><td class="td-fo">Chearavanont Family</td><td class="td-nw">$53B</td><td class="td-corp">CP Group</td><td class="td-val">$85B</td><td class="td-biz">Agri-food · Retail · Telecom</td></tr>
+      <tr data-region="HK" data-name="Sun Hung Kai Properties" data-mcap="33" data-nw="35.6"><td class="td-region"><span class="td-flag">🇭🇰</span> HK</td><td class="td-fo">Kwok Family</td><td class="td-nw">$35.6B</td><td class="td-corp">Sun Hung Kai Properties</td><td class="td-val">$33B</td><td class="td-biz">Property · Infrastructure · Telecom</td></tr>
+      <tr data-region="HK" data-name="CITIC Limited" data-mcap="30" data-nw="2.9"><td class="td-region"><span class="td-flag">🇭🇰</span> HK</td><td class="td-fo">Yung Family</td><td class="td-nw">$2.9B</td><td class="td-corp">CITIC Limited</td><td class="td-val">$30B</td><td class="td-biz">Financial Services · Resources</td></tr>
+      <tr data-region="CHN" data-name="SF Holdings" data-mcap="25" data-nw="16"><td class="td-region"><span class="td-flag">🇨🇳</span> CHN</td><td class="td-fo">Wang Family</td><td class="td-nw">$16B</td><td class="td-corp">SF Holdings</td><td class="td-val">$25B</td><td class="td-biz">Express Delivery · Logistics</td></tr>
+      <tr data-region="THA" data-name="CP ALL" data-mcap="22" data-nw="0"><td class="td-region"><span class="td-flag">🇹🇭</span> THA</td><td class="td-fo">Chearavanont Family</td><td class="td-nw">—</td><td class="td-corp">CP ALL</td><td class="td-val">$22B</td><td class="td-biz">Convenience Stores (14,000+ 7-Eleven)</td></tr>
+      <tr data-region="HK" data-name="CLP Holdings" data-mcap="23" data-nw="17"><td class="td-region"><span class="td-flag">🇭🇰</span> HK</td><td class="td-fo">Kadoorie Family</td><td class="td-nw">$17B</td><td class="td-corp">CLP Holdings</td><td class="td-val">$23B</td><td class="td-biz">Power Generation · Distribution</td></tr>
+      <tr data-region="HK" data-name="YunFeng Capital" data-mcap="15" data-nw="0"><td class="td-region"><span class="td-flag">🇭🇰</span> HK</td><td class="td-fo">YunFeng Capital</td><td class="td-nw">—</td><td class="td-corp">YunFeng Capital</td><td class="td-val">$15B</td><td class="td-biz">Private Equity (AUM)</td></tr>
+      <tr data-region="MYS" data-name="Wilmar International" data-mcap="15" data-nw="14"><td class="td-region"><span class="td-flag">🇲🇾</span> MYS</td><td class="td-fo">Kuok Family</td><td class="td-nw">$14B</td><td class="td-corp">Wilmar International</td><td class="td-val">$15B</td><td class="td-biz">Palm Oil · Agribusiness</td></tr>
+      <tr data-region="CHN" data-name="New Hope Group" data-mcap="15" data-nw="8"><td class="td-region"><span class="td-flag">🇨🇳</span> CHN</td><td class="td-fo">Liu Family</td><td class="td-nw">$8B</td><td class="td-corp">New Hope Group</td><td class="td-val">$15B</td><td class="td-biz">Agriculture · Dairy · Finance</td></tr>
+      <tr data-region="JPN" data-name="Nexon" data-mcap="15" data-nw="10"><td class="td-region"><span class="td-flag">🇯🇵</span> JPN</td><td class="td-fo">Kim Family (Nexon)</td><td class="td-nw">$10B</td><td class="td-corp">Nexon</td><td class="td-val">$15B</td><td class="td-biz">Online Gaming (MapleStory)</td></tr>
+      <tr data-region="KOR" data-name="Hanwha Corporation" data-mcap="15" data-nw="5"><td class="td-region"><span class="td-flag">🇰🇷</span> KOR</td><td class="td-fo">Hanwha Family Office</td><td class="td-nw">$5B</td><td class="td-corp">Hanwha Corporation</td><td class="td-val">$15B</td><td class="td-biz">Defense · Energy · Finance</td></tr>
+      <tr data-region="HK" data-name="Chow Tai Fook Jewellery" data-mcap="15" data-nw="19.5"><td class="td-region"><span class="td-flag">🇭🇰</span> HK</td><td class="td-fo">Cheng Family</td><td class="td-nw">$19.5B</td><td class="td-corp">Chow Tai Fook Jewellery</td><td class="td-val">$15B</td><td class="td-biz">Jewelry Retail (World's Largest)</td></tr>
+      <tr data-region="HK" data-name="SenseTime" data-mcap="10" data-nw="0"><td class="td-region"><span class="td-flag">🇭🇰</span> HK</td><td class="td-fo">Cheng Family / C Capital</td><td class="td-nw">—</td><td class="td-corp">SenseTime</td><td class="td-val">$10B</td><td class="td-biz">AI · Computer Vision · Smart City</td></tr>
+      <tr data-region="HK" data-name="FWD Group" data-mcap="10" data-nw="6.1"><td class="td-region"><span class="td-flag">🇭🇰</span> HK</td><td class="td-fo">Pacific Century Group</td><td class="td-nw">$6.1B</td><td class="td-corp">FWD Group</td><td class="td-val">$10B</td><td class="td-biz">Pan-Asian Insurance</td></tr>
+      <tr data-region="THA" data-name="True Corporation" data-mcap="10" data-nw="0"><td class="td-region"><span class="td-flag">🇹🇭</span> THA</td><td class="td-fo">Chearavanont Family</td><td class="td-nw">—</td><td class="td-corp">True Corporation</td><td class="td-val">$10B</td><td class="td-biz">Telecom (52M+ Subscribers)</td></tr>
+      <tr data-region="HK" data-name="Kerry Properties" data-mcap="4.4" data-nw="14"><td class="td-region"><span class="td-flag">🇭🇰</span> HK</td><td class="td-fo">Kuok Family</td><td class="td-nw">$14B</td><td class="td-corp">Kerry Properties</td><td class="td-val">$4.4B</td><td class="td-biz">Property Development</td></tr>
+      <tr data-region="PHL" data-name="Aboitiz Equity Ventures" data-mcap="8" data-nw="5"><td class="td-region"><span class="td-flag">🇵🇭</span> PHL</td><td class="td-fo">Aboitiz Family</td><td class="td-nw">$5B</td><td class="td-corp">Aboitiz Equity Ventures</td><td class="td-val">$8B</td><td class="td-biz">Power Generation · Banking</td></tr>
+      <tr data-region="PHL" data-name="Ayala Corporation" data-mcap="8" data-nw="4"><td class="td-region"><span class="td-flag">🇵🇭</span> PHL</td><td class="td-fo">Zobel de Ayala Family</td><td class="td-nw">$4B+</td><td class="td-corp">Ayala Corporation</td><td class="td-val">$8B</td><td class="td-biz">Banking · Telecom · Property</td></tr>
+      <tr data-region="PHL" data-name="JG Summit Holdings" data-mcap="8" data-nw="4"><td class="td-region"><span class="td-flag">🇵🇭</span> PHL</td><td class="td-fo">Gokongwei Family</td><td class="td-nw">$4B</td><td class="td-corp">JG Summit Holdings</td><td class="td-val">$8B</td><td class="td-biz">Airlines · Food · Property</td></tr>
+      <tr data-region="HK" data-name="PCCW" data-mcap="7" data-nw="6.1"><td class="td-region"><span class="td-flag">🇭🇰</span> HK</td><td class="td-fo">Pacific Century Group</td><td class="td-nw">$6.1B</td><td class="td-corp">PCCW / HKT</td><td class="td-val">$7B</td><td class="td-biz">Telecom · Media · IT Solutions</td></tr>
+      <tr data-region="HK" data-name="Animoca Brands" data-mcap="6" data-nw="0.5"><td class="td-region"><span class="td-flag">🇭🇰</span> HK</td><td class="td-fo">Outblaze</td><td class="td-nw">$0.5B+</td><td class="td-corp">Animoca Brands</td><td class="td-val">$6B</td><td class="td-biz">Blockchain Gaming · Web3</td></tr>
+      <tr data-region="HK" data-name="Shangri-La Asia" data-mcap="2.2" data-nw="14"><td class="td-region"><span class="td-flag">🇭🇰</span> HK</td><td class="td-fo">Kuok Family</td><td class="td-nw">$14B</td><td class="td-corp">Shangri-La Asia</td><td class="td-val">$2.2B</td><td class="td-biz">Luxury Hotels (100+ Worldwide)</td></tr>
+      <tr data-region="HK" data-name="Lee Kum Kee" data-mcap="5" data-nw="5"><td class="td-region"><span class="td-flag">🇭🇰</span> HK</td><td class="td-fo">Lee Kum Kee Family</td><td class="td-nw">$5B</td><td class="td-corp">Lee Kum Kee</td><td class="td-val">$5B+</td><td class="td-biz">Condiments · Health Products</td></tr>
+      <tr data-region="HK" data-name="Nan Fung Group" data-mcap="5" data-nw="8"><td class="td-region"><span class="td-flag">🇭🇰</span> HK</td><td class="td-fo">Chen Family</td><td class="td-nw">$8B</td><td class="td-corp">Nan Fung Group</td><td class="td-val">$5B+</td><td class="td-biz">Property · Life Sciences</td></tr>
+      <tr data-region="HK" data-name="The Peninsula Hotels" data-mcap="1.3" data-nw="17"><td class="td-region"><span class="td-flag">🇭🇰</span> HK</td><td class="td-fo">Kadoorie Family</td><td class="td-nw">$17B</td><td class="td-corp">The Peninsula Hotels</td><td class="td-val">$1.3B</td><td class="td-biz">Ultra-Luxury Hotels</td></tr>
+      <tr data-region="AUS" data-name="Gandel Group" data-mcap="5" data-nw="5"><td class="td-region"><span class="td-flag">🇦🇺</span> AUS</td><td class="td-fo">Gandel Family</td><td class="td-nw">$5B+</td><td class="td-corp">Gandel Group</td><td class="td-val">$5B+</td><td class="td-biz">Property · Shopping Centres</td></tr>
+      <tr data-region="KOR" data-name="SeAH Group" data-mcap="3" data-nw="3"><td class="td-region"><span class="td-flag">🇰🇷</span> KOR</td><td class="td-fo">Iron Grey Family Office</td><td class="td-nw">$3B</td><td class="td-corp">SeAH Group</td><td class="td-val">$3B+</td><td class="td-biz">Steel · Industrial Materials</td></tr>
+      <tr data-region="HK" data-name="Great Eagle" data-mcap="1.5" data-nw="3.7"><td class="td-region"><span class="td-flag">🇭🇰</span> HK</td><td class="td-fo">Lo Family</td><td class="td-nw">$3.7B</td><td class="td-corp">Great Eagle / Langham</td><td class="td-val">$1.5B</td><td class="td-biz">Property · Luxury Hotels</td></tr>
+      <tr data-region="HK" data-name="Jebsen Group" data-mcap="2" data-nw="4"><td class="td-region"><span class="td-flag">🇭🇰</span> HK</td><td class="td-fo">Jebsen Family</td><td class="td-nw">$4B</td><td class="td-corp">Jebsen Group</td><td class="td-val">$2B+</td><td class="td-biz">Consumer Goods · Distribution</td></tr>
+      <tr data-region="HK" data-name="Emperor Group" data-mcap="2" data-nw="4"><td class="td-region"><span class="td-flag">🇭🇰</span> HK</td><td class="td-fo">Yeung Family</td><td class="td-nw">$4B</td><td class="td-corp">Emperor Group</td><td class="td-val">$2B</td><td class="td-biz">Entertainment · Hotels · Jewelry</td></tr>
+      <tr data-region="HK" data-name="New World Development" data-mcap="3.4" data-nw="19.5"><td class="td-region"><span class="td-flag">🇭🇰</span> HK</td><td class="td-fo">Cheng Family</td><td class="td-nw">$19.5B</td><td class="td-corp">New World Development</td><td class="td-val">$3.4B</td><td class="td-biz">Property · K11 Luxury Malls</td></tr>
+      <tr data-region="HK" data-name="Shui On Land" data-mcap="1" data-nw="4"><td class="td-region"><span class="td-flag">🇭🇰</span> HK</td><td class="td-fo">Shui On Group</td><td class="td-nw">$4B</td><td class="td-corp">Shui On Land</td><td class="td-val">$1B</td><td class="td-biz">Premium Property (Xintiandi)</td></tr>
+      <tr data-region="HK" data-name="Chuangs Consortium" data-mcap="0.5" data-nw="3"><td class="td-region"><span class="td-flag">🇭🇰</span> HK</td><td class="td-fo">Chuang Family</td><td class="td-nw">$3B</td><td class="td-corp">Chuangs Consortium</td><td class="td-val">$0.5B</td><td class="td-biz">Property · Trading</td></tr>
+      <tr data-region="KSA" data-name="Abdul Latif Jameel" data-mcap="10" data-nw="20"><td class="td-region"><span class="td-flag">🇸🇦</span> KSA</td><td class="td-fo">Jameel Family</td><td class="td-nw">$20B+</td><td class="td-corp">Abdul Latif Jameel</td><td class="td-val">$10B+</td><td class="td-biz">Automotive · Energy · Finance</td></tr>
+      <tr data-region="UAE" data-name="Al Ghurair Group" data-mcap="5" data-nw="5"><td class="td-region"><span class="td-flag">🇦🇪</span> UAE</td><td class="td-fo">Al Ghurair Family</td><td class="td-nw">$5B+</td><td class="td-corp">Al Ghurair Group</td><td class="td-val">$5B+</td><td class="td-biz">Food · Construction · Resources</td></tr>
+      <tr data-region="UAE" data-name="Al Tayer Group" data-mcap="3" data-nw="3"><td class="td-region"><span class="td-flag">🇦🇪</span> UAE</td><td class="td-fo">Al Tayer Family</td><td class="td-nw">$3B+</td><td class="td-corp">Al Tayer Group</td><td class="td-val">$3B+</td><td class="td-biz">Luxury Retail · Automotive</td></tr>
+      <tr data-region="BHR" data-name="Kanoo Group" data-mcap="3" data-nw="3"><td class="td-region"><span class="td-flag">🇧🇭</span> BHR</td><td class="td-fo">Kanoo Family</td><td class="td-nw">$3B+</td><td class="td-corp">Kanoo Group</td><td class="td-val">$3B+</td><td class="td-biz">Industrial · Logistics · Travel</td></tr>
+      <tr data-region="UAE" data-name="Abu Dhabi Capital Group" data-mcap="2" data-nw="2"><td class="td-region"><span class="td-flag">🇦🇪</span> UAE</td><td class="td-fo">Royal Family Holding</td><td class="td-nw">$2B+</td><td class="td-corp">Abu Dhabi Capital Group</td><td class="td-val">$2B+</td><td class="td-biz">Multi-Asset Investment</td></tr>
+      <tr data-region="UAE" data-name="Ali & Sons" data-mcap="1" data-nw="1"><td class="td-region"><span class="td-flag">🇦🇪</span> UAE</td><td class="td-fo">Al Dhaheri Family</td><td class="td-nw">$1B+</td><td class="td-corp">Ali &amp; Sons</td><td class="td-val">$1B+</td><td class="td-biz">Multi-Asset · Venture · PE</td></tr>
+      <tr data-region="KSA" data-name="Al Rashed Global" data-mcap="1" data-nw="1"><td class="td-region"><span class="td-flag">🇸🇦</span> KSA</td><td class="td-fo">Al Rashed Family</td><td class="td-nw">$1B+</td><td class="td-corp">Al Rashed Global</td><td class="td-val">$1B+</td><td class="td-biz">Family Holdings · Private Markets</td></tr>
+      <tr data-region="UAE" data-name="Equalis Capital" data-mcap="0.5" data-nw="0.5"><td class="td-region"><span class="td-flag">🇦🇪</span> UAE</td><td class="td-fo">Al Otaiba Family Office</td><td class="td-nw">—</td><td class="td-corp">Equalis Capital</td><td class="td-val">—</td><td class="td-biz">Multi-Asset · Tech · Venture</td></tr>
+      <tr data-region="UAE" data-name="KBW Ventures" data-mcap="0.5" data-nw="0.5"><td class="td-region"><span class="td-flag">🇦🇪</span> UAE</td><td class="td-fo">Prince Khalid bin Waleed</td><td class="td-nw">—</td><td class="td-corp">KBW Ventures</td><td class="td-val">—</td><td class="td-biz">Growth · Ventures · AI</td></tr>
+      <tr data-region="UAE" data-name="Whitegate Capital" data-mcap="0.5" data-nw="0.5"><td class="td-region"><span class="td-flag">🇦🇪</span> UAE</td><td class="td-fo">Single Family Office</td><td class="td-nw">—</td><td class="td-corp">Whitegate Capital</td><td class="td-val">—</td><td class="td-biz">AI · Venture · Direct Investments</td></tr>
+      <tr data-region="UAE" data-name="Blu Stone Management" data-mcap="0.1" data-nw="0.1"><td class="td-region"><span class="td-flag">🇦🇪</span> UAE</td><td class="td-fo">DIFC Family Office</td><td class="td-nw">$100M+</td><td class="td-corp">Blu Stone Management</td><td class="td-val">—</td><td class="td-biz">Venture · Tech · Funds</td></tr>
+      <tr data-region="UAE" data-name="Al Masar Investments" data-mcap="0.1" data-nw="0.1"><td class="td-region"><span class="td-flag">🇦🇪</span> UAE</td><td class="td-fo">Single Family Office</td><td class="td-nw">—</td><td class="td-corp">Al Masar Investments</td><td class="td-val">—</td><td class="td-biz">Multi-Asset · Private Markets</td></tr>
+      <tr data-region="UAE" data-name="Atlas MENA Capital" data-mcap="0.1" data-nw="0.1"><td class="td-region"><span class="td-flag">🇦🇪</span> UAE</td><td class="td-fo">Family Office</td><td class="td-nw">—</td><td class="td-corp">Atlas MENA Capital</td><td class="td-val">—</td><td class="td-biz">Crypto VC · Venture Funds</td></tr>
+      <tr data-region="SGP" data-name="Golden Alpha" data-mcap="0.1" data-nw="0.1"><td class="td-region"><span class="td-flag">🇸🇬</span> SGP</td><td class="td-fo">3rd Gen Family Office</td><td class="td-nw">—</td><td class="td-corp">Golden Alpha</td><td class="td-val">—</td><td class="td-biz">Multi-Asset Investment</td></tr>
+      <tr data-region="UAE" data-name="Crescent Group" data-mcap="0.5" data-nw="0.5"><td class="td-region"><span class="td-flag">🇦🇪</span> UAE</td><td class="td-fo">Prominent UAE Family</td><td class="td-nw">—</td><td class="td-corp">Crescent Group</td><td class="td-val">—</td><td class="td-biz">Family Office · Diversified</td></tr>
+      <tr data-region="UAE" data-name="SantoCedrus Capital" data-mcap="0.1" data-nw="0.1"><td class="td-region"><span class="td-flag">🇦🇪</span> UAE</td><td class="td-fo">Family Office</td><td class="td-nw">—</td><td class="td-corp">SantoCedrus Capital</td><td class="td-val">—</td><td class="td-biz">Family Office · Investments</td></tr>
+      <tr data-region="UAE" data-name="KF Inc" data-mcap="0.1" data-nw="0.1"><td class="td-region"><span class="td-flag">🇦🇪</span> UAE</td><td class="td-fo">Family Office</td><td class="td-nw">—</td><td class="td-corp">KF Inc</td><td class="td-val">—</td><td class="td-biz">Family Office · Investments</td></tr>
+      <tr data-region="UAE" data-name="Purple Capital Group" data-mcap="0.1" data-nw="0.1"><td class="td-region"><span class="td-flag">🇦🇪</span> UAE</td><td class="td-fo">Family Office</td><td class="td-nw">—</td><td class="td-corp">Purple Capital Group</td><td class="td-val">—</td><td class="td-biz">Family Office · MENA</td></tr>
+      <tr data-region="UAE" data-name="Miras MFO" data-mcap="0.1" data-nw="0.1"><td class="td-region"><span class="td-flag">🇦🇪</span> UAE</td><td class="td-fo">Multi-Family Office</td><td class="td-nw">—</td><td class="td-corp">Miras MFO</td><td class="td-val">—</td><td class="td-biz">Multi-Family Office</td></tr>
+      <tr data-region="UAE" data-name="Patrimonium MFO" data-mcap="0.1" data-nw="0.1"><td class="td-region"><span class="td-flag">🇦🇪</span> UAE</td><td class="td-fo">Multi-Family Office</td><td class="td-nw">—</td><td class="td-corp">Patrimonium MFO</td><td class="td-val">—</td><td class="td-biz">Multi-Family Office · UAE</td></tr>
+    </tbody>
+  </table></div></div>
+</div>
+
+<!-- ═══ TAB 2 ═══ -->
+<div class="section" id="sec2">
+  <div class="section-header">
+    <div class="section-line"></div>
+    <div class="section-title">SOVEREIGN WEALTH & GOVERNMENT CAPITAL</div>
+    <div class="section-meta">12 ENTITIES · $3.7T+ AUM</div>
+    <div class="section-line-r"></div>
+  </div>
+
+  <div class="tbl-wrap"><div class="tbl-scroll"><table class="tbl" id="tbl2">
+    <thead><tr>
+      <th data-sort="region">Region<span class="sort-arrow"></span></th><th data-sort="name">Entity<span class="sort-arrow"></span></th><th class="r" data-sort="mcap">AUM<span class="sort-arrow"></span></th><th class="td-bar-cell"></th><th>Type</th><th>Remarks</th>
+    </tr></thead>
+    <tbody>
+      <tr data-region="UAE" data-name="ADIA" data-mcap="1000" data-nw="0"><td class="td-region"><span class="td-flag">🇦🇪</span> UAE</td><td class="td-corp">ADIA</td><td class="td-val">$1T</td><td class="td-bar-cell"><div class="td-bar-wrap"><div class="td-bar" style="width:100%"></div></div></td><td class="td-biz">Sovereign Wealth Fund</td><td class="td-biz">World's 3rd Largest SWF</td></tr>
+      <tr data-region="KSA" data-name="PIF" data-mcap="1150" data-nw="0"><td class="td-region"><span class="td-flag">🇸🇦</span> KSA</td><td class="td-corp">PIF</td><td class="td-val">$1.15T</td><td class="td-bar-cell"><div class="td-bar-wrap"><div class="td-bar" style="width:100%"></div></div></td><td class="td-biz">Sovereign Wealth Fund</td><td class="td-biz">Driving Saudi Vision 2030</td></tr>
+      <tr data-region="QAT" data-name="QIA" data-mcap="510" data-nw="0"><td class="td-region"><span class="td-flag">🇶🇦</span> QAT</td><td class="td-corp">QIA</td><td class="td-val">$510B</td><td class="td-bar-cell"><div class="td-bar-wrap"><div class="td-bar" style="width:51%"></div></div></td><td class="td-biz">Sovereign Wealth Fund</td><td class="td-biz">Barclays · VW · Harrods</td></tr>
+      <tr data-region="UAE" data-name="Mubadala" data-mcap="358" data-nw="0"><td class="td-region"><span class="td-flag">🇦🇪</span> UAE</td><td class="td-corp">Mubadala</td><td class="td-val">$358B</td><td class="td-bar-cell"><div class="td-bar-wrap"><div class="td-bar" style="width:31%"></div></div></td><td class="td-biz">Strategic Investment</td><td class="td-biz">AMD · GlobalFoundries</td></tr>
+      <tr data-region="UAE" data-name="ADQ" data-mcap="260" data-nw="0"><td class="td-region"><span class="td-flag">🇦🇪</span> UAE</td><td class="td-corp">ADQ</td><td class="td-val">$260B+</td><td class="td-bar-cell"><div class="td-bar-wrap"><div class="td-bar" style="width:23%"></div></div></td><td class="td-biz">Sovereign Holdings</td><td class="td-biz">Abu Dhabi Ports · ADNOC</td></tr>
+      <tr data-region="UAE" data-name="Lunate Capital" data-mcap="105" data-nw="0"><td class="td-region"><span class="td-flag">🇦🇪</span> UAE</td><td class="td-corp">Lunate Capital</td><td class="td-val">$105B</td><td class="td-bar-cell"><div class="td-bar-wrap"><div class="td-bar" style="width:10.5%"></div></div></td><td class="td-biz">Asset Management</td><td class="td-biz">Gov-Backed · Digital Assets</td></tr>
+      <tr data-region="KAZ" data-name="NIC Kazakhstan" data-mcap="70" data-nw="0"><td class="td-region"><span class="td-flag">🇰🇿</span> KAZ</td><td class="td-corp">NIC Kazakhstan</td><td class="td-val">$70B+</td><td class="td-bar-cell"><div class="td-bar-wrap"><div class="td-bar" style="width:7%"></div></div></td><td class="td-biz">National Investment</td><td class="td-biz">$300M Crypto Allocation 2026</td></tr>
+      <tr data-region="OMN" data-name="OIA" data-mcap="50" data-nw="0"><td class="td-region"><span class="td-flag">🇴🇲</span> OMN</td><td class="td-corp">OIA</td><td class="td-val">$50B+</td><td class="td-bar-cell"><div class="td-bar-wrap"><div class="td-bar" style="width:5%"></div></div></td><td class="td-biz">Sovereign Wealth Fund</td><td class="td-biz">Consolidated SWF</td></tr>
+      <tr data-region="UAE" data-name="ADIC" data-mcap="50" data-nw="0"><td class="td-region"><span class="td-flag">🇦🇪</span> UAE</td><td class="td-corp">ADIC</td><td class="td-val">$50B+</td><td class="td-bar-cell"><div class="td-bar-wrap"><div class="td-bar" style="width:5%"></div></div></td><td class="td-biz">Sovereign Wealth Fund</td><td class="td-biz">$2B JV with Mubadala</td></tr>
+      <tr data-region="UAE" data-name="Dubai Holding" data-mcap="75" data-nw="0"><td class="td-region"><span class="td-flag">🇦🇪</span> UAE</td><td class="td-corp">Dubai Holding</td><td class="td-val">$75B+</td><td class="td-bar-cell"><div class="td-bar-wrap"><div class="td-bar" style="width:6.5%"></div></div></td><td class="td-biz">Gov-Backed Holding</td><td class="td-biz">TECOM · Jumeirah Hotels</td></tr>
+      <tr data-region="UAE" data-name="AD Pension Fund" data-mcap="15" data-nw="0"><td class="td-region"><span class="td-flag">🇦🇪</span> UAE</td><td class="td-corp">AD Pension Fund</td><td class="td-val">$15B+</td><td class="td-bar-cell"><div class="td-bar-wrap"><div class="td-bar" style="width:1.5%"></div></div></td><td class="td-biz">Government Pension</td><td class="td-biz">Exploring Alternatives</td></tr>
+      <tr data-region="UAE" data-name="Shurooq" data-mcap="5" data-nw="0"><td class="td-region"><span class="td-flag">🇦🇪</span> UAE</td><td class="td-corp">Shurooq</td><td class="td-val">$5B+</td><td class="td-bar-cell"><div class="td-bar-wrap"><div class="td-bar" style="width:0.5%"></div></div></td><td class="td-biz">Gov Investment</td><td class="td-biz">Tourism · Healthcare · Tech</td></tr>
+    </tbody>
+  </table></div></div>
+</div>
+
+<script src="https://d3js.org/d3.v7.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/topojson-client@3/dist/topojson-client.min.js"></script>
+<script>
+/* ═══ NETWORK MAP ═══════════════════════════════════════════════════════ */
+(function(){
+const mapWrap=document.querySelector('.map-wrap');
+const W=1440,H=920;
+const sc=1;
+const FONT="system-ui,-apple-system,sans-serif";
+const BRAND="#F17E00",BG="#09090b",FG="#fafafa",MUTED="#a1a1aa",BORDER="#2e2e33";
+const PURPLE="#d8a0ff",TEAL="#60d0f0",GREEN="#90d860";
+const EASE=d3.easeCubicOut;
+const HOVER_DUR=500;
+
+const VB_PAD=80;
+const svg=d3.select("#map-main").attr("viewBox",`${-VB_PAD} ${-VB_PAD} ${W+VB_PAD*2} ${H+VB_PAD*2}`).attr("preserveAspectRatio","xMidYMid meet");
+const ovl=d3.select("#map-ovl").attr("viewBox",`${-VB_PAD} ${-VB_PAD} ${W+VB_PAD*2} ${H+VB_PAD*2}`).attr("preserveAspectRatio","xMidYMid meet");
+const defs=svg.append("defs");
+
+const mapCY=H/2;
+const baseProj=d3.geoMercator().center([88,18]).scale(H*0.58).translate([W*0.48,mapCY+30]);
+const ENLARGE=1.20; /* scale everything 20% after simulation to preserve distribution */
+
+function mkGlow(id,sd){
+  const f=defs.append("filter").attr("id",id).attr("x","-120%").attr("y","-120%").attr("width","340%").attr("height","340%");
+  f.append("feGaussianBlur").attr("stdDeviation",sd*sc).attr("result","b");
+  const m=f.append("feMerge");m.append("feMergeNode").attr("in","b");m.append("feMergeNode").attr("in","SourceGraphic");
+}
+mkGlow("glow",10);mkGlow("glowSm",4);
+
+function mkDots(id,col,op,dotR,spacing){
+  const s=spacing*sc,r=dotR*sc;
+  const p=defs.append("pattern").attr("id",id).attr("x",r).attr("y",r).attr("width",s).attr("height",s).attr("patternUnits","userSpaceOnUse");
+  p.append("circle").attr("cx",s/2).attr("cy",s/2).attr("r",r).attr("fill",col).attr("opacity",op);
+}
+mkDots("dots-purple",PURPLE,0.6,1.6,7);
+mkDots("dots-teal",TEAL,0.6,1.6,7);
+mkDots("dots-green",GREEN,0.6,1.6,7);
+mkDots("dots-neutral","#555",0.35,1.0,7);
+
+svg.append("rect").attr("width",W).attr("height",H).attr("fill",BG);
+
+/* gradient fades at top/bottom edges */
+const fadeH=60*sc,fadeBH=60*sc;
+[[0,"topFade",1,0],[1,"botFade",0,1]].forEach(([_,id,o1,o2])=>{
+  const g=defs.append("linearGradient").attr("id",id).attr("x1",0).attr("y1",0).attr("x2",0).attr("y2",1);
+  g.append("stop").attr("offset","0%").attr("stop-color",BG).attr("stop-opacity",o1);
+  g.append("stop").attr("offset","100%").attr("stop-color",BG).attr("stop-opacity",o2);
+});
+
+/* ── DATA ── */
+const B=[
+  {id:"adia",label:"ADIA",sub:"Abu Dhabi Investment Authority",val:"$1T",vB:1000,col:PURPLE,lng:54.3,lat:24.5,flag:"🇦🇪",rn:"MIDDLE EAST",corps:[{n:"Sovereign Wealth Fund · UAE",v:"$1T"}]},
+  {id:"pif",label:"PIF",sub:"Public Investment Fund",val:"$1.15T",vB:1150,col:PURPLE,lng:46.7,lat:24.7,flag:"🇸🇦",rn:"MIDDLE EAST",corps:[{n:"Saudi Arabia Sovereign Fund",v:"$1.15T"}]},
+  {id:"qia",label:"QIA",sub:"Qatar Investment Authority",val:"$510B",vB:510,col:PURPLE,lng:51.5,lat:25.3,flag:"🇶🇦",rn:"MIDDLE EAST",corps:[{n:"Qatar Sovereign Fund",v:"$510B"}]},
+  {id:"mubadala",label:"Mubadala",sub:"Mubadala Investment Co.",val:"$358B",vB:358,col:PURPLE,lng:54.4,lat:24.3,flag:"🇦🇪",rn:"MIDDLE EAST",corps:[{n:"Mubadala Investment (AMD, GlobalFoundries)",v:"$358B"}]},
+  {id:"adq",label:"ADQ",sub:"Abu Dhabi Developmental Holding",val:"$260B",vB:260,col:PURPLE,lng:54.5,lat:23.5,flag:"🇦🇪",rn:"MIDDLE EAST",corps:[{n:"ADQ Holdings (Abu Dhabi Ports, ADNOC Dist.)",v:"$260B+"}]},
+  {id:"lunate",label:"Lunate",sub:"Lunate Capital",val:"$105B",vB:105,col:PURPLE,lng:55.2,lat:25.2,flag:"🇦🇪",rn:"MIDDLE EAST",corps:[{n:"Gov-backed asset manager · Abu Dhabi",v:"$105B"}]},
+  {id:"nic_kaz",label:"NIC Kaz.",sub:"Nat. Investment Corp. Kazakhstan",val:"$70B",vB:70,col:PURPLE,lng:60,lat:28,flag:"🇰🇿",rn:"MIDDLE EAST",corps:[{n:"National Bank of Kazakhstan investment arm",v:"$70B"}]},
+  {id:"oia",label:"OIA",sub:"Oman Investment Authority",val:"$50B",vB:50,col:PURPLE,lng:58.5,lat:23.6,flag:"🇴🇲",rn:"MIDDLE EAST",corps:[{n:"Oman consolidated sovereign fund",v:"$50B"}]},
+  {id:"adic",label:"ADIC",sub:"Abu Dhabi Investment Council",val:"$50B",vB:50,col:PURPLE,lng:54.1,lat:24.1,flag:"🇦🇪",rn:"MIDDLE EAST",corps:[{n:"Abu Dhabi Investment Council",v:"$50B"}]},
+  {id:"dubai_h",label:"Dubai\nHolding",sub:"Dubai Holding",val:"$75B",vB:75,col:PURPLE,lng:55.3,lat:25.2,flag:"🇦🇪",rn:"MIDDLE EAST",corps:[{n:"TECOM",v:"—"},{n:"Dubai Properties",v:"—"},{n:"Jumeirah Hotels",v:"—"}]},
+  {id:"ad_pension",label:"AD Pension",sub:"Abu Dhabi Pension Fund",val:"$15B",vB:15,col:PURPLE,lng:54.7,lat:24.8,flag:"🇦🇪",rn:"MIDDLE EAST",corps:[{n:"Abu Dhabi gov. employee pension",v:"$15B"}]},
+  {id:"shurooq",label:"Shurooq",sub:"Sharjah Investment Authority",val:"$5B",vB:5,col:PURPLE,lng:55.5,lat:25.4,flag:"🇦🇪",rn:"MIDDLE EAST",corps:[{n:"Sharjah emirate investment authority",v:"$5B"}]},
+  {id:"swfi",label:"SWFI",sub:"SWF Institute · Research",val:"Research",vB:1,col:PURPLE,lng:55.0,lat:26.0,flag:"🇦🇪",rn:"MIDDLE EAST",corps:[{n:"Global SWF research & advisory",v:"—"}]},
+  {id:"joe_tsai",label:"Joe Tsai",sub:"Blue Pool Capital",val:"$12B",vB:12,col:TEAL,lng:114.2,lat:22.3,flag:"🇭🇰",rn:"HONG KONG",corps:[{n:"Alibaba Group",v:"$330B"},{n:"Brooklyn Nets (NBA)",v:"—"}]},
+  {id:"kwok",label:"Kwok Family",sub:"SHK Financial Group",val:"$35.6B",vB:35.6,col:TEAL,lng:114.1,lat:22.4,flag:"🇭🇰",rn:"HONG KONG",corps:[{n:"Sun Hung Kai Properties",v:"$33B"},{n:"SHK Financial Group",v:"Private"}]},
+  {id:"yung",label:"Yung Family",sub:"Yung's Enterprise Holdings",val:"$2.9B",vB:2.9,col:TEAL,lng:114.0,lat:22.2,flag:"🇭🇰",rn:"HONG KONG",corps:[{n:"CITIC Limited",v:"$30B"},{n:"Yung's Enterprise Holdings",v:"Private"}]},
+  {id:"kadoorie",label:"Kadoorie\nFamily",sub:"Sir Elly Kadoorie & Sons",val:"$17B",vB:17,col:TEAL,lng:114.15,lat:22.3,flag:"🇭🇰",rn:"HONG KONG",corps:[{n:"CLP Holdings",v:"$23B"},{n:"The Peninsula Hotels (HSH)",v:"$1.3B"}]},
+  {id:"cheng_fam",label:"Cheng Family",sub:"New World / C Capital",val:"$19.5B",vB:19.5,col:TEAL,lng:114.18,lat:22.35,flag:"🇭🇰",rn:"HONG KONG",corps:[{n:"Chow Tai Fook Jewellery",v:"$15B"},{n:"SenseTime",v:"$10B"},{n:"New World Development",v:"$3.4B"}]},
+  {id:"richard_li",label:"Richard Li",sub:"Pacific Century Group",val:"$6.1B",vB:6.1,col:TEAL,lng:114.1,lat:22.25,flag:"🇭🇰",rn:"HONG KONG",corps:[{n:"FWD Group",v:"$10B"},{n:"PCCW / HKT",v:"$7B"}]},
+  {id:"yunfeng",label:"Stanley Choi",sub:"YunFeng Capital co-founder",val:"Private",vB:2,col:TEAL,lng:114.05,lat:22.35,flag:"🇭🇰",rn:"HONG KONG",corps:[{n:"YunFeng Capital (w/ Jack Ma)",v:"$15B AUM"},{n:"International Entertainment Corp",v:"$0.5B"}]},
+  {id:"yeung",label:"Albert Yeung",sub:"Emperor Group",val:"$4B",vB:4,col:TEAL,lng:114.08,lat:22.22,flag:"🇭🇰",rn:"HONG KONG",corps:[{n:"Emperor Group (entertainment, hotels, jewelry)",v:"$2B"}]},
+  {id:"lo_ka_shui",label:"Lo Ka Shui",sub:"Great Eagle Holdings",val:"$3.7B",vB:3.7,col:TEAL,lng:114.12,lat:22.32,flag:"🇭🇰",rn:"HONG KONG",corps:[{n:"Great Eagle Holdings",v:"$1.5B"},{n:"Langham Hotels chain",v:"Private"}]},
+  {id:"lkk",label:"Lee Kum Kee",sub:"Lee Kum Kee Family Office",val:"$5B",vB:5,col:TEAL,lng:114.15,lat:22.18,flag:"🇭🇰",rn:"HONG KONG",corps:[{n:"Lee Kum Kee Group",v:"$5B+"},{n:"LKK Health Products / Infinitus",v:"$3B+"}]},
+  {id:"nan_fung",label:"Chen Family",sub:"Nan Fung Group",val:"$8B",vB:8,col:TEAL,lng:114.05,lat:22.28,flag:"🇭🇰",rn:"HONG KONG",corps:[{n:"Nan Fung Group (property)",v:"$5B+"},{n:"Nan Fung Life Sciences",v:"Private"}]},
+  {id:"yat_siu",label:"Yat Siu",sub:"Animoca Brands",val:"$0.5B",vB:0.5,col:TEAL,lng:114.2,lat:22.22,flag:"🇭🇰",rn:"HONG KONG",corps:[{n:"Animoca Brands (Web3 gaming)",v:"$6B"}]},
+  {id:"chuang",label:"Chuang Family",sub:"Chuangs Consortium",val:"$3B",vB:3,col:TEAL,lng:114.05,lat:22.15,flag:"🇭🇰",rn:"HONG KONG",corps:[{n:"Chuangs Consortium International",v:"$0.5B"}]},
+  {id:"jebsen",label:"Jebsen Family",sub:"Jebsen Group",val:"$4B",vB:4,col:TEAL,lng:114.18,lat:22.28,flag:"🇭🇰",rn:"HONG KONG",corps:[{n:"Jebsen Group (Porsche, Blue Girl, Gaggenau)",v:"$2B+"}]},
+  {id:"vincent_lo",label:"Vincent Lo",sub:"Shui On Group",val:"$4B",vB:4,col:TEAL,lng:114.1,lat:22.18,flag:"🇭🇰",rn:"HONG KONG",corps:[{n:"Shui On Land (Shanghai Xintiandi)",v:"$1B"}]},
+  {id:"tsangs",label:"Tsangs Group",sub:"Tsang Family · 9 contacts",val:"Private",vB:0.8,col:TEAL,lng:114.22,lat:22.18,flag:"🇭🇰",rn:"HONG KONG",corps:[{n:"Family conglomerate · 9 pipeline contacts",v:"—"}]},
+  {id:"wang_wei",label:"Wang Wei",sub:"SF Express",val:"$16B",vB:16,col:TEAL,lng:113.9,lat:30.6,flag:"🇨🇳",rn:"CHINA",corps:[{n:"SF Holdings (China premium courier)",v:"$25B"}]},
+  {id:"liu_y",label:"Liu Yonghao",sub:"New Hope Group",val:"$8B",vB:8,col:TEAL,lng:104.1,lat:30.7,flag:"🇨🇳",rn:"CHINA",corps:[{n:"New Hope Group (agri, dairy, finance)",v:"$15B"}]},
+  {id:"softbank",label:"Masayoshi Son",sub:"SoftBank Vision Fund",val:"~$55B",vB:55,col:TEAL,lng:139.7,lat:35.7,flag:"🇯🇵",rn:"JAPAN / KOREA",corps:[{n:"SoftBank Group",v:"$130B"},{n:"ARM Holdings",v:"$150B+"},{n:"Vision Fund ($100B+)",v:"—"}]},
+  {id:"hanwha",label:"Hanwha Kim\nFamily",sub:"Hanwha Family Office",val:"$5B",vB:5,col:TEAL,lng:127.0,lat:37.5,flag:"🇰🇷",rn:"JAPAN / KOREA",corps:[{n:"Hanwha Corporation (defense, energy, finance)",v:"$15B"}]},
+  {id:"nexon",label:"Kim Jung-ju †",sub:"Nexon · Family Estate",val:"$10B",vB:10,col:TEAL,lng:127.1,lat:37.2,flag:"🇰🇷",rn:"JAPAN / KOREA",corps:[{n:"Nexon (MapleStory, Dungeon Fighter Online)",v:"$15B"}]},
+  {id:"seah",label:"SeAH Family",sub:"Iron Grey Family Office",val:"$3B",vB:3,col:TEAL,lng:128.5,lat:35.8,flag:"🇰🇷",rn:"JAPAN / KOREA",corps:[{n:"SeAH Group (steel, specialty alloy tubes)",v:"$3B+"}]},
+  {id:"cp_group",label:"Chearavanont\nFamily",sub:"CP Group · ★ Early Investor",val:"$53B",vB:53,col:GREEN,lng:100.5,lat:13.8,flag:"🇹🇭",rn:"SE ASIA",corps:[{n:"CP Group (Thailand's largest conglomerate)",v:"$85B rev"},{n:"CP ALL (14,000+ 7-Elevens)",v:"$22B"},{n:"True Corporation (52M subscribers)",v:"$10B"}]},
+  {id:"kuok",label:"Robert Kuok\nFamily",sub:"Kerry Holdings · ★ Early Investor",val:"$14B",vB:14,col:GREEN,lng:96.5,lat:14,flag:"🇲🇾",rn:"SE ASIA",corps:[{n:"Kerry Properties",v:"$4.4B"},{n:"Shangri-La Asia (100+ luxury hotels)",v:"$2.2B"},{n:"Wilmar Int'l (largest palm oil co.)",v:"$15B"}]},
+  {id:"bulakul",label:"Bulakul Family",sub:"Industrial · Thailand",val:"Private",vB:1,col:GREEN,lng:100.4,lat:13.4,flag:"🇹🇭",rn:"SE ASIA",corps:[{n:"Thai industrial family with crypto interest",v:"—"}]},
+  {id:"aboitiz",label:"Aboitiz Family",sub:"Aboitiz Family Office",val:"$5B",vB:5,col:GREEN,lng:123.9,lat:10.3,flag:"🇵🇭",rn:"PHILIPPINES",corps:[{n:"Aboitiz Equity Ventures (power, banking)",v:"$8B"}]},
+  {id:"zobel",label:"Zobel de Ayala",sub:"Ayala Group",val:"$4B+",vB:4,col:GREEN,lng:121.0,lat:14.6,flag:"🇵🇭",rn:"PHILIPPINES",corps:[{n:"Ayala Corporation (est. 1834)",v:"$8B"},{n:"BPI, Globe Telecom, Ayala Land",v:"—"}]},
+  {id:"gokongwei",label:"Gokongwei\nFamily",sub:"JG Summit Holdings",val:"$4B",vB:4,col:GREEN,lng:121.2,lat:14.3,flag:"🇵🇭",rn:"PHILIPPINES",corps:[{n:"JG Summit Holdings",v:"$8B"},{n:"Cebu Pacific, Universal Robina, Robinsons",v:"—"}]},
+];
+
+const MAX_R=120,MIN_R=26,HOVER_R=108;
+const grpMax={};
+B.forEach(d=>{if(!grpMax[d.col]||d.vB>grpMax[d.col])grpMax[d.col]=d.vB;});
+B.forEach(d=>{d.r=MIN_R+Math.sqrt(d.vB/grpMax[d.col])*(MAX_R-MIN_R);});
+
+/* ── Mobile detection (early, before force sim) ── */
+const isMobile=window.innerWidth<700;
+let mobileKeep=null;
+if(isMobile){
+  /* determine which bubbles to keep: top 5/5/3 large + next 3 per color as small extras */
+  mobileKeep={};
+  const mobileExtra={};
+  [PURPLE,TEAL,GREEN].forEach(col=>{
+    const sorted=B.filter(d=>d.col===col).sort((a,b)=>b.vB-a.vB);
+    const mainLimit=col===GREEN?3:5;
+    sorted.slice(0,mainLimit).forEach(d=>{mobileKeep[d.id]=true;});
+    sorted.slice(mainLimit,mainLimit+3).forEach(d=>{mobileKeep[d.id]=true;mobileExtra[d.id]=true;});
+  });
+  /* compressed range: main 50-80, extras 40 — prevents overlap and weird scale */
+  B.forEach(d=>{
+    if(mobileExtra[d.id]){d.r=40;}
+    else{
+      const ratio=Math.sqrt(d.vB/grpMax[d.col]);
+      d.r=50+ratio*30;/* range 50-80 */
+    }
+  });
+}
+
+const NAME_FS=isMobile?22:17,VAL_FS=isMobile?52:31,GAP=isMobile?HOVER_R*0.32:NAME_FS*1.15;
+
+/* ── panel ── */
+const panel=document.getElementById("bp");
+const bpFl=document.getElementById("bp-fl"),bpRn=document.getElementById("bp-rn");
+const bpNm=document.getElementById("bp-nm"),bpVal=document.getElementById("bp-val"),bpSb=document.getElementById("bp-sb"),bpBd=document.getElementById("bp-bd");
+let hideTimer=null,activeId=null,breathPaused=false;
+
+function showPanel(d,svgX,svgY){
+  clearTimeout(hideTimer);
+  if(activeId&&activeId!==d.id)doHideInstant();
+  activeId=d.id;breathPaused=true;
+  panel.style.setProperty("--pc",d.col);
+  bpFl.textContent=d.flag;bpRn.textContent=d.rn;
+  bpNm.textContent=d.label.replace(/\n/g," ");bpVal.textContent=d.val;bpSb.textContent=d.sub;
+  bpBd.innerHTML=d.corps.map(c=>
+    `<div class="bp-rw"><span class="bp-cn">${c.n}</span>${c.v&&c.v!=="—"?`<span class="bp-cv">${c.v}</span>`:""}</div>`
+  ).join("");
+  panel.classList.add("vis");
+  /* hide tap hint after first interaction */
+  /* dim map background when hovering */
+  d3.select("#mapG").transition().duration(HOVER_DUR).ease(EASE).attr("opacity",0.25);
+
+  const rect=document.getElementById("map-main").getBoundingClientRect();
+  const sx=rect.left+svgX*(rect.width/W),sy=rect.top+svgY*(rect.height/H);
+  const pw=380,sxR=rect.width/W;
+
+  requestAnimationFrame(()=>{
+    const ph=panel.offsetHeight||140;
+    const pw2=panel.offsetWidth||380;
+    const wrapRect=mapWrap.getBoundingClientRect();
+    const mapW=wrapRect.width, mapH=wrapRect.height;
+    /* position relative to map-wrap */
+    const relX=sx-wrapRect.left, relY=sy-wrapRect.top;
+
+    let left,top;
+    if(mapW<700){
+      /* Narrow: center card horizontally, position at top of map */
+      left=(mapW-pw2)/2;
+      top=8;
+      if(left<4) left=4;
+    }else{
+      /* Desktop: position beside the bubble */
+      const gap=HOVER_R*2*sxR+24;
+      left=relX+gap;top=relY-ph/2;
+      if(left+pw2>mapW-8) left=relX-gap-pw2;
+      if(left<4) left=4;
+      if(left+pw2>mapW-4) left=mapW-pw2-4;
+      if(top<4) top=4;
+      if(top+ph>mapH-4) top=mapH-ph-4;
+    }
+    panel.style.left=left+"px";panel.style.top=top+"px";
+
+    /* Connector line (desktop only) */
+    if(mapW>=700){
+      const oRect=document.getElementById("map-ovl").getBoundingClientRect();
+      const peX=left+wrapRect.left+(left+wrapRect.left>sx?0:pw2);
+      const peY=top+wrapRect.top+ph/2;
+      const ang=Math.atan2(peY-sy,peX-sx);
+      const lx1=svgX+Math.cos(ang)*(HOVER_R+8*sc);
+      const ly1=svgY+Math.sin(ang)*(HOVER_R+8*sc);
+      const rLx2=(peX-oRect.left)*(W/oRect.width),rLy2=(peY-oRect.top)*(H/oRect.height);
+      const ea=Math.atan2(rLy2-ly1,rLx2-lx1);
+      const lx2=rLx2-Math.cos(ea)*8*sc,ly2=rLy2-Math.sin(ea)*8*sc;
+
+      ovl.selectAll("*").remove();
+      const od=ovl.append("defs");
+      const lg=od.append("linearGradient").attr("id","clg")
+        .attr("gradientUnits","userSpaceOnUse").attr("x1",lx1).attr("y1",ly1).attr("x2",lx2).attr("y2",ly2);
+      lg.append("stop").attr("offset","0%").attr("stop-color",d.col).attr("stop-opacity",0.8);
+      lg.append("stop").attr("offset","100%").attr("stop-color",d.col).attr("stop-opacity",0.1);
+      ovl.append("line").attr("x1",lx1).attr("y1",ly1).attr("x2",lx2).attr("y2",ly2)
+        .attr("stroke","url(#clg)").attr("stroke-width",1.5).attr("stroke-linecap","round");
+    }else{
+      ovl.selectAll("*").remove();
+    }
+  });
+
+  d3.selectAll(".bg").each(function(n){
+    const el=d3.select(this);
+    if(n.id===d.id){
+      /* hovered bubble: full brightness, scale up, glow */
+      el.interrupt().attr("opacity",1).transition().duration(HOVER_DUR).ease(EASE)
+        .attr("transform",`translate(${n.x},${n.y}) scale(1)`);
+      el.select(".b-halo").transition().duration(HOVER_DUR).ease(EASE).attr("opacity",0.18);
+      el.select(".b-circle").attr("filter","url(#glowSm)")
+        .transition().duration(HOVER_DUR).ease(EASE).attr("fill-opacity",0.55);
+      el.select(".b-ring").transition().duration(HOVER_DUR).ease(EASE).attr("opacity",0.55);
+      /* make texts inside hovered bubble fully visible + white */
+      el.selectAll("text").transition().duration(HOVER_DUR).ease(EASE).attr("opacity",1).attr("fill","#ffffff");
+      for(let ri=0;ri<3;ri++){
+        el.append("circle").attr("class","ripple").attr("r",HOVER_R).attr("fill","none")
+          .attr("stroke",n.col).attr("stroke-width",1.2-ri*0.3).attr("opacity",0)
+          .transition().delay(ri*120).duration(500).ease(EASE)
+          .attr("r",HOVER_R+(ri+1)*12).attr("opacity",0.35-ri*0.1)
+          .transition().duration(400).attr("opacity",0).remove();
+      }
+    }else{
+      /* non-hovered: dim circle but keep text slightly visible */
+      el.interrupt().transition().duration(HOVER_DUR).ease(EASE).attr("opacity",0.18);
+      el.select(".b-circle").transition().duration(HOVER_DUR).ease(EASE).attr("fill-opacity",0.08);
+    }
+  });
+}
+
+function scheduleHide(){hideTimer=setTimeout(doHide,40);}
+function doHideInstant(){
+  activeId=null;breathPaused=false;panel.classList.remove("vis");
+  d3.select("#mapG").attr("opacity",0.75);
+  d3.selectAll(".bg").each(function(n){
+    const el=d3.select(this);
+    el.interrupt().attr("opacity",1).attr("transform",`translate(${n.x},${n.y}) scale(${n.r/HOVER_R})`);
+    el.select(".b-halo").attr("opacity",0);
+    el.select(".b-circle").attr("filter",null).attr("fill-opacity",0.27);
+    el.selectAll("text").attr("fill",n.col);
+  });
+  d3.selectAll(".b-ring").attr("opacity",0);d3.selectAll(".ripple").remove();ovl.selectAll("*").remove();
+}
+function doHide(){
+  activeId=null;breathPaused=false;panel.classList.remove("vis");
+  d3.select("#mapG").transition().duration(HOVER_DUR).ease(EASE).attr("opacity",0.75);
+  d3.selectAll(".bg").each(function(n){
+    const el=d3.select(this);
+    el.interrupt().transition().duration(HOVER_DUR).ease(EASE)
+      .attr("opacity",1).attr("transform",`translate(${n.x},${n.y}) scale(${n.r/HOVER_R})`);
+    el.select(".b-halo").transition().duration(HOVER_DUR).attr("opacity",0);
+    el.select(".b-circle").attr("filter",null).transition().duration(HOVER_DUR).ease(EASE).attr("fill-opacity",0.27);
+    el.selectAll("text").transition().duration(HOVER_DUR).ease(EASE).attr("fill",n.col);
+  });
+  d3.selectAll(".b-ring").transition().duration(HOVER_DUR).attr("opacity",0);
+  d3.selectAll(".ripple").remove();ovl.selectAll("*").remove();
+}
+panel.addEventListener("mouseenter",()=>clearTimeout(hideTimer));
+panel.addEventListener("mouseleave",scheduleHide);
+document.getElementById("bp-close").addEventListener("click",e=>{e.stopPropagation();doHide();});
+svg.on("click",doHide);
+
+/* ── world map ── */
+d3.json("https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json").then(world=>{
+  const ISO_REGION={};
+  [['swf',[784,682,634,512,414,48,275,368,400,760,887,422,586,398]],
+   ['china',[156,158]],['hk',[344,446]],
+   ['sea',[764,458,702,360,116,418,104,704]],
+   ['japan',[392,410,408]],['phil',[608]]
+  ].forEach(([r,ids])=>ids.forEach(i=>ISO_REGION[+i]=r));
+
+  const DOTS_MAP={
+    swf:"url(#dots-purple)",china:"url(#dots-teal)",hk:"url(#dots-teal)",
+    japan:"url(#dots-teal)",sea:"url(#dots-green)",phil:"url(#dots-green)"};
+
+  const geoPath=d3.geoPath().projection(baseProj);
+  const countries=topojson.feature(world,world.objects.countries);
+  const mapG=svg.append("g").attr("id","mapG");
+
+  mapG.selectAll("path.land").data(countries.features).join("path")
+    .attr("class","land").attr("d",geoPath)
+    .attr("fill",d=>DOTS_MAP[ISO_REGION[+d.id]]||"url(#dots-neutral)")
+    .attr("stroke","none");
+
+  /* edge fades — bottom only, no top fade to avoid covering bubbles */
+  mapG.append("rect").attr("x",0).attr("y",H-fadeBH).attr("width",W).attr("height",fadeBH)
+    .attr("fill","url(#botFade)").attr("pointer-events","none");
+
+  /* force simulation */
+  const PAD=20;
+  const simBubbles=isMobile?B.filter(d=>mobileKeep[d.id]):B;
+  simBubbles.forEach(d=>{const[x0,y0]=baseProj([d.lng,d.lat]);d.x=x0;d.y=y0;});
+  /* also init non-sim bubbles so they have x,y */
+  if(isMobile) B.filter(d=>!mobileKeep[d.id]).forEach(d=>{const[x0,y0]=baseProj([d.lng,d.lat]);d.x=x0;d.y=y0;});
+
+  /* collide: d.r + 4 ≈ 8px gap between edges (tight clustering) */
+  const sim=d3.forceSimulation(simBubbles)
+    .force("collide",d3.forceCollide(d=>d.r+(isMobile?12:4)).strength(0.95))
+    .stop();
+  if(isMobile){
+    const colorCX={[PURPLE]:W*0.30,[TEAL]:W*0.62,[GREEN]:W*0.50};
+    const colorCY={[PURPLE]:H*0.52,[TEAL]:H*0.52,[GREEN]:H*0.72};
+    sim.force("gx",d3.forceX(d=>colorCX[d.col]).strength(0.10));
+    sim.force("gy",d3.forceY(d=>colorCY[d.col]).strength(0.10));
+  }else{
+    /* Compute color group centers from geo projections */
+    const colorGrps={};
+    [PURPLE,TEAL,GREEN].forEach(col=>{
+      const grp=simBubbles.filter(d=>d.col===col);
+      colorGrps[col]={
+        cx:d3.mean(grp,d=>baseProj([d.lng,d.lat])[0]),
+        cy:d3.mean(grp,d=>baseProj([d.lng,d.lat])[1])
+      };
+    });
+    /* Pull toward color group center (strong) blended with individual geo (weak) */
+    /* 70% cluster, 30% geo = same-color bubbles stay tight together */
+    sim.force("gx",d3.forceX(d=>{
+      const geo=baseProj([d.lng,d.lat])[0];
+      const cc=colorGrps[d.col].cx;
+      return cc*0.70+geo*0.30;
+    }).strength(0.10));
+    sim.force("gy",d3.forceY(d=>{
+      const geo=baseProj([d.lng,d.lat])[1];
+      const cc=colorGrps[d.col].cy;
+      return cc*0.70+geo*0.30;
+    }).strength(0.10));
+  }
+  for(let i=0;i<1000;i++){
+    sim.tick();
+    simBubbles.forEach(d=>{
+      d.x=Math.max(d.r+PAD,Math.min(W-d.r-PAD,d.x));
+      d.y=Math.max(d.r+PAD,Math.min(H-d.r-PAD,d.y));
+    });
+  }
+
+  /* enlarge 20% from center — preserves distribution, just makes everything bigger */
+  if(!isMobile){
+    const cx=W/2,cy=H/2;
+    simBubbles.forEach(d=>{
+      d.x=cx+(d.x-cx)*ENLARGE;
+      d.y=cy+(d.y-cy)*ENLARGE;
+    });
+  }
+  /* scale the map dots to match */
+  mapG.attr("transform",isMobile?null:`translate(${W/2},${H/2}) scale(${ENLARGE}) translate(${-W/2},${-H/2})`);
+
+  /* draw bubbles */
+  const bubbleL=svg.append("g").attr("id","bubbleL");
+
+  function addLabel(g,txt,y,fs,col,op,bs){
+    const afs=bs?fs/bs:fs;
+    const lines=txt.split("\n"),lh=afs*1.25;
+    const startY=y-(lines.length-1)*lh/2;
+    lines.forEach((ln,i)=>{
+      g.append("text").attr("text-anchor","middle").attr("dominant-baseline","central")
+        .attr("y",startY+i*lh).attr("fill",col).attr("font-size",afs)
+        .attr("font-weight",600).attr("font-family",FONT).attr("opacity",op).text(ln);
+    });
+  }
+
+  /* staggered entrance — bubbles scale in from 0, sorted large→small for drama */
+  const drawBubbles=isMobile?B.filter(d=>mobileKeep[d.id]):B;
+  const sorted=[...drawBubbles].sort((a,b)=>b.vB-a.vB);
+  sorted.forEach((d,i)=>{
+    const bs=d.r/HOVER_R;
+    const g=bubbleL.append("g").attr("class","bg").attr("id","b-"+d.id)
+      .attr("transform",`translate(${d.x},${d.y}) scale(0)`)
+      .style("cursor","pointer")
+      .attr("opacity",0).datum(d);
+
+    g.append("circle").attr("class","b-halo").attr("r",HOVER_R*1.4)
+      .attr("fill",d.col).attr("opacity",0).attr("filter","url(#glow)");
+    g.append("circle").attr("class","b-circle").attr("r",HOVER_R)
+      .attr("fill",d.col).attr("fill-opacity",0.27)
+      .attr("stroke",d.col).attr("stroke-width",0.4);
+    g.append("circle").attr("class","b-ring").attr("r",HOVER_R+8)
+      .attr("fill","none").attr("stroke",d.col).attr("stroke-width",1.5).attr("opacity",0);
+
+    const tbs=Math.max(bs,0.8);
+    const aGAP=GAP/tbs;
+    addLabel(g,d.label,-aGAP,NAME_FS,d.col,0.95,tbs);
+
+    const isNum=d.val.startsWith("$")||d.val.startsWith("~");
+    const aVFS=VAL_FS/tbs;
+    g.append("text").attr("text-anchor","middle").attr("dominant-baseline","central")
+      .attr("y",aGAP)
+      .attr("fill",isNum?FG:MUTED)
+      .attr("font-size",aVFS).attr("font-weight",800)
+      .attr("font-style",isNum?"normal":"italic")
+      .attr("font-family",FONT)
+      .attr("font-variant-numeric","tabular-nums")
+      .text(d.val);
+
+    /* staggered entrance: 40ms between each, spring-like ease */
+    g.transition().delay(200+i*40).duration(600).ease(d3.easeBackOut.overshoot(0.6))
+      .attr("transform",`translate(${d.x},${d.y}) scale(${bs})`)
+      .attr("opacity",1);
+
+    g.on("mouseenter",()=>showPanel(d,d.x,d.y))
+     .on("mouseleave",scheduleHide)
+     .on("click",e=>{e.stopPropagation();activeId===d.id?doHide():showPanel(d,d.x,d.y);});
+  });
+
+  /* ── Mobile: zoom viewBox to fit visible bubbles tightly ── */
+  if(isMobile){
+    let mnX=Infinity,mxX=-Infinity,mnY=Infinity,mxY=-Infinity;
+    drawBubbles.forEach(d=>{
+      mnX=Math.min(mnX,d.x-d.r*1.6);mxX=Math.max(mxX,d.x+d.r*1.6);
+      mnY=Math.min(mnY,d.y-d.r*1.6);mxY=Math.max(mxY,d.y+d.r*1.6);
+    });
+    const vPad=40;
+    const vbX=mnX-vPad,vbY=mnY-vPad,vbW=mxX-mnX+vPad*2,vbH=mxY-mnY+vPad*2;
+    svg.attr("viewBox",`${vbX} ${vbY} ${vbW} ${vbH}`);
+    ovl.attr("viewBox",`${vbX} ${vbY} ${vbW} ${vbH}`);
+  }
+
+  /* map background fade-in */
+  mapG.attr("opacity",0).transition().duration(1200).ease(EASE).attr("opacity",0.75);
+
+  /* breathing animation — top 3 per color, sequential: purple → green → blue */
+  const colorOrder=[PURPLE,GREEN,TEAL];
+  const colorGroups={};
+  B.forEach(d=>{if(!colorGroups[d.col])colorGroups[d.col]=[];colorGroups[d.col].push(d);});
+  /* build ordered list: 3 purple, 3 green, 3 blue */
+  const breathTargets=[];
+  colorOrder.forEach(col=>{
+    const grp=colorGroups[col]||[];
+    grp.sort((a,b)=>b.vB-a.vB);
+    grp.slice(0,3).forEach(d=>{
+      const g=d3.select("#b-"+d.id);
+      if(!g.empty()){
+        breathTargets.push({id:d.id,r:d.r,col:d.col,
+          g:g,el:g.select(".b-circle"),halo:g.select(".b-halo")});
+      }
+    });
+  });
+  /* animate one color group (3 bubbles) at a time — opacity only, no scale (prevents jitter) */
+  let breathGroupIdx=0;
+  function breathWave(){
+    if(breathPaused){setTimeout(breathWave,1000);return;}
+    const groupStart=breathGroupIdx*3;
+    const glowDur=900,shrinkDur=1200;
+    for(let i=0;i<3;i++){
+      const pick=breathTargets[(groupStart+i)%breathTargets.length];
+      if(!pick||pick.id===activeId)continue;
+      const delay=i*150;
+      /* opacity-only breathing: fill-opacity pulse + halo glow, no transform changes */
+      pick.el.transition("breath").delay(delay).duration(glowDur).ease(d3.easeSinInOut)
+        .attr("fill-opacity",0.45)
+        .transition().duration(shrinkDur).ease(d3.easeSinInOut)
+        .attr("fill-opacity",0.27);
+      pick.halo.transition("breath").delay(delay).duration(glowDur).ease(d3.easeSinInOut)
+        .attr("opacity",0.10)
+        .transition().duration(shrinkDur).ease(d3.easeSinInOut)
+        .attr("opacity",0);
+    }
+    breathGroupIdx=(breathGroupIdx+1)%3;
+    setTimeout(breathWave,glowDur+shrinkDur+200);
+  }
+  setTimeout(breathWave,isMobile?8000:1800);
+
+  /* ── Mobile intro: highlight top bubble with glow, then subtle "Tap to explore" ── */
+  if(isMobile){
+    const topBubble=drawBubbles.slice().sort((a,b)=>b.vB-a.vB)[0];
+    if(topBubble){
+      breathPaused=true;
+      let introAborted=false;
+      const abortIntro=()=>{
+        introAborted=true;breathPaused=false;
+        const pill=document.getElementById('intro-pill');
+        if(pill){pill.style.opacity='0';setTimeout(()=>pill.remove(),400);}
+      };
+      mapWrap.addEventListener('touchstart',abortIntro,{once:true,passive:true});
+
+      /* Phase 1: After entrance, glow the top bubble smoothly */
+      setTimeout(()=>{
+        if(introAborted)return;
+        const tg=d3.select("#b-"+topBubble.id);
+        if(tg.empty())return;
+        /* Smoothly highlight: dim others, glow target */
+        d3.selectAll(".bg").each(function(n){
+          const el=d3.select(this);
+          if(n.id===topBubble.id){
+            el.transition().duration(800).ease(EASE).attr("opacity",1);
+            el.select(".b-halo").transition().duration(800).attr("opacity",0.2);
+            el.select(".b-circle").transition().duration(800).attr("fill-opacity",0.5);
+          }else{
+            el.transition().duration(800).ease(EASE).attr("opacity",0.15);
+          }
+        });
+        d3.select("#mapG").transition().duration(800).ease(EASE).attr("opacity",0.3);
+
+        /* Phase 2: Show card with smooth fade */
+        setTimeout(()=>{
+          if(introAborted)return;
+          panel.style.opacity='0';
+          panel.style.transition='opacity 0.6s ease';
+          showPanel(topBubble,topBubble.x,topBubble.y);
+          requestAnimationFrame(()=>{panel.style.opacity='1';});
+
+          /* Phase 3: Fade card out, restore map */
+          setTimeout(()=>{
+            if(introAborted)return;
+            panel.style.opacity='0';
+            setTimeout(()=>{
+              doHide();
+              panel.style.opacity='';panel.style.transition='';
+
+              /* Phase 4: Show minimal "Tap to explore" text */
+              setTimeout(()=>{
+                if(introAborted)return;
+                const pill=document.createElement('div');
+                pill.id='intro-pill';
+                pill.style.cssText=`
+                  position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
+                  color:rgba(161,161,170,0.6);font-size:12px;font-weight:500;
+                  letter-spacing:1.5px;font-family:'Inter',system-ui,sans-serif;
+                  text-transform:uppercase;
+                  opacity:0;transition:opacity 1s ease;z-index:999;white-space:nowrap;
+                `;
+                pill.textContent='Tap to explore';
+                mapWrap.appendChild(pill);
+                requestAnimationFrame(()=>{pill.style.opacity='1';});
+                setTimeout(()=>{
+                  pill.style.opacity='0';
+                  setTimeout(()=>{pill.remove();breathPaused=false;},1000);
+                },2000);
+              },400);
+            },600);
+          },2500);
+        },600);
+      },1800);
+    }
+  }
+
+  /* notify parent iframe to resize */
+  setTimeout(()=>{
+    if(window.parent!==window)window.parent.postMessage('resize-iframe','*');
+  },800);
+
+}).catch(err=>{
+  svg.append("text").attr("x",W/2).attr("y",H/2)
+    .attr("text-anchor","middle").attr("fill","red").attr("font-size",18)
+    .text("Error: "+err.message);
+});
+})();
+</script>
+
+<script>
+/* ── Staggered row + bar reveal ── */
+function revealRows(sectionId){
+  const rows=document.querySelectorAll('#'+sectionId+' .tbl tbody tr');
+  rows.forEach((r,i)=>{
+    /* store original bar width, reset to 0 */
+    const bar=r.querySelector('.td-bar');
+    if(bar&&!bar.dataset.origW){
+      bar.dataset.origW=bar.style.width||'0%';
+      bar.style.setProperty('--bar-w',bar.dataset.origW);
+    }
+    r.classList.remove('revealed');
+    if(bar)bar.classList.remove('animated');
+    setTimeout(()=>{
+      r.classList.add('revealed');
+      if(bar)setTimeout(()=>bar.classList.add('animated'),150);
+    },30*i+100);
+  });
+  /* notify parent to resize iframe */
+  setTimeout(()=>{
+    if(window.parent!==window)window.parent.postMessage('resize-iframe','*');
+  },30*rows.length+500);
+}
+
+/* ── Tab switching ── */
+function switchTab(secId,btn){
+  document.querySelectorAll('.section').forEach(s=>s.classList.remove('visible'));
+  document.getElementById(secId).classList.add('visible');
+  document.querySelectorAll('.sub-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  revealRows(secId);
+}
+
+/* ── Helpers ── */
+function parseVal(s){if(!s||s==='—'||s==='0')return 0;return parseFloat(s)||0;}
+
+/* ── Region filter chips ── */
+const ASIA_REGIONS=new Set(['HK','CHN','JPN','KOR','THA','MYS','PHL','SGP','AUS','IDN','IND','TWN']);
+const ME_REGIONS=new Set(['UAE','KSA','QAT','BHR','OMN','KWT','KAZ','JOR','EGY']);
+function filterRegion(tableId,region,btn){
+  const table=document.getElementById(tableId),
+        rows=Array.from(table.querySelectorAll('tbody tr')),
+        bar=btn.closest('.chip-bar');
+  bar.querySelectorAll('.chip').forEach(c=>c.classList.remove('active'));
+  btn.classList.add('active');
+  rows.forEach(r=>{
+    if(!region) r.style.display='';
+    else if(region==='ASIA') r.style.display=ASIA_REGIONS.has(r.dataset.region)?'':'none';
+    else if(region==='ME') r.style.display=ME_REGIONS.has(r.dataset.region)?'':'none';
+    else r.style.display=r.dataset.region===region?'':'none';
+  });
+  const visible=rows.filter(r=>r.style.display!=='none');
+  const maxVal=Math.max(...visible.map(r=>parseVal(r.dataset.mcap)),1);
+  visible.forEach(r=>{const bar=r.querySelector('.td-bar');if(bar){const pct=(parseVal(r.dataset.mcap)/maxVal)*100;bar.style.width=Math.max(pct,0.3)+'%';}});
+}
+
+/* ── Column header click sort ── */
+const sortState={};
+function headerSort(th){
+  const table=th.closest('table'),tableId=table.id,
+        key=th.dataset.sort;
+  if(!key)return;
+  const stateKey=tableId+'_'+key;
+  const defaultDir=(key==='name'||key==='region'||key==='fo')?'asc':'desc';
+  if(!sortState[stateKey])sortState[stateKey]=defaultDir;
+  else sortState[stateKey]=sortState[stateKey]==='asc'?'desc':'asc';
+  const dir=sortState[stateKey];
+  table.querySelectorAll('.sort-arrow').forEach(a=>a.textContent='');
+  th.querySelector('.sort-arrow').textContent=dir==='asc'?' ▲':' ▼';
+  th.style.color='#F17E00';
+  table.querySelectorAll('th').forEach(h=>{if(h!==th)h.style.color='';});
+  const tbody=table.querySelector('tbody'),
+        rows=Array.from(tbody.querySelectorAll('tr'));
+  rows.sort((a,b)=>{
+    let va,vb;
+    if(key==='mcap'||key==='nw'){va=parseVal(a.dataset.mcap);vb=parseVal(b.dataset.mcap);if(key==='nw'){va=parseVal(a.dataset.nw);vb=parseVal(b.dataset.nw);}}
+    else if(key==='name'){va=(a.dataset.name||'').toLowerCase();vb=(b.dataset.name||'').toLowerCase();return dir==='asc'?va.localeCompare(vb):vb.localeCompare(va);}
+    else if(key==='region'){va=(a.dataset.region||'').toLowerCase();vb=(b.dataset.region||'').toLowerCase();if(va===vb)return parseVal(b.dataset.mcap)-parseVal(a.dataset.mcap);return dir==='asc'?va.localeCompare(vb):vb.localeCompare(va);}
+    else if(key==='fo'){va=(a.querySelector('.td-fo')?.textContent||'').toLowerCase();vb=(b.querySelector('.td-fo')?.textContent||'').toLowerCase();return dir==='asc'?va.localeCompare(vb):vb.localeCompare(va);}
+    else return 0;
+    return dir==='desc'?vb-va:va-vb;
+  });
+  const visible=rows.filter(r=>r.style.display!=='none');
+  const maxVal=Math.max(...visible.map(r=>parseVal(r.dataset.mcap)),1);
+  rows.forEach(r=>{tbody.appendChild(r);if(r.style.display!=='none'){const bar=r.querySelector('.td-bar');if(bar){const pct=(parseVal(r.dataset.mcap)/maxVal)*100;bar.style.width=Math.max(pct,0.3)+'%';}}});
+}
+
+/* ── Attach header click listeners ── */
+document.querySelectorAll('.tbl th[data-sort]').forEach(th=>{
+  th.addEventListener('click',()=>headerSort(th));
+});
+
+/* ── Store original bar widths before animation zeroes them ── */
+document.querySelectorAll('.td-bar').forEach(bar=>{
+  bar.dataset.origW=bar.style.width||'0%';
+  bar.style.setProperty('--bar-w',bar.dataset.origW);
+});
+
+/* ── Initial reveal ── */
+setTimeout(()=>revealRows('sec1'),500);
+
+/* tap to expand truncated cells on mobile */
+document.querySelectorAll('.td-corp,.td-fo,.td-biz').forEach(el=>{
+  el.addEventListener('click',()=>el.classList.toggle('expanded'));
+});
+
+/* fade-edge: hide when scrolled to end */
+document.querySelectorAll('.tbl-scroll').forEach(el=>{
+  const wrap=el.closest('.tbl-wrap');
+  el.addEventListener('scroll',()=>{
+    const atEnd=el.scrollLeft>=el.scrollWidth-el.clientWidth-10;
+    if(wrap)wrap.classList.toggle('at-end',atEnd);
+  },{passive:true});
+});
+</script>
+</body></html>
