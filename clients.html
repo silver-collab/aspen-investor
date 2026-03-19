@@ -471,7 +471,7 @@ const B=[
   {id:"gokongwei",label:"Gokongwei\nFamily",sub:"JG Summit Holdings",val:"$4B",vB:4,col:GREEN,lng:121.2,lat:14.3,flag:"🇵🇭",rn:"PHILIPPINES",corps:[{n:"JG Summit Holdings",v:"$8B"},{n:"Cebu Pacific, Universal Robina, Robinsons",v:"—"}]},
 ];
 
-const MAX_R=100,MIN_R=22,HOVER_R=90;
+const MAX_R=120,MIN_R=26,HOVER_R=108;
 const grpMax={};
 B.forEach(d=>{if(!grpMax[d.col]||d.vB>grpMax[d.col])grpMax[d.col]=d.vB;});
 B.forEach(d=>{d.r=MIN_R+Math.sqrt(d.vB/grpMax[d.col])*(MAX_R-MIN_R);});
