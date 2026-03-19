@@ -247,8 +247,8 @@ body{max-width:1152px;margin:0 auto;padding:0 24px;overflow-x:hidden;overflow-y:
 </div>
 </div>
 
-<!-- ═══ KPI STRIP ═══ -->
-<div class="kpi">
+<!-- ═══ KPI STRIP (hidden on Client Portfolio) ═══ -->
+<div class="kpi" style="display:none;">
   <div class="kpi-item"><div class="kpi-num">$4.5T+</div><div class="kpi-label">Network AUM</div></div>
   <div class="kpi-div"></div>
   <div class="kpi-item"><div class="kpi-num">3300+</div><div class="kpi-label">Institutions</div></div>
@@ -397,7 +397,6 @@ const defs=svg.append("defs");
 
 const mapCY=H/2;
 const baseProj=d3.geoMercator().center([88,18]).scale(H*0.58).translate([W*0.48,mapCY+30]);
-const ENLARGE=1.10; /* scale everything 10% after simulation */
 
 function mkGlow(id,sd){
   const f=defs.append("filter").attr("id",id).attr("x","-120%").attr("y","-120%").attr("width","340%").attr("height","340%");
@@ -669,9 +668,9 @@ d3.json("https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json").then(w
   /* also init non-sim bubbles so they have x,y */
   if(isMobile) B.filter(d=>!mobileKeep[d.id]).forEach(d=>{const[x0,y0]=baseProj([d.lng,d.lat]);d.x=x0;d.y=y0;});
 
-  /* collide: d.r + 10 = 20px gap between same-size edges */
+  /* collide: d.r + 4 ≈ 8px gap between edges (tight clustering) */
   const sim=d3.forceSimulation(simBubbles)
-    .force("collide",d3.forceCollide(d=>d.r+(isMobile?12:10)).strength(0.95))
+    .force("collide",d3.forceCollide(d=>d.r+(isMobile?12:4)).strength(0.95))
     .stop();
   if(isMobile){
     const colorCX={[PURPLE]:W*0.30,[TEAL]:W*0.62,[GREEN]:W*0.50};
@@ -688,19 +687,18 @@ d3.json("https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json").then(w
         cy:d3.mean(grp,d=>baseProj([d.lng,d.lat])[1])
       };
     });
-    const BUBBLE_LIFT=H*0.10;
     /* Pull toward color group center (strong) blended with individual geo (weak) */
-    /* This clusters same-color bubbles tightly while keeping regional shape */
+    /* 70% cluster, 30% geo = same-color bubbles stay tight together */
     sim.force("gx",d3.forceX(d=>{
       const geo=baseProj([d.lng,d.lat])[0];
       const cc=colorGrps[d.col].cx;
-      return cc*0.6+geo*0.4; /* 60% cluster, 40% geo */
-    }).strength(0.08));
+      return cc*0.70+geo*0.30;
+    }).strength(0.10));
     sim.force("gy",d3.forceY(d=>{
-      const geo=baseProj([d.lng,d.lat])[1]-BUBBLE_LIFT;
-      const cc=colorGrps[d.col].cy-BUBBLE_LIFT;
-      return cc*0.6+geo*0.4;
-    }).strength(0.08));
+      const geo=baseProj([d.lng,d.lat])[1];
+      const cc=colorGrps[d.col].cy;
+      return cc*0.70+geo*0.30;
+    }).strength(0.10));
   }
   for(let i=0;i<1000;i++){
     sim.tick();
@@ -710,17 +708,7 @@ d3.json("https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json").then(w
     });
   }
 
-  /* enlarge 10% + shift down 10%: scale from center, then offset */
-  if(!isMobile){
-    const cx=W/2,cy=H/2;
-    const downShift=H*0.10; /* move everything 10% lower */
-    simBubbles.forEach(d=>{
-      d.x=cx+(d.x-cx)*ENLARGE;
-      d.y=cy+(d.y-cy)*ENLARGE+downShift;
-    });
-  }
-  /* scale the map to match */
-  mapG.attr("transform",isMobile?null:`translate(${W/2},${H/2+H*0.10}) scale(${ENLARGE}) translate(${-W/2},${-H/2})`);
+  /* no post-sim transform — bubbles stay at natural geo positions */
 
   /* draw bubbles */
   const bubbleL=svg.append("g").attr("id","bubbleL");
