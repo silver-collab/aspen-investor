@@ -395,8 +395,8 @@ const svg=d3.select("#map-main").attr("viewBox",`${-VB_PAD} ${-VB_PAD} ${W+VB_PA
 const ovl=d3.select("#map-ovl").attr("viewBox",`${-VB_PAD} ${-VB_PAD} ${W+VB_PAD*2} ${H+VB_PAD*2}`).attr("preserveAspectRatio","xMidYMid meet");
 const defs=svg.append("defs");
 
-const mapCY=H/2 - H*0.10;
-const baseProj=d3.geoMercator().center([88,18]).scale(H*0.667).translate([W*0.48,mapCY+30]);
+const mapCY=H/2;
+const baseProj=d3.geoMercator().center([88,18]).scale(H*0.80).translate([W*0.48,mapCY]);
 
 function mkGlow(id,sd){
   const f=defs.append("filter").attr("id",id).attr("x","-120%").attr("y","-120%").attr("width","340%").attr("height","340%");
