@@ -111,7 +111,7 @@ body{max-width:1152px;margin:0 auto;padding:0 24px;overflow-x:hidden;overflow-y:
 .td-biz{font-size:12px;color:#a1a1aa;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:260px;letter-spacing:0.2px;font-weight:400;opacity:0.6;cursor:pointer;}
 
 /* ── MAP CONTAINER (full-screen) ── */
-.map-wrap{position:relative;width:100vw;margin-left:calc(-50vw + 50%);margin-bottom:0;
+.map-wrap{position:relative;width:100vw;margin-left:calc(-50vw + 50%);margin-top:-2vh;margin-bottom:0;
   overflow:visible;
   animation:fadeIn 0.8s cubic-bezier(0.22,1,0.36,1) 0.15s both;}
 .map-wrap svg{display:block;width:100%;height:auto;}
@@ -390,7 +390,7 @@ const PURPLE="#d8a0ff",TEAL="#60d0f0",GREEN="#90d860";
 const EASE=d3.easeCubicOut;
 const HOVER_DUR=500;
 
-const VB_PAD=160;
+const VB_PAD=80;
 const svg=d3.select("#map-main").attr("viewBox",`${-VB_PAD} ${-VB_PAD} ${W+VB_PAD*2} ${H+VB_PAD*2}`).attr("preserveAspectRatio","xMidYMid meet");
 const ovl=d3.select("#map-ovl").attr("viewBox",`${-VB_PAD} ${-VB_PAD} ${W+VB_PAD*2} ${H+VB_PAD*2}`).attr("preserveAspectRatio","xMidYMid meet");
 const defs=svg.append("defs");
