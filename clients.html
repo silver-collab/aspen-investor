@@ -390,14 +390,14 @@ const PURPLE="#d8a0ff",TEAL="#60d0f0",GREEN="#90d860";
 const EASE=d3.easeCubicOut;
 const HOVER_DUR=500;
 
-const VB_PAD=120;
+const VB_PAD=160;
 const svg=d3.select("#map-main").attr("viewBox",`${-VB_PAD} ${-VB_PAD} ${W+VB_PAD*2} ${H+VB_PAD*2}`).attr("preserveAspectRatio","xMidYMid meet");
 const ovl=d3.select("#map-ovl").attr("viewBox",`${-VB_PAD} ${-VB_PAD} ${W+VB_PAD*2} ${H+VB_PAD*2}`).attr("preserveAspectRatio","xMidYMid meet");
 const defs=svg.append("defs");
 
 const mapCY=H/2;
-/* shift map down 8% so bubbles sit centered below hero, not crammed at top */
-const baseProj=d3.geoMercator().center([88,18]).scale(H*0.58).translate([W*0.48,mapCY+H*0.08]);
+/* center map vertically in SVG viewport */
+const baseProj=d3.geoMercator().center([88,18]).scale(H*0.58).translate([W*0.48,mapCY+30]);
 
 function mkGlow(id,sd){
   const f=defs.append("filter").attr("id",id).attr("x","-120%").attr("y","-120%").attr("width","340%").attr("height","340%");
@@ -414,7 +414,7 @@ function mkDots(id,col,op,dotR,spacing){
 mkDots("dots-purple",PURPLE,0.6,1.6,7);
 mkDots("dots-teal",TEAL,0.6,1.6,7);
 mkDots("dots-green",GREEN,0.6,1.6,7);
-mkDots("dots-neutral","#444",0.25,1.0,7);
+mkDots("dots-neutral","#555",0.35,1.0,7);
 
 svg.append("rect").attr("width",W).attr("height",H).attr("fill",BG);
 
@@ -607,7 +607,7 @@ function showPanel(d,svgX,svgY){
 function scheduleHide(){hideTimer=setTimeout(doHide,40);}
 function doHideInstant(){
   activeId=null;breathPaused=false;panel.classList.remove("vis");
-  d3.select("#mapG").attr("opacity",0.6);
+  d3.select("#mapG").attr("opacity",0.75);
   d3.selectAll(".bg").each(function(n){
     const el=d3.select(this);
     el.interrupt().attr("opacity",1).attr("transform",`translate(${n.x},${n.y}) scale(${n.r/HOVER_R})`);
@@ -619,7 +619,7 @@ function doHideInstant(){
 }
 function doHide(){
   activeId=null;breathPaused=false;panel.classList.remove("vis");
-  d3.select("#mapG").transition().duration(HOVER_DUR).ease(EASE).attr("opacity",0.6);
+  d3.select("#mapG").transition().duration(HOVER_DUR).ease(EASE).attr("opacity",0.75);
   d3.selectAll(".bg").each(function(n){
     const el=d3.select(this);
     el.interrupt().transition().duration(HOVER_DUR).ease(EASE)
@@ -782,7 +782,7 @@ d3.json("https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json").then(w
   }
 
   /* map background fade-in */
-  mapG.attr("opacity",0).transition().duration(1200).ease(EASE).attr("opacity",0.6);
+  mapG.attr("opacity",0).transition().duration(1200).ease(EASE).attr("opacity",0.75);
 
   /* breathing animation — top 3 per color, sequential: purple → green → blue */
   const colorOrder=[PURPLE,GREEN,TEAL];
